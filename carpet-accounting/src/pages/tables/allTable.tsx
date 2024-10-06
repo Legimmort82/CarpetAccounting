@@ -182,7 +182,7 @@ const columns = [
   }),
 
   columnHelper.accessor("ersalshodeh", {
-    cell: (info) => info.getValue(),
+    cell: (info) => <span>{info.getValue() ? "بله" : "خیر"}</span> ,
     header: () => (
       <span className="flex items-center">
         ارسال شده
