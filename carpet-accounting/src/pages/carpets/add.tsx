@@ -1,8 +1,12 @@
-import CarpetInput from '@/components/Sections/Input/CarpetInput'
+import AddCarpet from "@/components/Sections/Input/AddCarpet"
+
+
 
 function AddCarpets() {
   return (
-    <CarpetInput />
+    <>
+      <AddCarpet/>
+    </>
   )
 }
 

@@ -1,11 +1,10 @@
-import React from 'react'
+import EditCarpet from "@/components/Sections/Input/EditCarpet"
+
 
 function EditCarpets
 () {
   return (
-    <div>EditCarpets
-        
-    </div>
+    <EditCarpet />
   )
 }
 

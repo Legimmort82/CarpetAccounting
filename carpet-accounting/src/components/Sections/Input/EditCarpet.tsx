@@ -1,17 +1,16 @@
 import Layout from "@/components/Layout/Layout"
-import SimpleInput from "@/components/UI/Inputs/simpleInput"
+import SimpleInput from "@/components/UI/Inputs/SimpleInput"
 
 
-function CarpetInput() {
+function EditCarpet() {
   return (
     <>
       <Layout>
         <section className="flex flex-col min-h-screen w-full py-6 px-4 items-center overflow-auto">
-          <h1 className="text-3xl font-bold mb-10">ویرایش قالی</h1>
-          <h2 className="text-2xl font-bold self-start mb-6">مشخصات قالی</h2>
+          <h1 className="text-3xl font-bold mb-14">ویرایش قالی</h1>
 
           <form className="flex flex-col gap-y-1">
-            <div className="flex flex-wrap justify-center gap-10 items-center bg-[#cbcfff] py-7 rounded-tr-md rounded-tl-md">
+            <div className="flex flex-wrap justify-center gap-12 items-center bg-[#cbcfff] py-7 rounded-tr-md rounded-tl-md">
               <SimpleInput text={"عرض"} />
               <SimpleInput text={"طول"} />
               <SimpleInput text={"متراژ"} />
@@ -21,17 +20,17 @@ function CarpetInput() {
               <SimpleInput text={"کد"} />
             </div>
 
-            <div className="flex flex-wrap justify-center gap-12 items-center bg-[#9fa8ff] py-7 ">
+            <div className="flex flex-wrap justify-center gap-14 items-center bg-[#9fa8ff] py-7 ">
               <SimpleInput text={"شیرازه"} />
               <SimpleInput text={"تاریخ ورود"} />
               <SimpleInput text={"تاریخ خروج"} />
             </div>
-            <div className="flex flex-wrap justify-center gap-12 items-center bg-[#8b97ff] py-7 ">
+            <div className="flex flex-wrap justify-center gap-14 items-center bg-[#8b97ff] py-7 ">
               <SimpleInput text={"گره"} />
               <SimpleInput text={"تاریخ ورود"} />
               <SimpleInput text={"تاریخ خروج"} />
             </div>
-            <div className="flex flex-wrap justify-center gap-12 items-center bg-[#7684ff] py-7 rounded-br-md rounded-bl-md shadow-lg shadow-gray-300">
+            <div className="flex flex-wrap justify-center gap-14 items-center bg-[#7684ff] py-7 rounded-br-md rounded-bl-md shadow-lg shadow-gray-300">
               <SimpleInput text={"چله"} />
               <SimpleInput text={"تاریخ ورود"} />
               <SimpleInput text={"تاریخ خروج"} />
@@ -54,4 +53,4 @@ function CarpetInput() {
   )
 }
 
-export default CarpetInput
+export default EditCarpet

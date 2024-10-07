@@ -2,7 +2,9 @@
 
 function Carpets() {
   return (
-    <div>Carpets</div>
+    <>
+
+    </>
   )
 }
 

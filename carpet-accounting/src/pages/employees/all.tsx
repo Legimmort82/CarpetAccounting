@@ -42,8 +42,7 @@ const columns = [
   })
 ]
 
-function AllEmployees
-  () {
+function AllEmployees() {
   const [data, setData] = useState([...employeesData])
   const [globalFilter, setGlobalFilter] = useState("");
 

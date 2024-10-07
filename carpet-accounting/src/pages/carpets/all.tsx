@@ -26,7 +26,7 @@ type Carpet = {
   gerehVouroud: string,
   ersalshodeh: boolean
 }
-const columnHelper = createColumnHelper<Carpet>();
+const columnHelper = createColumnHelper < Carpet > ();
 
 const columns = [
   columnHelper.accessor("shomareh", {
@@ -183,7 +183,7 @@ const columns = [
   }),
 
   columnHelper.accessor("ersalshodeh", {
-    cell: (info) => <span>{info.getValue() ? "بله" : "خیر"}</span> ,
+    cell: (info) => <span>{info.getValue() ? "بله" : "خیر"}</span>,
     header: () => (
       <span className="flex items-center">
         ارسال شده
@@ -192,8 +192,7 @@ const columns = [
   }),
 ]
 
-function AllCarpets
-() {
+function AllCarpets() {
   const [data, setData] = useState([...mockData])
   const [globalFilter, setGlobalFilter] = useState("");
 
@@ -221,7 +220,7 @@ function AllCarpets
         <div className="flex flex-col min-h-screen w-full py-6 px-4 items-center overflow-auto">
 
           <h1 className="text-3xl font-bold mb-5">فهرست تمام قالی ها</h1>
-          
+
           <div className="flex justify-between items-center w-full">
             <div className="mb-4 relative">
               <input
@@ -287,7 +286,7 @@ function AllCarpets
               </tbody>
             </table>
           </div>
-          
+
           <div className="flex justify-between items-center mt-4 text-sm text-gray-700 w-full">
             <div className="flex items-center mt-4 ">
               <span className="ml-2">تعداد ردیف ها</span>
@@ -364,3 +363,5 @@ function AllCarpets
 }
 
 export default AllCarpets
+
+
