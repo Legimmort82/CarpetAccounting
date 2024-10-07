@@ -37,7 +37,6 @@ function Layout({ children }: props) {
 	return (
 		<>
 			<section className="flex">
-
 				<div className="flex flex-col items-center bg-[#050A30] z-10 h-screen sticky top-0 right-0 min-w-[350px] overflow-auto">
 					<div>
 						<Image className="w-[220px] h-[220px]" src={logo} alt="logo" />

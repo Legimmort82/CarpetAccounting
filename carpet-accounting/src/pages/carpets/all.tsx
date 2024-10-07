@@ -256,7 +256,7 @@ function AllCarpets
                     {headerGroup.headers.map((header) => (
                       <th
                         key={header.id}
-                        className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase"
+                        className="px-9 py-3 text-center text-xs font-medium text-white uppercase"
                       >
                         {flexRender(
                           header.column.columnDef.header,
@@ -274,7 +274,7 @@ function AllCarpets
                     {row.getVisibleCells().map((cell) => (
                       <td
                         key={cell.id}
-                        className="px-6 py-4 text-center text-sm font-medium text-gray-800"
+                        className="px-9 py-4 text-center text-sm font-medium text-gray-800"
                       >
                         {flexRender(
                           cell.column.columnDef.cell,
