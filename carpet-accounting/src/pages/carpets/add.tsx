@@ -1,8 +1,8 @@
-import React from 'react'
+import CarpetInput from '@/components/Sections/Input/CarpetInput'
 
 function AddCarpets() {
   return (
-    <div>AddCarpets</div>
+    <CarpetInput />
   )
 }
 

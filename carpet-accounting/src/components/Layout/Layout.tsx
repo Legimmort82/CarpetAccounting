@@ -4,13 +4,10 @@ import DropDownList from "@/components/UI/DropDowns/DropDownList"
 import logo from "@/assets/loginPage/Logo.svg"
 import carpetLogo from "@/assets/sideBar/carpet.svg"
 import carpetListLogo from "@/assets/sideBar/carpet-list.svg"
-import carpetCalendarListLogo from "@/assets/sideBar/carpet-calendar-list.svg"
 import addCarpetLogo from "@/assets/sideBar/add.svg"
 import editCarpetLogo from "@/assets/sideBar/edit.svg"
 import workersListLogo from "@/assets/sideBar/workers-list.svg"
 import workerLogo from "@/assets/sideBar/worker.svg"
-import trashWorkerLogo from "@/assets/sideBar/trash.svg"
-import skillWorkersListLogo from "@/assets/sideBar/skill-worker-list.svg"
 import salaryLogo from "@/assets/sideBar/salary.svg"
 import exitLogo from "@/assets/sideBar/exit.svg"
 import { useState } from "react"
@@ -58,11 +55,6 @@ function Layout({ children }: props) {
 									لیست تمام قالی ها
 								</DropDownList>
 								<DropDownList
-									logo={carpetCalendarListLogo}
-								>
-									لیست تمام قالی ها بر اساس ماه
-								</DropDownList>
-								<DropDownList
 									logo={addCarpetLogo}
 								>
 									اضافه کردن قالی
@@ -90,11 +82,6 @@ function Layout({ children }: props) {
 									لیست تمام کارکنان
 								</DropDownList>
 								<DropDownList
-									logo={skillWorkersListLogo}
-								>
-									لیست کارکنان بر اساس مهارت
-								</DropDownList>
-								<DropDownList
 									logo={addCarpetLogo}
 								>
 									اضافه کردن افراد
@@ -103,11 +90,6 @@ function Layout({ children }: props) {
 									logo={editCarpetLogo}
 								>
 									ویرایش افراد
-								</DropDownList>
-								<DropDownList
-									logo={trashWorkerLogo}
-								>
-									حذف افراد
 								</DropDownList>
 							</div>
 						</div>
