@@ -123,17 +123,17 @@ function Layout({ children }: props) {
 
 							<div className={`${openSalary ? "block" : "hidden"} w-full flex flex-col items-center`}>
 								<DropDownList
-									logo={salaryLogo}									
+									logo={salaryLogo}
 								>
 									ثبت مساعده
 								</DropDownList>
 								<DropDownList
-									logo={salaryLogo}									
+									logo={salaryLogo}
 								>
 									حقوق ماهانه
 								</DropDownList>
 								<DropDownList
-									logo={salaryLogo}								
+									logo={salaryLogo}
 								>
 									فاکتور
 								</DropDownList>

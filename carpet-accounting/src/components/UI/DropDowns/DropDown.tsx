@@ -1,6 +1,5 @@
 import Image from "next/image"
 import downArrow from "@/assets/sideBar/down-arrow.svg"
-import DropDownList from "./DropDownList"
 
 type props = {
   children: React.ReactNode,
