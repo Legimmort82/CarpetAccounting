@@ -32,7 +32,7 @@ const columns = [
   columnHelper.accessor("shomareh", {
     cell: (info) => info.getValue(),
     header: () => (
-      <span className="flex items-center">
+      <span className="flex items-center justify-center">
         شماره
       </span>
     )
@@ -41,7 +41,7 @@ const columns = [
   columnHelper.accessor("arz", {
     cell: (info) => info.getValue(),
     header: () => (
-      <span className="flex items-center">
+      <span className="flex items-center justify-center">
         عرض
       </span>
     )
@@ -50,7 +50,7 @@ const columns = [
   columnHelper.accessor("tool", {
     cell: (info) => info.getValue(),
     header: () => (
-      <span className="flex items-center">
+      <span className="flex items-center justify-center">
         طول
       </span>
     )
@@ -59,7 +59,7 @@ const columns = [
   columnHelper.accessor("metraj", {
     cell: (info) => info.getValue(),
     header: () => (
-      <span className="flex items-center">
+      <span className="flex items-center justify-center">
         متراژ
       </span>
     )
@@ -68,7 +68,7 @@ const columns = [
   columnHelper.accessor("naghsheh", {
     cell: (info) => info.getValue(),
     header: () => (
-      <span className="flex items-center">
+      <span className="flex items-center justify-center">
         نقشه
       </span>
     )
@@ -77,7 +77,7 @@ const columns = [
   columnHelper.accessor("rang", {
     cell: (info) => info.getValue(),
     header: () => (
-      <span className="flex items-center">
+      <span className="flex items-center justify-center">
         رنگ
       </span>
     )
@@ -86,7 +86,7 @@ const columns = [
   columnHelper.accessor("serial", {
     cell: (info) => info.getValue(),
     header: () => (
-      <span className="flex items-center">
+      <span className="flex items-center justify-center">
         سریال
       </span>
     )
@@ -95,7 +95,7 @@ const columns = [
   columnHelper.accessor("code", {
     cell: (info) => info.getValue(),
     header: () => (
-      <span className="flex items-center">
+      <span className="flex items-center justify-center">
         کد
       </span>
     )
@@ -104,7 +104,7 @@ const columns = [
   columnHelper.accessor("shirazeh", {
     cell: (info) => info.getValue(),
     header: () => (
-      <span className="flex items-center">
+      <span className="flex items-center justify-center">
         شیرازه
       </span>
     )
@@ -113,7 +113,7 @@ const columns = [
   columnHelper.accessor("shirazehKhoroug", {
     cell: (info) => info.getValue(),
     header: () => (
-      <span className="flex items-center">
+      <span className="flex items-center justify-center">
         خ-شیرازه
       </span>
     )
@@ -122,7 +122,7 @@ const columns = [
   columnHelper.accessor("shirazehVouroud", {
     cell: (info) => info.getValue(),
     header: () => (
-      <span className="flex items-center">
+      <span className="flex items-center justify-center">
         و-شیرازه
       </span>
     )
@@ -131,7 +131,7 @@ const columns = [
   columnHelper.accessor("cheleh", {
     cell: (info) => info.getValue(),
     header: () => (
-      <span className="flex items-center">
+      <span className="flex items-center justify-center">
         چله
       </span>
     )
@@ -140,7 +140,7 @@ const columns = [
   columnHelper.accessor("chelehKhroug", {
     cell: (info) => info.getValue(),
     header: () => (
-      <span className="flex items-center">
+      <span className="flex items-center justify-center">
         خ-چله
       </span>
     )
@@ -149,7 +149,7 @@ const columns = [
   columnHelper.accessor("chelehVouroud", {
     cell: (info) => info.getValue(),
     header: () => (
-      <span className="flex items-center">
+      <span className="flex items-center justify-center">
         و-چله
       </span>
     )
@@ -158,7 +158,7 @@ const columns = [
   columnHelper.accessor("gereh", {
     cell: (info) => info.getValue(),
     header: () => (
-      <span className="flex items-center">
+      <span className="flex items-center justify-center">
         گره
       </span>
     )
@@ -167,7 +167,7 @@ const columns = [
   columnHelper.accessor("gerehKhoroug", {
     cell: (info) => info.getValue(),
     header: () => (
-      <span className="flex items-center">
+      <span className="flex items-center justify-center">
         خ-گره
       </span>
     )
@@ -176,7 +176,7 @@ const columns = [
   columnHelper.accessor("gerehVouroud", {
     cell: (info) => info.getValue(),
     header: () => (
-      <span className="flex items-center">
+      <span className="flex items-center justify-center">
         و-گره
       </span>
     )
@@ -185,7 +185,7 @@ const columns = [
   columnHelper.accessor("ersalshodeh", {
     cell: (info) => <span>{info.getValue() ? "بله" : "خیر"}</span>,
     header: () => (
-      <span className="flex items-center">
+      <span className="flex items-center justify-center">
         ارسال شده
       </span>
     )
