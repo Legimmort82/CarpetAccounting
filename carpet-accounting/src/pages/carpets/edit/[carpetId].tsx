@@ -1,8 +1,7 @@
 import EditCarpet from "@/components/Sections/Input/EditCarpet"
 
 
-function EditCarpets
-() {
+function EditCarpets() {
   return (
     <EditCarpet />
   )

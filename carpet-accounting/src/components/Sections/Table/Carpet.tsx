@@ -4,6 +4,7 @@ import { useState } from "react";
 import mockData from "@/data/data.json"
 import Image from "next/image";
 import Layout from "@/components/Layout/Layout";
+import Link from "next/link";
 
 
 type Carpet = {
@@ -217,37 +218,38 @@ function Carpets() {
   return (
     <>
       <Layout>
-        <div className="flex flex-col min-h-screen w-full py-6 px-4 items-center overflow-auto">
+        <div className="flex flex-col min-h-screen w-full py-[150px] px-4 items-center overflow-auto">
+          <div className="flex flex-col items-stretch pl-4 py-3 pr-[366px] fixed top-0 left-0 bg-white w-full">
+            <h1 className="text-3xl font-bold self-center mb-6">فهرست تمام قالی ها</h1>
 
-          <h1 className="text-3xl font-bold mb-5">فهرست تمام قالی ها</h1>
-
-          <div className="flex justify-between items-center w-full">
-            <div className="mb-4 relative">
-              <input
-                type="text"
-                value={globalFilter ?? ""}
-                onChange={(e) => setGlobalFilter(e.target.value)}
-                placeholder="دنبال چی میگردی؟"
-                className="relative bg-[#2E2A54] h-[44px] pl-4 pr-9 py-3 rounded-md w-[550px] text-white"
-              />
-              <Image className="absolute w-7 h-7 top-[10px] right-1" src={searchLogo} alt="search-logo" />
-            </div>
-
-            <div className="flex items-center gap-4 mb-4">
-              <div className="flex items-center gap-4">
-                <div className="bg-gray-300 h-[44px] text-center rounded-md w-[200px]">
-                  ماه
-                </div>
-                <div className="bg-gray-300 h-[44px] text-center rounded-md w-[200px]">
-                  سال
-                </div>
+            <div className="flex justify-between items-center">
+              <div className="mb-4 relative">
+                <input
+                  type="text"
+                  value={globalFilter ?? ""}
+                  onChange={(e) => setGlobalFilter(e.target.value)}
+                  placeholder="دنبال چی میگردی؟"
+                  className="relative bg-[#2E2A54] h-[44px] pl-4 pr-9 py-3 rounded-md w-[550px] text-white"
+                />
+                <Image className="absolute w-7 h-7 top-[10px] right-1" src={searchLogo} alt="search-logo" />
               </div>
 
-              <button className="bg-gray-200 py-2 px-4 text-center rounded-md">مشاهده</button>
+              <div className="flex items-center gap-4 mb-4">
+                <div className="flex items-center gap-4">
+                  <div className="bg-gray-300 h-[44px] text-center rounded-md w-[200px]">
+                    ماه
+                  </div>
+                  <div className="bg-gray-300 h-[44px] text-center rounded-md w-[200px]">
+                    سال
+                  </div>
+                </div>
+
+                <button className="bg-gray-200 py-2 px-4 text-center rounded-md">مشاهده</button>
+              </div>
             </div>
           </div>
 
-          <div className="overflow-x-auto shadow-md rounded-lg">
+          <div className="overflow-x-auto shadow-md rounded-lg mb-14">
             <table className="min-w-full divide-y divide-white">
               <thead className="bg-[#050A30]">
                 {table.getHeaderGroups().map((headerGroup) => (
@@ -255,7 +257,7 @@ function Carpets() {
                     {headerGroup.headers.map((header) => (
                       <th
                         key={header.id}
-                        className="px-9 py-3 text-center text-xs font-medium text-white uppercase"
+                        className="px-9 py-3 text-center text-md font-medium text-white uppercase"
                       >
                         {flexRender(
                           header.column.columnDef.header,
@@ -269,7 +271,7 @@ function Carpets() {
 
               <tbody className="bg-[#C9CCE7] divide-y-2 divide-white">
                 {table.getRowModel().rows.map((row) => (
-                  <tr key={row.id} className="hover:bg-gray-50">
+                  <tr key={row.id} className="hover:bg-gray-50 cursor-pointer">
                     {row.getVisibleCells().map((cell) => (
                       <td
                         key={cell.id}
@@ -287,7 +289,7 @@ function Carpets() {
             </table>
           </div>
 
-          <div className="flex justify-between items-center mt-4 text-sm text-gray-700 w-full">
+          <div className="flex justify-between items-center py-2 text-sm text-gray-700 bg-white pl-40 pr-[510px] fixed bottom-0 left-0 w-full">
             <div className="flex items-center mt-4 ">
               <span className="ml-2">تعداد ردیف ها</span>
 
