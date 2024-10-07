@@ -5,6 +5,7 @@ import mockData from "@/data/data.json"
 import Image from "next/image";
 import Layout from "@/components/Layout/Layout";
 
+
 type Carpet = {
   shomareh: number,
   arz: string,
@@ -190,7 +191,9 @@ const columns = [
     )
   }),
 ]
-function AllTable() {
+
+function AllCarpets
+() {
   const [data, setData] = useState([...mockData])
   const [globalFilter, setGlobalFilter] = useState("");
 
@@ -271,7 +274,7 @@ function AllTable() {
                     {row.getVisibleCells().map((cell) => (
                       <td
                         key={cell.id}
-                        className="px-6 py-4 text-right text-sm font-medium text-gray-800"
+                        className="px-6 py-4 text-center text-sm font-medium text-gray-800"
                       >
                         {flexRender(
                           cell.column.columnDef.cell,
@@ -360,4 +363,4 @@ function AllTable() {
   )
 }
 
-export default AllTable
+export default AllCarpets

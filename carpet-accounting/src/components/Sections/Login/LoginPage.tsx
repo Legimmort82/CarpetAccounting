@@ -1,6 +1,6 @@
 import Image from "next/image"
 import Logo from "@/assets/loginPage/Logo.svg"
-import LoginForm from "./LoginForm/LoginForm"
+import LoginForm from "./LoginForm"
 
 
 

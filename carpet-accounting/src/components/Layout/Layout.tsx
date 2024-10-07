@@ -1,6 +1,6 @@
 import Image from "next/image"
-import DropDown from "./DropDowns/DropDown"
-import DropDownList from "./DropDowns/DropDown-list/DropDownList"
+import DropDown from "@/components/UI/DropDowns/DropDown"
+import DropDownList from "@/components/UI/DropDowns/DropDownList"
 import logo from "@/assets/loginPage/Logo.svg"
 import carpetLogo from "@/assets/sideBar/carpet.svg"
 import carpetListLogo from "@/assets/sideBar/carpet-list.svg"
@@ -52,30 +52,28 @@ function Layout({ children }: props) {
 								قالی ها
 							</DropDown>
 
-							<DropDownList
-								logo={carpetListLogo}
-								className={openCarpet ? "block" : "hidden"}
-							>
-								لیست تمام قالی ها
-							</DropDownList>
-							<DropDownList
-								logo={carpetCalendarListLogo}
-								className={openCarpet ? "block" : "hidden"}
-							>
-								لیست تمام قالی ها بر اساس ماه
-							</DropDownList>
-							<DropDownList
-								logo={addCarpetLogo}
-								className={openCarpet ? "block" : "hidden"}
-							>
-								اضافه کردن قالی
-							</DropDownList>
-							<DropDownList
-								logo={editCarpetLogo}
-								className={openCarpet ? "block" : "hidden"}
-							>
-								ویرایش قالی
-							</DropDownList>
+							<div className={`${openCarpet ? "block" : "hidden"} w-full flex flex-col items-center`}>
+								<DropDownList
+									logo={carpetListLogo}
+								>
+									لیست تمام قالی ها
+								</DropDownList>
+								<DropDownList
+									logo={carpetCalendarListLogo}
+								>
+									لیست تمام قالی ها بر اساس ماه
+								</DropDownList>
+								<DropDownList
+									logo={addCarpetLogo}
+								>
+									اضافه کردن قالی
+								</DropDownList>
+								<DropDownList
+									logo={editCarpetLogo}
+								>
+									ویرایش قالی
+								</DropDownList>
+							</div>
 						</div>
 
 						<div className="w-full flex flex-col items-center mb-4">
@@ -86,36 +84,33 @@ function Layout({ children }: props) {
 								کارکنان
 							</DropDown>
 
-							<DropDownList
-								logo={workerLogo}
-								className={openWorkers ? "block" : "hidden"}
-							>
-								لیست تمام کارکنان
-							</DropDownList>
-							<DropDownList
-								logo={skillWorkersListLogo}
-								className={openWorkers ? "block" : "hidden"}
-							>
-								لیست کارکنان بر اساس مهارت
-							</DropDownList>
-							<DropDownList
-								logo={addCarpetLogo}
-								className={openWorkers ? "block" : "hidden"}
-							>
-								اضافه کردن افراد
-							</DropDownList>
-							<DropDownList
-								logo={editCarpetLogo}
-								className={openWorkers ? "block" : "hidden"}
-							>
-								ویرایش افراد
-							</DropDownList>
-							<DropDownList
-								logo={trashWorkerLogo}
-								className={openWorkers ? "block" : "hidden"}
-							>
-								حذف افراد
-							</DropDownList>
+							<div className={`${openWorkers ? "block" : "hidden"} w-full flex flex-col items-center`}>
+								<DropDownList
+									logo={workerLogo}
+								>
+									لیست تمام کارکنان
+								</DropDownList>
+								<DropDownList
+									logo={skillWorkersListLogo}
+								>
+									لیست کارکنان بر اساس مهارت
+								</DropDownList>
+								<DropDownList
+									logo={addCarpetLogo}
+								>
+									اضافه کردن افراد
+								</DropDownList>
+								<DropDownList
+									logo={editCarpetLogo}
+								>
+									ویرایش افراد
+								</DropDownList>
+								<DropDownList
+									logo={trashWorkerLogo}
+								>
+									حذف افراد
+								</DropDownList>
+							</div>
 						</div>
 
 						<div className="w-full flex flex-col items-center mb-4">
@@ -126,24 +121,24 @@ function Layout({ children }: props) {
 								حقوق
 							</DropDown>
 
-							<DropDownList
-								logo={salaryLogo}
-								className={openSalary ? "block" : "hidden"}
-							>
-								ثبت مساعده
-							</DropDownList>
-							<DropDownList
-								logo={salaryLogo}
-								className={openSalary ? "block" : "hidden"}
-							>
-								حقوق ماهانه
-							</DropDownList>
-							<DropDownList
-								logo={salaryLogo}
-								className={openSalary ? "block" : "hidden"}
-							>
-								فاکتور
-							</DropDownList>
+							<div className={`${openSalary ? "block" : "hidden"} w-full flex flex-col items-center`}>
+								<DropDownList
+									logo={salaryLogo}									
+								>
+									ثبت مساعده
+								</DropDownList>
+								<DropDownList
+									logo={salaryLogo}									
+								>
+									حقوق ماهانه
+								</DropDownList>
+								<DropDownList
+									logo={salaryLogo}								
+								>
+									فاکتور
+								</DropDownList>
+							</div>
+
 						</div>
 
 						<div className="w-full flex flex-col items-center mb-4 cursor-pointer">
