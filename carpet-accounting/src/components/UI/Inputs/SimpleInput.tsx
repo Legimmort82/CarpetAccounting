@@ -59,7 +59,7 @@ const SimpleInput = forwardRef(
           onChange={onChange}
           onFocus={handleFocus}
           onBlur={handleBlur}
-          className={`w-full py-2 px-4 bg-gray-50 outline-none focus:ring-1 focus:ring-black rounded-md ${focus ? "scale-[1.02]" : ""
+          className={`w-full py-2 px-4 bg-gray-50 outline-none focus:ring-1 focus:ring-black duration-200 rounded-md ${focus ? "scale-[1.05]" : ""
             }`}
         />
         {error && <p className="text-sm text-red-600 mt-2">{error}</p>}
