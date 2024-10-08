@@ -1,5 +1,5 @@
 import { useController } from "react-hook-form";
-import { ForwardRefExoticComponent, JSXElementConstructor, RefAttributes } from "react";
+import { ForwardRefExoticComponent, JSXElementConstructor } from "react";
 
 type FieldProps = {
   name: string;

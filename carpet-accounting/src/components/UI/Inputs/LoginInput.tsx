@@ -1,5 +1,5 @@
 
-import { ForwardRefExoticComponent, RefAttributes, forwardRef, useState } from "react";
+import { forwardRef, useState } from "react";
 import Image from "next/image";
 import eye from "@/assets/loginPage/eye.svg"
 import eyeClose from "@/assets/loginPage/eye-closed.svg"
