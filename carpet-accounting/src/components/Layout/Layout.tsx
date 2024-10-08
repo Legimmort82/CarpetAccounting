@@ -5,7 +5,6 @@ import logo from "@/assets/loginPage/Logo.svg"
 import carpetLogo from "@/assets/sideBar/carpet.svg"
 import carpetListLogo from "@/assets/sideBar/carpet-list.svg"
 import addCarpetLogo from "@/assets/sideBar/add.svg"
-import editCarpetLogo from "@/assets/sideBar/edit.svg"
 import workersListLogo from "@/assets/sideBar/workers-list.svg"
 import workerLogo from "@/assets/sideBar/worker.svg"
 import salaryLogo from "@/assets/sideBar/salary.svg"
@@ -50,19 +49,17 @@ function Layout({ children }: props) {
 
 							<div className={`${openCarpet ? "block" : "hidden"} w-full flex flex-col items-center`}>
 								<DropDownList
+									href="/carpets/all"
 									logo={carpetListLogo}
 								>
 									لیست تمام قالی ها
 								</DropDownList>
+
 								<DropDownList
+									href="/carpets/add"
 									logo={addCarpetLogo}
 								>
 									اضافه کردن قالی
-								</DropDownList>
-								<DropDownList
-									logo={editCarpetLogo}
-								>
-									ویرایش قالی
 								</DropDownList>
 							</div>
 						</div>
@@ -77,19 +74,16 @@ function Layout({ children }: props) {
 
 							<div className={`${openWorkers ? "block" : "hidden"} w-full flex flex-col items-center`}>
 								<DropDownList
+									href="/employees/all"
 									logo={workerLogo}
 								>
 									لیست تمام کارکنان
 								</DropDownList>
 								<DropDownList
+									href="/employees/add"
 									logo={addCarpetLogo}
 								>
 									اضافه کردن افراد
-								</DropDownList>
-								<DropDownList
-									logo={editCarpetLogo}
-								>
-									ویرایش افراد
 								</DropDownList>
 							</div>
 						</div>
@@ -104,16 +98,19 @@ function Layout({ children }: props) {
 
 							<div className={`${openSalary ? "block" : "hidden"} w-full flex flex-col items-center`}>
 								<DropDownList
+									href="/"
 									logo={salaryLogo}
 								>
 									ثبت مساعده
 								</DropDownList>
 								<DropDownList
+									href="/"
 									logo={salaryLogo}
 								>
 									حقوق ماهانه
 								</DropDownList>
 								<DropDownList
+									href="/"
 									logo={salaryLogo}
 								>
 									فاکتور
@@ -124,6 +121,7 @@ function Layout({ children }: props) {
 
 						<div className="w-full flex flex-col items-center mb-4 cursor-pointer">
 							<DropDownList
+								href="/"
 								logo={exitLogo}
 								className={"font-bold"}
 							>

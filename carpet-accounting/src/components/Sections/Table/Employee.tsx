@@ -4,6 +4,7 @@ import { useState } from "react";
 import employeesData from "@/data/employees.json"
 import Image from "next/image";
 import Layout from "@/components/Layout/Layout";
+import { useRouter } from "next/router";
 
 
 type Carpet = {
@@ -45,6 +46,7 @@ const columns = [
 function Employees() {
   const [data, setData] = useState([...employeesData])
   const [globalFilter, setGlobalFilter] = useState("");
+  const router = useRouter()
 
   const table = useReactTable({
     data,
@@ -105,7 +107,7 @@ function Employees() {
 
               <tbody className="bg-[#C9CCE7] divide-y-2 divide-white">
                 {table.getRowModel().rows.map((row) => (
-                  <tr key={row.id} className="hover:bg-gray-50">
+                  <tr key={row.id} onClick={() => router.push(`/employees/edit/${row.original.shomareh}`)} className="hover:bg-gray-50 cursor-pointer">
                     {row.getVisibleCells().map((cell) => (
                       <td
                         key={cell.id}

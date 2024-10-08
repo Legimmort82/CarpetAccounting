@@ -4,7 +4,7 @@ import { useState } from "react";
 import mockData from "@/data/data.json"
 import Image from "next/image";
 import Layout from "@/components/Layout/Layout";
-import Link from "next/link";
+import { useRouter } from "next/router";
 
 
 
@@ -197,6 +197,7 @@ const columns = [
 function Carpets() {
   const [data, setData] = useState([...mockData])
   const [globalFilter, setGlobalFilter] = useState("");
+  const router = useRouter();
 
   const table = useReactTable({
     data,
@@ -273,21 +274,19 @@ function Carpets() {
 
               <tbody className="bg-[#C9CCE7] divide-y-2 divide-white">
                 {table.getRowModel().rows.map((row) => (
-                  <Link href={`/carpets/edit/${row.original.code}`}>
-                    <tr key={row.id} className="hover:bg-gray-50 cursor-pointer">
-                      {row.getVisibleCells().map((cell) => (
-                        <td
-                          key={cell.id}
-                          className="px-9 py-4 text-center text-sm font-medium text-gray-800"
-                        >
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )}
-                        </td>
-                      ))}
-                    </tr>
-                  </Link>
+                  <tr key={row.id} onClick={() => router.push(`/carpets/edit/${row.original.shomareh}`)} className="hover:bg-gray-50 cursor-pointer">
+                    {row.getVisibleCells().map((cell) => (
+                      <td
+                        key={cell.id}
+                        className="px-9 py-4 text-center text-sm font-medium text-gray-800"
+                      >
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </td>
+                    ))}
+                  </tr>
                 ))}
               </tbody>
             </table>
