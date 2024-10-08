@@ -7,6 +7,7 @@ import Layout from "@/components/Layout/Layout";
 import Link from "next/link";
 
 
+
 type Carpet = {
   shomareh: number,
   arz: string,
@@ -215,6 +216,7 @@ function Carpets() {
     getFilteredRowModel: getFilteredRowModel(),
   });
 
+
   return (
     <>
       <Layout>
@@ -271,19 +273,21 @@ function Carpets() {
 
               <tbody className="bg-[#C9CCE7] divide-y-2 divide-white">
                 {table.getRowModel().rows.map((row) => (
-                  <tr key={row.id} className="hover:bg-gray-50 cursor-pointer">
-                    {row.getVisibleCells().map((cell) => (
-                      <td
-                        key={cell.id}
-                        className="px-9 py-4 text-center text-sm font-medium text-gray-800"
-                      >
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
-                      </td>
-                    ))}
-                  </tr>
+                  <Link href={`/carpets/edit/${row.original.code}`}>
+                    <tr key={row.id} className="hover:bg-gray-50 cursor-pointer">
+                      {row.getVisibleCells().map((cell) => (
+                        <td
+                          key={cell.id}
+                          className="px-9 py-4 text-center text-sm font-medium text-gray-800"
+                        >
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
+                        </td>
+                      ))}
+                    </tr>
+                  </Link>
                 ))}
               </tbody>
             </table>
