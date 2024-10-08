@@ -3,7 +3,6 @@ import SelectableInput from "../Inputs/SelectableInput";
 import SimpleInput from "../Inputs/SimpleInput";
 import withField from "./WithField";
 
-export const LoginInputField = withField(LoginInput)
-export const SelectableInputField = withField(SelectableInput)
-export const SimpleInputField = withField(SimpleInput)
-
+export const LoginInputField = withField({ Comp: LoginInput });
+// export const SelectableInputField = withField({ Comp: SelectableInput });
+export const SimpleInputField = withField({ Comp: SimpleInput });

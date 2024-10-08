@@ -1,18 +1,24 @@
 import { useController } from "react-hook-form";
-import PropTypes from "prop-types";
+import { ForwardRefExoticComponent, JSXElementConstructor, RefAttributes } from "react";
 
-type props = {
-  Comp: any
-}
+type FieldProps = {
+  name: string;
+  required?: boolean | string;
+  // control: any; // You might want to be more specific depending on your controller type
+  [key: string]: any; // This allows passing additional props
+};
 
-const withField = (Comp: props) => {
-  return function Field({ name, required, control, ...props }) {
+type WithFieldProps = {
+  Comp:  ForwardRefExoticComponent<any> | JSXElementConstructor<any>;
+};
+
+const withField = ({ Comp }: WithFieldProps) => {
+  return function Field({ name, required, ...props }: FieldProps) {
     const {
       field: { ref, ...field },
       fieldState,
     } = useController({
       name,
-      control,
       rules: {
         required: required === true ? "Please enter this field" : required,
       },
@@ -27,9 +33,6 @@ const withField = (Comp: props) => {
       />
     );
   };
-};
-withField.propTypes = {
-  Comp: PropTypes.node,
 };
 
 export default withField;

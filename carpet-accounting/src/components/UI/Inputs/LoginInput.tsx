@@ -1,5 +1,5 @@
 
-import { forwardRef, useState } from "react";
+import { ForwardRefExoticComponent, RefAttributes, forwardRef, useState } from "react";
 import Image from "next/image";
 import eye from "@/assets/loginPage/eye.svg"
 import eyeClose from "@/assets/loginPage/eye-closed.svg"
@@ -9,10 +9,10 @@ type props = {
   value?: string,
   error?: string,
   placeholder?: string,
-  name?: string,
-  required: boolean,
+  name: string,
+  required?: boolean,
   onChange?: () => void,
-  text: string,
+  text?: string,
   isEye?: boolean
 }
 
