@@ -221,7 +221,7 @@ function Carpets() {
   return (
     <>
       <Layout>
-        <div className="flex flex-col min-h-screen w-full py-[150px] px-4 items-center overflow-auto">
+        <div className="flex flex-col h-screen  w-full pt-[150px] px-4 items-center">
           <div className="flex flex-col items-stretch pl-4 py-3 pr-[366px] fixed top-0 left-0 bg-white w-full">
             <h1 className="text-3xl font-bold self-center mb-6">فهرست تمام قالی ها</h1>
 
@@ -252,9 +252,9 @@ function Carpets() {
             </div>
           </div>
 
-          <div className="overflow-x-auto shadow-md rounded-lg mb-14">
-            <table className="min-w-full divide-y divide-white">
-              <thead className="bg-[#050A30]">
+          <div className="w-calc350 h-screen  overflow-auto shadow-md rounded-lg mb-12 ">
+            <table className=" divide-y divide-white h-calc50  ">
+              <thead className="bg-[#050A30] sticky top-0">
                 {table.getHeaderGroups().map((headerGroup) => (
                   <tr key={headerGroup.id}>
                     {headerGroup.headers.map((header) => (
