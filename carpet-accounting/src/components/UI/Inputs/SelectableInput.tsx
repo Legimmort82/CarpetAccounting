@@ -73,7 +73,8 @@ const SelectableInput = forwardRef(
                 className="absolute right-2 top-3 w-5 h-5"
               />
               <input
-                type="text"
+                type={type}
+                ref={ref}
                 value={inputValue}
                 name={name}
                 onChange={(e) => setInputValue(e.target.value)}
