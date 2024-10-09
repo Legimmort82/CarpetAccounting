@@ -25,6 +25,7 @@ type props = {
   data: {id:number,value:string}[];
   required?: boolean;
   getValue: (value:number) => void;
+  className?: string
 };
 
 const SelectableInput = forwardRef(
@@ -38,6 +39,7 @@ const SelectableInput = forwardRef(
       data,
       required,
       getValue,
+      className
     }: props,
     ref: any
   ) => {
@@ -48,7 +50,7 @@ const SelectableInput = forwardRef(
 
     return (
       <>
-        <div className="w-[30%] font-medium h-80">
+        <div className={`font-medium z-10 h-10 cursor-pointer duration-300 hover:scale-[1.02] ${className}`}>
           <div
             className={`bg-gray-200 w-full p-2 flex items-center justify-between rounded-md
           ${selected ? "text-black" : "text-gray-500"}`}

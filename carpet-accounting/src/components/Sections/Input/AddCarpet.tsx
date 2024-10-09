@@ -12,16 +12,17 @@ import { log } from "util";
 import { useQuery } from "@tanstack/react-query";
 
 function AddCarpet() {
-  const colors = useGetAllColors();
-  // const {data} = useQuery({["Colors"], () => axios.get("127.0.0.1:8000/carpets/colors")})
-  // console.log(data);
-  // console.log(colors.data)
-  const data = fetch("https://jsonplaceholder.typicode.com/todos/").then((res) => {
-    res.json();
-    console.log(res);
-    
-  });
-  const arrey = [
+  // const colors = useGetAllColors();
+  // // const {data} = useQuery({["Colors"], () => axios.get("127.0.0.1:8000/carpets/colors")})
+  // // console.log(data);
+  // // console.log(colors.data)
+  // const data = fetch("https://jsonplaceholder.typicode.com/todos/").then((res) => {
+  //   res.json();
+  //   console.log(res);
+
+  // });
+
+  const colorArrey = [
     { value: "نارنجی", id: 1 },
     { value: "سفید", id: 2 },
     { value: "زرد", id: 3 },
@@ -33,6 +34,46 @@ function AddCarpet() {
     { value: "طوسی", id: 9 },
     { value: "سرمه ای", id: 10 },
   ];
+
+  const naghshehArrey = [
+    { value: "سلطانی", id: 1 },
+    { value: "آهو", id: 2 },
+    { value: "پلنگی", id: 3 },
+    { value: "دریا", id: 4 },
+    { value: "جنگل", id: 5 },
+    { value: "کوه", id: 6 },
+    { value: "بیابان", id: 7 },
+    { value: "رود", id: 8 },
+    { value: "ساحل", id: 9 },
+    { value: "جزیره", id: 10 },
+  ];
+
+  const toolArrey = [
+    { value: "4", id: 1 },
+    { value: "2", id: 2 },
+    { value: "5", id: 3 },
+    { value: "2", id: 4 },
+    { value: "6", id: 5 },
+    { value: "3", id: 6 },
+    { value: "3", id: 7 },
+    { value: "4", id: 8 },
+    { value: "2", id: 9 },
+    { value: "4", id: 10 },
+  ];
+
+  const arzArrey = [
+    { value: "3", id: 1 },
+    { value: "2", id: 2 },
+    { value: "1", id: 3 },
+    { value: "1", id: 4 },
+    { value: "2", id: 5 },
+    { value: "3", id: 6 },
+    { value: "3", id: 7 },
+    { value: "1", id: 8 },
+    { value: "2", id: 9 },
+    { value: "1", id: 10 },
+  ];
+
   const methods = useForm({
     defaultValues: {
       arz: "",
@@ -80,14 +121,37 @@ function AddCarpet() {
             </div>
           </div>
 
-          <div className="flex flex-wrap justify-center gap-12 items-center bg-[#cbcfff] py-7">
-            <SimpleInputField name="arz" text={"عرض"} />
-            <SimpleInputField name="tool" text={"طول"} />
+          <div className="flex flex-wrap justify-center gap-12  bg-[#cbcfff] py-7">
+            <SelectableInputField
+              name="arz"
+              data={arzArrey}
+              placeholder={"انتخاب عرض"}
+              getValue={(value: string) => {
+                methods.setValue("arz", value);
+              }}
+              className={"z-20"}
+            />
+            <SelectableInputField
+              name="tool"
+              data={toolArrey}
+              placeholder={"انتخاب طول"}
+              getValue={(value: string) => {
+                methods.setValue("tool", value);
+              }}
+              className={"z-20"}
+            />
             <SimpleInputField name="metraj" text={"متراژ"} />
-            <SimpleInputField name="naghsheh" text={"نقشه"} />
+            <SelectableInputField
+              name="naghsheh"
+              data={naghshehArrey}
+              placeholder={"انتخاب نقشه"}
+              getValue={(value: string) => {
+                methods.setValue("naghsheh", value);
+              }}
+            />
             <SelectableInputField
               name="rang"
-              data={arrey}
+              data={colorArrey}
               placeholder="انتخاب رنگ"
               getValue={(value: string) => {
                 methods.setValue("rang", value);
