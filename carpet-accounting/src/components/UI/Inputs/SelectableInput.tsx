@@ -64,7 +64,7 @@ const SelectableInput = forwardRef(
             className={`bg-gray-200 mt-2 overflow-y-auto 
           ${open ? "max-h-60" : "max-h-0"}`}
           >
-            <div className="relative flex items-center sticky top-0">
+            <div className=" flex items-center sticky top-0">
               <Image
                 src={search}
                 alt="search"

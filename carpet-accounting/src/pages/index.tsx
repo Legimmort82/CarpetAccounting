@@ -1,9 +1,8 @@
-import HomePage from "@/components/Sections/Home/HomePage";
-import SelectableInput from "@/components/UI/Inputs/SelectableInput";
+import HomePage from "@/components/Sections/Home/HomePage"       
 
 export default function Home() {
   return (
-      // <HomePage/>
-      <SelectableInput/>
+      <HomePage/>
+      
   );
 }
