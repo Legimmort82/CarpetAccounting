@@ -11,7 +11,7 @@ import {
 import useGetAllColors from "@/api/getColors";
 import { log } from "util";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import React from "react";
 
 const colorArray = [
@@ -76,6 +76,28 @@ const shoaaArray = [
 ];
 
 function AddCarpet() {
+  const methods = useForm({
+    defaultValues: {
+      arz: "",
+      tool: "",
+      metraj: "",
+      naghsheh: "",
+      rang: "",
+      serial: "",
+      code: "",
+      shirazeh: "",
+      rectangle:false,
+      shirazehKhoroug: "",
+      shirazehVouroud: "",
+      cheleh: "",
+      chelehKhroug: "",
+      chelehVouroud: "",
+      gereh: "",
+      gerehKhoroug: "",
+      gerehVouroud: "",
+    },
+    // resolver: zodResolver(AddCarpetSchema),
+  });
   const [isCircle, setIsCircle] = useState(false);
   const [isRectangle, setIsRectangle] = useState(true);
   const [isRadius, setIsRadius] = useState(false);
@@ -90,7 +112,15 @@ function AddCarpet() {
     }
   }
   const handleRectangleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsRectangle(e.target.checked);
+    if (isRectangle == true) {
+      setIsRectangle(false);
+      console.log(isRectangle);
+      methods.setValue("rectangle", isRectangle);
+    } else {
+      setIsRectangle(true);
+      methods.setValue("rectangle", isRectangle);
+    }
+
     if (e.target.checked) {
       setIsCircle(false);
       setIsWH(!isWH);
@@ -107,27 +137,15 @@ function AddCarpet() {
   //   console.log(res);
   // });
 
-  const methods = useForm({
-    defaultValues: {
-      arz: "",
-      tool: "",
-      metraj: "",
-      naghsheh: "",
-      rang: "",
-      serial: "",
-      code: "",
-      shirazeh: "",
-      shirazehKhoroug: "",
-      shirazehVouroud: "",
-      cheleh: "",
-      chelehKhroug: "",
-      chelehVouroud: "",
-      gereh: "",
-      gerehKhoroug: "",
-      gerehVouroud: "",
-    },
-    // resolver: zodResolver(AddCarpetSchema),
-  });
+
+  const arz = methods.watch("arz");
+  const tool = methods.watch("tool");
+  useEffect(() => {
+    if (arz && tool) {
+      const calculatedMetraj = Number(arz) * Number(tool);
+      methods.setValue("metraj", calculatedMetraj); // Set the value of 'metraj'
+    }
+  }, [arz, tool, methods.setValue]);
   const handleSubmit = (data: object) => {
     console.log(data);
   };
@@ -146,14 +164,8 @@ function AddCarpet() {
 
             <div className="flex flex-wrap gap-5 items-center">
               <CheckBoxInputField
-                name="circle"
-                checked={isCircle}
-                label={"دایره"}
-                onChange={handleCircleChange}
-              />
-              <CheckBoxInputField
                 name="regtangle"
-                checked={isRectangle}
+                // checked={isRectangle}
                 label={"مستطیل"}
                 onChange={handleRectangleChange}
               />
@@ -162,33 +174,24 @@ function AddCarpet() {
 
           <div className="flex flex-wrap justify-center gap-12 items-center bg-[#cbcfff] py-7">
             <SelectableInputField
-              name="shoaa"
-              data={shoaaArray}
-              placeholder={"انتخاب شعاع"}
-              getValue={(value: string) => {
-                methods.setValue("arz", value);
-              }}
-              className={`z-40 ${isCircle ? "" : "hidden"}`}
-            />
-            <SelectableInputField
               name="arz"
               data={arzArray}
-              placeholder={"انتخاب عرض"}
-              getValue={(value: string) => {
+              placeholder={!isRectangle ? "انتخاب عرض":"انتخاب شعاع"}
+              getRealValue={(value: string) => {
                 methods.setValue("arz", value);
               }}
-              className={`z-40 ${isRectangle ? "" : "hidden"}`}
+              className={`z-40`}
             />
             <SelectableInputField
               name="tool"
               data={toolArray}
-              placeholder={"انتخاب طول"}
-              getValue={(value: string) => {
+              placeholder={!isRectangle ? "انتخاب طول":"انتخاب شعاع"}
+              getRealValue={(value: string) => {
                 methods.setValue("tool", value);
               }}
-              className={`z-30 ${isRectangle ? "" : "hidden"}`}
+              className={`z-30`}
             />
-            <SimpleInputField name="metraj" label={"متراژ"} />
+            <SimpleInputField name="metraj" label={"متراژ"} readOnly/>
             <SelectableInputField
               name="naghsheh"
               data={naghshehArray}
@@ -210,17 +213,38 @@ function AddCarpet() {
             <SimpleInputField name="code" label={"کد"} />
           </div>
           <div className="flex flex-wrap justify-center gap-14 items-center bg-[#9fa8ff] py-7 ">
-            <SimpleInputField name="shirazeh" label={"شیرازه"} />
+          <SelectableInputField
+              name="shirazeh"
+              data={colorArray}
+              placeholder="انتخاب شیرازه"
+              getRealValue={(value: string) => {
+                methods.setValue("shirazeh", value);
+              }}
+            />
             <SimpleInputField name="shirazehVouroud" label={"تاریخ ورود"} />
             <SimpleInputField name="shirazehKhoroug" label={"تاریخ خروج"} />
           </div>
           <div className="flex flex-wrap justify-center gap-14 items-center bg-[#8b97ff] py-7 ">
-            <SimpleInputField name="gereh" label={"گره"} />
+          <SelectableInputField
+              name="gereh"
+              data={colorArray}
+              placeholder="انتخاب گره"
+              getRealValue={(value: string) => {
+                methods.setValue("gereh", value);
+              }}
+            />
             <SimpleInputField name="gerehVouroud" label={"تاریخ ورود"} />
             <SimpleInputField name="gerehKhoroug" label={"تاریخ خروج"} />
           </div>
           <div className="flex flex-wrap justify-center gap-14 items-center bg-[#7684ff] py-7 rounded-br-md rounded-bl-md shadow-lg shadow-gray-300">
-            <SimpleInputField name="cheleh" label={"چله"} />
+          <SelectableInputField
+              name="cheleh"
+              data={colorArray}
+              placeholder="انتخاب چله"
+              getRealValue={(value: string) => {
+                methods.setValue("cheleh", value);
+              }}
+            />
             <SimpleInputField name="chelehVouroud" label={"تاریخ ورود"} />
             <SimpleInputField name="chelehKhoroug" label={"تاریخ خروج"} />
           </div>

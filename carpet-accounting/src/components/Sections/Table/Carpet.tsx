@@ -7,6 +7,7 @@ import Layout from "@/components/Layout/Layout";
 import { useRouter } from "next/router";
 import { useDebounce } from "@/hooks/useDebounce";
 import { SelectableInputField } from "@/components/UI/Fields/fields";
+import SelectableInput from "@/components/UI/Inputs/SelectableInput";
 
 const monthArray = [
   { value: "01", id: 1 },
@@ -267,30 +268,31 @@ function Carpets() {
                 <Image className="absolute w-7 h-7 top-[10px] right-1" src={searchLogo} alt="search-logo" />
               </div>
 
-              <div className="flex items-center gap-4 mb-4">
-                //! need Form------------
-                {/* <div className="flex items-center gap-4">
-                  <SelectableInputField
+              <div className="flex items-center gap-4 mb-4 z-50">
+                <div className="flex items-center gap-4">
+                  <SelectableInput
                     name="month"
                     placeholder="انتخاب ماه"
                     data={monthArray}
+                    className="z-20 relative"
                   />
 
-                  <SelectableInputField
+                  <SelectableInput
                     name="year"
                     placeholder="انتخاب سال"
                     data={yearsArray}
+                    className="z-50 relative"
+
                   />
-                </div> */}
-                //!----------------------
+                </div>
                 <button className="bg-gray-200 py-2 px-4 text-center rounded-md">مشاهده</button>
               </div>
             </div>
           </div>
 
           <div className="w-calc382 overflow-x-auto rounded-lg mb-[70px]">
-            <table className=" divide-y divide-white overflow-x-auto rounded-lg ">
-              <thead className="bg-[#050A30] sticky top-0">
+            <table className=" divide-y divide-white  overflow-x-auto rounded-lg ">
+              <thead className="bg-[#050A30] top-0 z-10">
                 {table.getHeaderGroups().map((headerGroup) => (
                   <tr key={headerGroup.id}>
                     {headerGroup.headers.map((header) => (

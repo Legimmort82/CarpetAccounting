@@ -1,8 +1,12 @@
-import Layout from "@/components/Layout/Layout"
-import { CheckBoxInputField, SelectableInputField, SimpleInputField } from "@/components/UI/Fields/fields";
+import Layout from "@/components/Layout/Layout";
+import {
+  CheckBoxInputField,
+  SelectableInputField,
+  SimpleInputField,
+} from "@/components/UI/Fields/fields";
 import Form from "@/components/UI/Form";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import React from "react";
 
 const colorArray = [
@@ -67,28 +71,6 @@ const shoaaArray = [
 ];
 
 function EditCarpet() {
-  const [isCircle, setIsCircle] = useState(false);
-  const [isRectangle, setIsRectangle] = useState(true);
-  const [isRadius, setIsRadius] = useState(false);
-  const [isWH, setIsWH] = useState(true);
-
-  const handleCircleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsCircle(e.target.checked);
-    if (e.target.checked) {
-      setIsRectangle(false);
-      setIsRadius(!isRadius);
-      setIsWH(!isWH);
-    }
-  }
-  const handleRectangleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsRectangle(e.target.checked);
-    if (e.target.checked) {
-      setIsCircle(false);
-      setIsWH(!isWH);
-      setIsRadius(!isRadius);
-    }
-  }
-
   const methods = useForm({
     defaultValues: {
       arz: "",
@@ -99,6 +81,7 @@ function EditCarpet() {
       serial: "",
       code: "",
       shirazeh: "",
+      rectangle: false,
       shirazehKhoroug: "",
       shirazehVouroud: "",
       cheleh: "",
@@ -110,6 +93,38 @@ function EditCarpet() {
     },
     // resolver: zodResolver(AddCarpetSchema),
   });
+  const [isCircle, setIsCircle] = useState(false);
+  const [isRectangle, setIsRectangle] = useState(true);
+  const [isRadius, setIsRadius] = useState(false);
+  const [isWH, setIsWH] = useState(true);
+
+  const handleRectangleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(isRectangle);
+
+    if (isRectangle == true) {
+      setIsRectangle(false);
+      console.log(isRectangle);
+      methods.setValue("rectangle", isRectangle);
+    } else {
+      setIsRectangle(true);
+      methods.setValue("rectangle", isRectangle);
+    }
+
+    if (e.target.checked) {
+      setIsCircle(false);
+      setIsWH(!isWH);
+      setIsRadius(!isRadius);
+    }
+  };
+
+  const arz = methods.watch("arz");
+  const tool = methods.watch("tool");
+  useEffect(() => {
+    if (arz && tool) {
+      const calculatedMetraj = Number(arz) * Number(tool);
+      methods.setValue("metraj", calculatedMetraj); // Set the value of 'metraj'
+    }
+  }, [arz, tool, methods.setValue]);
   const handleSubmit = (data: object) => {
     console.log(data);
   };
@@ -119,8 +134,6 @@ function EditCarpet() {
       <Layout>
         <section className="flex flex-col min-h-screen w-full py-6 px-4 items-center overflow-auto">
           <h1 className="text-3xl font-bold mb-14">ویرایش قالی</h1>
-
-
 
           <Form
             onSubmit={handleSubmit}
@@ -132,14 +145,8 @@ function EditCarpet() {
 
               <div className="flex flex-wrap gap-5 items-center">
                 <CheckBoxInputField
-                  name="circle"
-                  checked={isCircle}
-                  label={"دایره"}
-                  onChange={handleCircleChange}
-                />
-                <CheckBoxInputField
                   name="regtangle"
-                  checked={isRectangle}
+                  // checked={true}
                   label={"مستطیل"}
                   onChange={handleRectangleChange}
                 />
@@ -147,33 +154,24 @@ function EditCarpet() {
             </div>
             <div className="flex flex-wrap justify-center gap-12 items-center bg-[#cbcfff] py-7 rounded-tr-md rounded-tl-md">
               <SelectableInputField
-                name="shoaa"
-                data={shoaaArray}
-                placeholder={"انتخاب شعاع"}
-                getValue={(value: string) => {
-                  methods.setValue("arz", value);
-                }}
-                className={`z-40 ${isCircle ? "" : "hidden"}`}
-              />
-              <SelectableInputField
                 name="arz"
                 data={arzArray}
-                placeholder={"انتخاب عرض"}
-                getValue={(value: string) => {
+                placeholder={!isRectangle ? "انتخاب عرض" : "انتخاب شعاع"}
+                getRealValue={(value: string) => {
                   methods.setValue("arz", value);
                 }}
-                className={`z-40 ${isRectangle ? "" : "hidden"}`}
+                className={`z-40`}
               />
               <SelectableInputField
                 name="tool"
                 data={toolArray}
-                placeholder={"انتخاب طول"}
-                getValue={(value: string) => {
+                placeholder={!isRectangle ? "انتخاب طول" : "انتخاب شعاع"}
+                getRealValue={(value: string) => {
                   methods.setValue("tool", value);
                 }}
-                className={`z-30 ${isRectangle ? "" : "hidden"}`}
+                className={`z-30`}
               />
-              <SimpleInputField name="metraj" label={"متراژ"} />
+              <SimpleInputField name="metraj" label={"متراژ"} readOnly />
               <SelectableInputField
                 name="naghsheh"
                 data={naghshehArray}
@@ -196,36 +194,61 @@ function EditCarpet() {
             </div>
 
             <div className="flex flex-wrap justify-center gap-14 items-center bg-[#9fa8ff] py-7 ">
-              <SimpleInputField name="shirazeh" label={"شیرازه"} />
+              <SelectableInputField
+                name="shirazeh"
+                data={naghshehArray}
+                placeholder={"انتخاب شیرازه"}
+                getRealValue={(value: string) => {
+                  methods.setValue("shirazeh", value);
+                }}
+                className={"z-40"}
+              />
               <SimpleInputField name="shirazehVouroud" label={"تاریخ ورود"} />
               <SimpleInputField name="shirazehKhoroug" label={"تاریخ خروج"} />
             </div>
             <div className="flex flex-wrap justify-center gap-14 items-center bg-[#8b97ff] py-7 ">
-              <SimpleInputField name="gereh" label={"گره"} />
+            <SelectableInputField
+                name="gereh"
+                data={naghshehArray}
+                placeholder={"انتخاب گره"}
+                getRealValue={(value: string) => {
+                  methods.setValue("gereh", value);
+                }}
+                className={"z-30"}
+              />
               <SimpleInputField name="gerehVouroud" label={"تاریخ ورود"} />
               <SimpleInputField name="gerehKhoroug" label={"تاریخ خروج"} />
             </div>
             <div className="flex flex-wrap justify-center gap-14 items-center bg-[#7684ff] py-7 rounded-br-md rounded-bl-md shadow-lg shadow-gray-300">
-              <SimpleInputField name="cheleh" label={"چله"} />
+            <SelectableInputField
+                name="cheleh"
+                data={naghshehArray}
+                placeholder={"انتخاب چله"}
+                getRealValue={(value: string) => {
+                  methods.setValue("cheleh", value);
+                }}
+                className={"z-30"}
+              />
               <SimpleInputField name="chelehVouroud" label={"تاریخ ورود"} />
               <SimpleInputField name="chelehKhoroug" label={"تاریخ خروج"} />
             </div>
 
             <div className="flex justify-between items-center mt-7">
-              <CheckBoxInputField
-                name="send"
-                label={"ارسال شده"}
-              />
+              <CheckBoxInputField name="send" label={"ارسال شده"} />
               <div className="flex justify-center items-center gap-2">
-                <button className="bg-gray-200 px-5 py-2 rounded-md text-xl text-gray-600">حذف</button>
-                <button className="bg-gray-200 px-5 py-2 rounded-md text-xl text-gray-600">ویرایش</button>
+                <button className="bg-gray-200 px-5 py-2 rounded-md text-xl text-gray-600">
+                  حذف
+                </button>
+                <button className="bg-gray-200 px-5 py-2 rounded-md text-xl text-gray-600">
+                  ویرایش
+                </button>
               </div>
             </div>
           </Form>
         </section>
       </Layout>
     </>
-  )
+  );
 }
 
-export default EditCarpet
+export default EditCarpet;

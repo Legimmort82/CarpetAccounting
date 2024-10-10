@@ -20,12 +20,13 @@ type props = {
   type?: string;
   value?: string;
   error?: string;
+  getRealValue?: (value: string) => void;
   placeholder?: string;
   name?: string;
-  data: {id:number,value:string}[];
+  data: { id: number; value: string }[];
   required?: boolean;
-  getValue: (value:number) => void;
-  className?: string
+  getValue?: (value: number) => void;
+  className?: string;
 };
 
 const SelectableInput = forwardRef(
@@ -39,7 +40,8 @@ const SelectableInput = forwardRef(
       data,
       required,
       getValue,
-      className
+      getRealValue,
+      className,
     }: props,
     ref: any
   ) => {
@@ -50,15 +52,15 @@ const SelectableInput = forwardRef(
 
     return (
       <>
-        <div className={`font-medium z-10 h-10 cursor-pointer duration-300 hover:scale-[1.02] ${className}`}>
+        <div
+          className={`font-medium z-20 h-10 cursor-pointer duration-300 hover:scale-[1.02] ${className}`}
+        >
           <div
             className={`bg-gray-200 w-full p-2 flex items-center justify-between rounded-md
           ${selected ? "text-black" : "text-gray-500"}`}
             onClick={() => setOpen(!open)}
           >
-            <p className="text-md px-1">
-              {selected ? selected : placeholder}{" "}
-            </p>
+            <p className="text-md px-1">{selected ? selected : placeholder} </p>
             <Image className="w-4 h-4" src={downArrow} alt="downArrow" />
           </div>
 
@@ -85,7 +87,7 @@ const SelectableInput = forwardRef(
 
             {color.map((item) => (
               <li
-                key={item?.value}
+                key={item?.id}
                 className={`py-2 px-4 text-sm hover:bg-sky-600 hover:text-white
                 ${
                   item?.value === selected
@@ -96,7 +98,15 @@ const SelectableInput = forwardRef(
                 onClick={() => {
                   if (item?.value !== selected) {
                     setSelected(item?.value);
-                    getValue(item?.id);
+                    if(getValue){
+                      getValue(item?.id);
+                    }
+                    
+                    // Add this check to avoid invoking `undefined`
+                    if (getRealValue) {
+                      getRealValue(item?.value);
+                    }
+                    
                     setOpen(false);
                     setInputValue("");
                   }

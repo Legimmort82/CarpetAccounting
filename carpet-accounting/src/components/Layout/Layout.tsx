@@ -61,6 +61,12 @@ function Layout({ children }: props) {
 								>
 									اضافه کردن قالی
 								</DropDownList>
+								<DropDownList
+									href="/carpets/incomplete"
+									logo={addCarpetLogo}
+								>
+									لیست تکمیل نشده ها
+								</DropDownList>
 							</div>
 						</div>
 
