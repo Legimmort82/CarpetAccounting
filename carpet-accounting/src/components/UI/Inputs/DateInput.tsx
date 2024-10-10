@@ -38,7 +38,7 @@ const DateInput = forwardRef(
           onChange={(newDate) => setDate(newDate as DateObject)}
           calendar={persian}
           locale={persian_fa}
-          calendarPosition="bottom-left"
+          calendarPosition="bottom"
           fixRelativePosition
           style={{
             width: "100%",
