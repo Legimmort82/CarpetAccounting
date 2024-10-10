@@ -5,6 +5,7 @@ import mockData from "@/data/data.json"
 import Image from "next/image";
 import Layout from "@/components/Layout/Layout";
 import { useRouter } from "next/router";
+import { useDebounce } from "@/hooks/useDebounce";
 
 
 
@@ -197,13 +198,14 @@ const columns = [
 function Carpets() {
   const [data, setData] = useState([...mockData])
   const [globalFilter, setGlobalFilter] = useState("");
+  const debounceSearch = useDebounce(globalFilter, 1000);
   const router = useRouter();
 
   const table = useReactTable({
     data,
     columns,
     state: {
-      globalFilter,
+      globalFilter: debounceSearch,
     },
     initialState: {
       pagination: {
