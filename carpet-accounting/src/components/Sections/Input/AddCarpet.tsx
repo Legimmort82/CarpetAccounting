@@ -4,13 +4,13 @@ import { set, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AddCarpetSchema } from "@/schemas/AddCarpetSchema";
 import {
+  CheckBoxInputField,
   SelectableInputField,
   SimpleInputField,
 } from "@/components/UI/Fields/fields";
 import useGetAllColors from "@/api/getColors";
 import { log } from "util";
 import { useQuery } from "@tanstack/react-query";
-import CheckBoxInput from "@/components/UI/Inputs/CheckBoxInput";
 import { useState } from "react";
 import React from "react";
 
@@ -151,13 +151,13 @@ function AddCarpet() {
             <h2 className="text-xl font-bold self-start pl-5">نوع قالی:</h2>
 
             <div className="flex flex-wrap gap-5 items-center">
-              <CheckBoxInput
+              <CheckBoxInputField
                 name="circle"
                 checked={isCircle}
                 label={"دایره"}
                 onChange={handleCircleChange}
               />
-              <CheckBoxInput
+              <CheckBoxInputField
                 name="regtangle"
                 checked={isRectangle}
                 label={"مستطیل"}
@@ -232,10 +232,10 @@ function AddCarpet() {
           </div>
 
           <div className="flex justify-between items-center mt-7">
-            <div className="flex items-center justify-center gap-2">
-              <label className="text-xl">ارسال شده</label>
-              <input type="checkbox" className="w-5 h-5" />
-            </div>
+            <CheckBoxInputField
+              name="send"
+              label={"ارسال شده"}
+            />
             <div className="flex justify-center items-center gap-2">
               <button className="bg-gray-200 px-5 py-2 rounded-md text-xl text-gray-600">
                 انصراف

@@ -7,4 +7,4 @@ import withField from "./WithField";
 export const LoginInputField = withField({ Comp: LoginInput });
 export const SelectableInputField = withField({ Comp: SelectableInput });
 export const SimpleInputField = withField({ Comp: SimpleInput });
-// export const CheckBoxInputField = withField({ Comp: CheckBoxInput });
+export const CheckBoxInputField = withField({ Comp: CheckBoxInput });
