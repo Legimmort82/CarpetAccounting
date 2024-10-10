@@ -3,7 +3,7 @@ import DateInput from "@/components/UI/Inputs/DateInput";
 
 export default function Home() {
   return (
-      // <HomePage/>
-      <DateInput/>
+      <HomePage/>
+      
   );
 }
