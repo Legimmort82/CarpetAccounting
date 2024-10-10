@@ -1,7 +1,12 @@
-import Layout from "@/components/Layout/Layout";
+import Incompletes from "@/components/Sections/Table/Incomplete";
 
-const Incomplete = () => {
-  return <Layout></Layout>;
+
+const AllIncompletes = () => {
+  return (
+    <>
+      <Incompletes/>
+    </>
+  )
 };
 
-export default Incomplete;
+export default AllIncompletes;
