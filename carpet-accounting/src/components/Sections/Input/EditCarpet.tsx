@@ -93,10 +93,10 @@ function EditCarpet() {
     },
     // resolver: zodResolver(AddCarpetSchema),
   });
-  const [isCircle, setIsCircle] = useState(false);
+  // const [isCircle, setIsCircle] = useState(false);
   const [isRectangle, setIsRectangle] = useState(true);
-  const [isRadius, setIsRadius] = useState(false);
-  const [isWH, setIsWH] = useState(true);
+  // const [isRadius, setIsRadius] = useState(false);
+  // const [isWH, setIsWH] = useState(true);
 
   const handleRectangleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log(isRectangle);
@@ -110,11 +110,11 @@ function EditCarpet() {
       methods.setValue("rectangle", isRectangle);
     }
 
-    if (e.target.checked) {
-      setIsCircle(false);
-      setIsWH(!isWH);
-      setIsRadius(!isRadius);
-    }
+    // if (e.target.checked) {
+    //   setIsCircle(false);
+    //   setIsWH(!isWH);
+    //   setIsRadius(!isRadius);
+    // }
   };
 
   const arz = methods.watch("arz");
@@ -122,7 +122,7 @@ function EditCarpet() {
   useEffect(() => {
     if (arz && tool) {
       const calculatedMetraj = Number(arz) * Number(tool);
-      methods.setValue("metraj", calculatedMetraj); // Set the value of 'metraj'
+      methods.setValue("metraj", String(calculatedMetraj)); // Set the value of 'metraj'(calculatedMetraj); // Set the value of 'metraj'
     }
   }, [arz, tool, methods.setValue]);
   const handleSubmit = (data: object) => {

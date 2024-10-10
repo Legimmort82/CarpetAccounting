@@ -98,19 +98,19 @@ function AddCarpet() {
     },
     // resolver: zodResolver(AddCarpetSchema),
   });
-  const [isCircle, setIsCircle] = useState(false);
+  // const [isCircle, setIsCircle] = useState(false);
   const [isRectangle, setIsRectangle] = useState(true);
-  const [isRadius, setIsRadius] = useState(false);
-  const [isWH, setIsWH] = useState(true);
+  // const [isRadius, setIsRadius] = useState(false);
+  // const [isWH, setIsWH] = useState(true);
 
-  const handleCircleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsCircle(e.target.checked);
-    if (e.target.checked) {
-      setIsRectangle(false);
-      setIsRadius(!isRadius);
-      setIsWH(!isWH);
-    }
-  }
+  // const handleCircleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setIsCircle(e.target.checked);
+  //   if (e.target.checked) {
+  //     setIsRectangle(false);
+  //     setIsRadius(!isRadius);
+  //     setIsWH(!isWH);
+  //   }
+  // }
   const handleRectangleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (isRectangle == true) {
       setIsRectangle(false);
@@ -121,11 +121,11 @@ function AddCarpet() {
       methods.setValue("rectangle", isRectangle);
     }
 
-    if (e.target.checked) {
-      setIsCircle(false);
-      setIsWH(!isWH);
-      setIsRadius(!isRadius);
-    }
+    // if (e.target.checked) {
+    //   setIsCircle(false);
+    //   setIsWH(!isWH);
+    //   setIsRadius(!isRadius);
+    // }
   }
 
   // const colors = useGetAllColors();
@@ -143,7 +143,7 @@ function AddCarpet() {
   useEffect(() => {
     if (arz && tool) {
       const calculatedMetraj = Number(arz) * Number(tool);
-      methods.setValue("metraj", calculatedMetraj); // Set the value of 'metraj'
+      methods.setValue("metraj", String(calculatedMetraj)); // Set the value of 'metraj'
     }
   }, [arz, tool, methods.setValue]);
   const handleSubmit = (data: object) => {
