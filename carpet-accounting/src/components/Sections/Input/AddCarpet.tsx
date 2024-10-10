@@ -14,7 +14,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import React from "react";
 
-const colorArrey = [
+const colorArray = [
   { value: "نارنجی", id: 1 },
   { value: "سفید", id: 2 },
   { value: "زرد", id: 3 },
@@ -26,8 +26,7 @@ const colorArrey = [
   { value: "طوسی", id: 9 },
   { value: "سرمه ای", id: 10 },
 ];
-
-const naghshehArrey = [
+const naghshehArray = [
   { value: "سلطانی", id: 1 },
   { value: "آهو", id: 2 },
   { value: "پلنگی", id: 3 },
@@ -39,8 +38,7 @@ const naghshehArrey = [
   { value: "ساحل", id: 9 },
   { value: "جزیره", id: 10 },
 ];
-
-const toolArrey = [
+const toolArray = [
   { value: "4", id: 1 },
   { value: "2", id: 2 },
   { value: "5", id: 3 },
@@ -52,8 +50,7 @@ const toolArrey = [
   { value: "2", id: 9 },
   { value: "4", id: 10 },
 ];
-
-const arzArrey = [
+const arzArray = [
   { value: "3", id: 1 },
   { value: "2", id: 2 },
   { value: "1", id: 3 },
@@ -65,8 +62,7 @@ const arzArrey = [
   { value: "2", id: 9 },
   { value: "1", id: 10 },
 ];
-
-const shoaaArrey = [
+const shoaaArray = [
   { value: "3.5", id: 1 },
   { value: "2.25", id: 2 },
   { value: "1.9", id: 3 },
@@ -102,7 +98,6 @@ function AddCarpet() {
     }
   }
 
-
   // const colors = useGetAllColors();
   // // const {data} = useQuery({["Colors"], () => axios.get("127.0.0.1:8000/carpets/colors")})
   // // console.log(data);
@@ -110,7 +105,6 @@ function AddCarpet() {
   // const data = fetch("https://jsonplaceholder.typicode.com/todos/").then((res) => {
   //   res.json();
   //   console.log(res);
-
   // });
 
   const methods = useForm({
@@ -169,7 +163,7 @@ function AddCarpet() {
           <div className="flex flex-wrap justify-center gap-12 items-center bg-[#cbcfff] py-7">
             <SelectableInputField
               name="shoaa"
-              data={shoaaArrey}
+              data={shoaaArray}
               placeholder={"انتخاب شعاع"}
               getValue={(value: string) => {
                 methods.setValue("arz", value);
@@ -178,7 +172,7 @@ function AddCarpet() {
             />
             <SelectableInputField
               name="arz"
-              data={arzArrey}
+              data={arzArray}
               placeholder={"انتخاب عرض"}
               getValue={(value: string) => {
                 methods.setValue("arz", value);
@@ -187,17 +181,17 @@ function AddCarpet() {
             />
             <SelectableInputField
               name="tool"
-              data={toolArrey}
+              data={toolArray}
               placeholder={"انتخاب طول"}
               getValue={(value: string) => {
                 methods.setValue("tool", value);
               }}
               className={`z-30 ${isRectangle ? "" : "hidden"}`}
             />
-            <SimpleInputField name="metraj" text={"متراژ"} />
+            <SimpleInputField name="metraj" label={"متراژ"} />
             <SelectableInputField
               name="naghsheh"
-              data={naghshehArrey}
+              data={naghshehArray}
               placeholder={"انتخاب نقشه"}
               getValue={(value: string) => {
                 methods.setValue("naghsheh", value);
@@ -206,29 +200,29 @@ function AddCarpet() {
             />
             <SelectableInputField
               name="rang"
-              data={colorArrey}
+              data={colorArray}
               placeholder="انتخاب رنگ"
               getValue={(value: string) => {
                 methods.setValue("rang", value);
               }}
             />
-            <SimpleInputField name="serial" text={"سریال"} />
-            <SimpleInputField name="code" text={"کد"} />
+            <SimpleInputField name="serial" label={"سریال"} />
+            <SimpleInputField name="code" label={"کد"} />
           </div>
           <div className="flex flex-wrap justify-center gap-14 items-center bg-[#9fa8ff] py-7 ">
-            <SimpleInputField name="shirazeh" text={"شیرازه"} />
-            <SimpleInputField name="shirazehVouroud" text={"تاریخ ورود"} />
-            <SimpleInputField name="shirazehKhoroug" text={"تاریخ خروج"} />
+            <SimpleInputField name="shirazeh" label={"شیرازه"} />
+            <SimpleInputField name="shirazehVouroud" label={"تاریخ ورود"} />
+            <SimpleInputField name="shirazehKhoroug" label={"تاریخ خروج"} />
           </div>
           <div className="flex flex-wrap justify-center gap-14 items-center bg-[#8b97ff] py-7 ">
-            <SimpleInputField name="gereh" text={"گره"} />
-            <SimpleInputField name="gerehVouroud" text={"تاریخ ورود"} />
-            <SimpleInputField name="gerehKhoroug" text={"تاریخ خروج"} />
+            <SimpleInputField name="gereh" label={"گره"} />
+            <SimpleInputField name="gerehVouroud" label={"تاریخ ورود"} />
+            <SimpleInputField name="gerehKhoroug" label={"تاریخ خروج"} />
           </div>
           <div className="flex flex-wrap justify-center gap-14 items-center bg-[#7684ff] py-7 rounded-br-md rounded-bl-md shadow-lg shadow-gray-300">
-            <SimpleInputField name="cheleh" text={"چله"} />
-            <SimpleInputField name="chelehVouroud" text={"تاریخ ورود"} />
-            <SimpleInputField name="chelehKhoroug" text={"تاریخ خروج"} />
+            <SimpleInputField name="cheleh" label={"چله"} />
+            <SimpleInputField name="chelehVouroud" label={"تاریخ ورود"} />
+            <SimpleInputField name="chelehKhoroug" label={"تاریخ خروج"} />
           </div>
 
           <div className="flex justify-between items-center mt-7">

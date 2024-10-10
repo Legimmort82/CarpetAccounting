@@ -6,8 +6,36 @@ import Image from "next/image";
 import Layout from "@/components/Layout/Layout";
 import { useRouter } from "next/router";
 import { useDebounce } from "@/hooks/useDebounce";
+import { SelectableInputField } from "@/components/UI/Fields/fields";
 
-
+const monthArray = [
+  { value: "01", id: 1 },
+  { value: "02", id: 2 },
+  { value: "03", id: 3 },
+  { value: "04", id: 4 },
+  { value: "05", id: 5 },
+  { value: "06", id: 6 },
+  { value: "07", id: 7 },
+  { value: "08", id: 8 },
+  { value: "09", id: 9 },
+  { value: "10", id: 10 },
+  { value: "11", id: 11 },
+  { value: "12", id: 12 }
+]
+const yearsArray = [
+  { value: "1396", id: 1 },
+  { value: "1397", id: 2 },
+  { value: "1398", id: 3 },
+  { value: "1399", id: 4 },
+  { value: "1400", id: 5 },
+  { value: "1401", id: 6 },
+  { value: "1402", id: 7 },
+  { value: "1403", id: 8 },
+  { value: "1404", id: 9 },
+  { value: "1405", id: 10 },
+  { value: "1406", id: 11 },
+  { value: "1407", id: 12 }
+]
 
 type Carpet = {
   shomareh: number,
@@ -240,21 +268,27 @@ function Carpets() {
               </div>
 
               <div className="flex items-center gap-4 mb-4">
-                <div className="flex items-center gap-4">
-                  <div className="bg-gray-300 h-[44px] text-center rounded-md w-[200px]">
-                    ماه
-                  </div>
-                  <div className="bg-gray-300 h-[44px] text-center rounded-md w-[200px]">
-                    سال
-                  </div>
-                </div>
+                //! need Form------------
+                {/* <div className="flex items-center gap-4">
+                  <SelectableInputField
+                    name="month"
+                    placeholder="انتخاب ماه"
+                    data={monthArray}
+                  />
 
+                  <SelectableInputField
+                    name="year"
+                    placeholder="انتخاب سال"
+                    data={yearsArray}
+                  />
+                </div> */}
+                //!----------------------
                 <button className="bg-gray-200 py-2 px-4 text-center rounded-md">مشاهده</button>
               </div>
             </div>
           </div>
 
-          <div className="  w-calc382  overflow-x-auto  rounded-lg mb-16">
+          <div className="w-calc382 overflow-x-auto rounded-lg mb-[70px]">
             <table className=" divide-y divide-white overflow-x-auto rounded-lg ">
               <thead className="bg-[#050A30] sticky top-0">
                 {table.getHeaderGroups().map((headerGroup) => (

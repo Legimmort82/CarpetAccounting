@@ -7,7 +7,7 @@ type props = {
   placeholder?: string;
   name?: string;
   required?: boolean;
-  text?: string;
+  label?: string;
   onChange?: () => void;
 };
 
@@ -20,7 +20,7 @@ const SimpleInput = forwardRef(
       placeholder,
       name,
       required,
-      text,
+      label,
       onChange,
     }: props,
     ref: any
@@ -35,7 +35,7 @@ const SimpleInput = forwardRef(
     };
     return (
       <div className="flex items-center justify-center gap-2">
-        <label className="text-xl">{text}</label>
+        <label className="text-xl">{label}</label>
         <input
           type={type}
           required={required}
@@ -46,7 +46,7 @@ const SimpleInput = forwardRef(
           onChange={onChange}
           onFocus={handleFocus}
           onBlur={handleBlur}
-          className={`w-full py-2 px-4 bg-gray-50 outline-none focus:ring-1 focus:ring-black duration-200 rounded-md ${focus ? "scale-[1.05]" : ""
+          className={`w-full py-2 px-4 bg-gray-50 outline-none focus:ring-1 focus:ring-black duration-200 rounded-md ${focus ? "scale-[1.03]" : ""
             }`}
         />
         {error && <p className="text-sm text-red-600 mt-2">{error}</p>}
