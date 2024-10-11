@@ -16,6 +16,7 @@ import useGetRectangleWidth from "@/api/Carpets/Sizes/getRectangleWidth";
 import useGetCheleh from "@/api/Carpets/Skills/getCheleh";
 import useGetGereh from "@/api/Carpets/Skills/getGereh";
 import useGetShirazeh from "@/api/Carpets/Skills/getShirazeh";
+import DateInput from "@/components/UI/Inputs/DateInput";
 
 const colorArray = [
   { value: "نارنجی", id: 1 },
@@ -211,11 +212,23 @@ function EditCarpet() {
                 }}
                 className={"z-40"}
               />
-              <SimpleInputField name="shirazehVouroud" label={"تاریخ ورود"} />
-              <SimpleInputField name="shirazehKhoroug" label={"تاریخ خروج"} />
+              {/* <SimpleInputField name="shirazehVouroud" label={"تاریخ ورود"} />
+              <SimpleInputField name="shirazehKhoroug" label={"تاریخ خروج"} /> */}
+              <DateInput
+                label="تاریخ ورود"
+                getValue={(value) => {
+                  methods.setValue("shirazehVouroud", value);
+                }}
+              />
+              <DateInput
+                label="تاریخ خروج"
+                getValue={(value) => {
+                  methods.setValue("shirazehKhoroug", value);
+                }}
+              />
             </div>
             <div className="flex flex-wrap justify-center gap-14 items-center bg-[#8b97ff] py-7 ">
-            <SelectableInputField
+              <SelectableInputField
                 name="gereh"
                 data={Gereh?.data}
                 placeholder={"انتخاب گره"}
@@ -224,11 +237,23 @@ function EditCarpet() {
                 }}
                 className={"z-30"}
               />
-              <SimpleInputField name="gerehVouroud" label={"تاریخ ورود"} />
-              <SimpleInputField name="gerehKhoroug" label={"تاریخ خروج"} />
+              {/* <SimpleInputField name="gerehVouroud" label={"تاریخ ورود"} />
+              <SimpleInputField name="gerehKhoroug" label={"تاریخ خروج"} /> */}
+              <DateInput
+                label="تاریخ ورود"
+                getValue={(value) => {
+                  methods.setValue("gerehVouroud", value);
+                }}
+              />
+              <DateInput
+                label="تاریخ خروج"
+                getValue={(value) => {
+                  methods.setValue("gerehKhoroug", value);
+                }}
+              />
             </div>
             <div className="flex flex-wrap justify-center gap-14 items-center bg-[#7684ff] py-7 rounded-br-md rounded-bl-md shadow-lg shadow-gray-300">
-            <SelectableInputField
+              <SelectableInputField
                 name="cheleh"
                 data={Cheleh?.data}
                 placeholder={"انتخاب چله"}
@@ -237,8 +262,20 @@ function EditCarpet() {
                 }}
                 className={"z-30"}
               />
-              <SimpleInputField name="chelehVouroud" label={"تاریخ ورود"} />
-              <SimpleInputField name="chelehKhoroug" label={"تاریخ خروج"} />
+              {/* <SimpleInputField name="chelehVouroud" label={"تاریخ ورود"} />
+              <SimpleInputField name="chelehKhoroug" label={"تاریخ خروج"} /> */}
+              <DateInput
+                label="تاریخ ورود"
+                getValue={(value) => {
+                  methods.setValue("chelehVouroud", value);
+                }}
+              />
+              <DateInput
+                label="تاریخ خروج"
+                getValue={(value) => {
+                  methods.setValue("chelehKhoroug", value);
+                }}
+              />
             </div>
 
             <div className="flex justify-between items-center mt-7">
