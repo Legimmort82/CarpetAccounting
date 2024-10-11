@@ -45,7 +45,7 @@ const SelectableInput = forwardRef(
     }: props,
     ref: any
   ) => {
-    const [color, setColor] = useState(data);
+    // const [color, setColor] = useState(data);
     const [inputValue, setInputValue] = useState("");
     const [selected, setSelected] = useState("");
     const [open, setOpen] = useState(false);
@@ -85,7 +85,7 @@ const SelectableInput = forwardRef(
               />
             </div>
 
-            {color.map((item) => (
+            {data && data.map((item) => (
               <li
                 key={item?.id}
                 className={`py-2 px-4 text-sm hover:bg-sky-600 hover:text-white

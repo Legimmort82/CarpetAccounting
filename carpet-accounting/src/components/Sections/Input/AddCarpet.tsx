@@ -1,18 +1,19 @@
 import Layout from "@/components/Layout/Layout";
 import Form from "@/components/UI/Form";
-import { set, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { AddCarpetSchema } from "@/schemas/AddCarpetSchema";
+import { useForm } from "react-hook-form";
 import {
   CheckBoxInputField,
   SelectableInputField,
   SimpleInputField,
 } from "@/components/UI/Fields/fields";
-import useGetAllColors from "@/api/getColors";
-import { log } from "util";
-import { useQuery } from "@tanstack/react-query";
+import useGetAllColors from "@/api/Carpets/Colors&Designs/getColors";
 import { useEffect, useState } from "react";
 import React from "react";
+import useGetDesigns from "@/api/Carpets/Colors&Designs/getDesigns";
+import useGetCircleSizes from "@/api/Carpets/Sizes/getCircleSizes";
+import useGetRectangleWidth from "@/api/Carpets/Sizes/getRectangleWidth";
+import useGetRectangleLength from "@/api/Carpets/Sizes/getRectangleLength";
+import DateInput from "@/components/UI/Inputs/DateInput";
 
 const colorArray = [
   { value: "نارنجی", id: 1 },
@@ -26,56 +27,14 @@ const colorArray = [
   { value: "طوسی", id: 9 },
   { value: "سرمه ای", id: 10 },
 ];
-const naghshehArray = [
-  { value: "سلطانی", id: 1 },
-  { value: "آهو", id: 2 },
-  { value: "پلنگی", id: 3 },
-  { value: "دریا", id: 4 },
-  { value: "جنگل", id: 5 },
-  { value: "کوه", id: 6 },
-  { value: "بیابان", id: 7 },
-  { value: "رود", id: 8 },
-  { value: "ساحل", id: 9 },
-  { value: "جزیره", id: 10 },
-];
-const toolArray = [
-  { value: "4", id: 1 },
-  { value: "2", id: 2 },
-  { value: "5", id: 3 },
-  { value: "2", id: 4 },
-  { value: "6", id: 5 },
-  { value: "3", id: 6 },
-  { value: "3", id: 7 },
-  { value: "4", id: 8 },
-  { value: "2", id: 9 },
-  { value: "4", id: 10 },
-];
-const arzArray = [
-  { value: "3", id: 1 },
-  { value: "2", id: 2 },
-  { value: "1", id: 3 },
-  { value: "1", id: 4 },
-  { value: "2", id: 5 },
-  { value: "3", id: 6 },
-  { value: "3", id: 7 },
-  { value: "1", id: 8 },
-  { value: "2", id: 9 },
-  { value: "1", id: 10 },
-];
-const shoaaArray = [
-  { value: "3.5", id: 1 },
-  { value: "2.25", id: 2 },
-  { value: "1.9", id: 3 },
-  { value: "1", id: 4 },
-  { value: "2", id: 5 },
-  { value: "3.25", id: 6 },
-  { value: "3", id: 7 },
-  { value: "1.75", id: 8 },
-  { value: "2.45", id: 9 },
-  { value: "1.25", id: 10 },
-];
 
 function AddCarpet() {
+  const { data: colors } = useGetAllColors();
+  const { data: designs } = useGetDesigns();
+  const { data: CircleSizes } = useGetCircleSizes();
+  const { data: Widths } = useGetRectangleWidth();
+  const { data: Lengths } = useGetRectangleLength();
+
   const methods = useForm({
     defaultValues: {
       arz: "",
@@ -86,7 +45,7 @@ function AddCarpet() {
       serial: "",
       code: "",
       shirazeh: "",
-      rectangle:false,
+      rectangle: false,
       shirazehKhoroug: "",
       shirazehVouroud: "",
       cheleh: "",
@@ -98,19 +57,9 @@ function AddCarpet() {
     },
     // resolver: zodResolver(AddCarpetSchema),
   });
-  // const [isCircle, setIsCircle] = useState(false);
-  const [isRectangle, setIsRectangle] = useState(true);
-  // const [isRadius, setIsRadius] = useState(false);
-  // const [isWH, setIsWH] = useState(true);
 
-  // const handleCircleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setIsCircle(e.target.checked);
-  //   if (e.target.checked) {
-  //     setIsRectangle(false);
-  //     setIsRadius(!isRadius);
-  //     setIsWH(!isWH);
-  //   }
-  // }
+  const [isRectangle, setIsRectangle] = useState(true);
+
   const handleRectangleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (isRectangle == true) {
       setIsRectangle(false);
@@ -120,35 +69,22 @@ function AddCarpet() {
       setIsRectangle(true);
       methods.setValue("rectangle", isRectangle);
     }
-
-    // if (e.target.checked) {
-    //   setIsCircle(false);
-    //   setIsWH(!isWH);
-    //   setIsRadius(!isRadius);
-    // }
-  }
-
-  // const colors = useGetAllColors();
-  // // const {data} = useQuery({["Colors"], () => axios.get("127.0.0.1:8000/carpets/colors")})
-  // // console.log(data);
-  // // console.log(colors.data)
-  // const data = fetch("https://jsonplaceholder.typicode.com/todos/").then((res) => {
-  //   res.json();
-  //   console.log(res);
-  // });
-
+  };
 
   const arz = methods.watch("arz");
   const tool = methods.watch("tool");
+
   useEffect(() => {
     if (arz && tool) {
       const calculatedMetraj = Number(arz) * Number(tool);
-      methods.setValue("metraj", String(calculatedMetraj)); // Set the value of 'metraj'
+      methods.setValue("metraj", String(calculatedMetraj)); 
     }
   }, [arz, tool, methods.setValue]);
+
   const handleSubmit = (data: object) => {
     console.log(data);
   };
+
   return (
     <Layout>
       <section className="flex flex-col min-h-screen w-full py-6 px-4 items-center overflow-auto">
@@ -175,26 +111,26 @@ function AddCarpet() {
           <div className="flex flex-wrap justify-center gap-12 items-center bg-[#cbcfff] py-7">
             <SelectableInputField
               name="arz"
-              data={arzArray}
-              placeholder={!isRectangle ? "انتخاب عرض":"انتخاب شعاع"}
+              data={isRectangle ? CircleSizes?.data : Widths?.data}
+              placeholder={!isRectangle ? "انتخاب عرض" : "انتخاب شعاع"}
               getRealValue={(value: string) => {
                 methods.setValue("arz", value);
               }}
-              className={`z-40`}
+              className={`z-50`}
             />
             <SelectableInputField
               name="tool"
-              data={toolArray}
-              placeholder={!isRectangle ? "انتخاب طول":"انتخاب شعاع"}
+              data={isRectangle ? CircleSizes?.data : Lengths?.data}
+              placeholder={!isRectangle ? "انتخاب طول" : "انتخاب شعاع"}
               getRealValue={(value: string) => {
                 methods.setValue("tool", value);
               }}
-              className={`z-30`}
+              className={`z-50`}
             />
-            <SimpleInputField name="metraj" label={"متراژ"} readOnly/>
+            <SimpleInputField name="metraj" label={"متراژ"} readOnly />
             <SelectableInputField
               name="naghsheh"
-              data={naghshehArray}
+              data={designs?.data}
               placeholder={"انتخاب نقشه"}
               getValue={(value: string) => {
                 methods.setValue("naghsheh", value);
@@ -203,41 +139,64 @@ function AddCarpet() {
             />
             <SelectableInputField
               name="rang"
-              data={colorArray}
+              data={colors?.data}
               placeholder="انتخاب رنگ"
               getValue={(value: string) => {
                 methods.setValue("rang", value);
               }}
+              className={"z-40"}
             />
             <SimpleInputField name="serial" label={"سریال"} />
             <SimpleInputField name="code" label={"کد"} />
           </div>
           <div className="flex flex-wrap justify-center gap-14 items-center bg-[#9fa8ff] py-7 ">
-          <SelectableInputField
+            <SelectableInputField
               name="shirazeh"
               data={colorArray}
               placeholder="انتخاب شیرازه"
               getRealValue={(value: string) => {
                 methods.setValue("shirazeh", value);
               }}
+              className={"z-40"}
             />
-            <SimpleInputField name="shirazehVouroud" label={"تاریخ ورود"} />
-            <SimpleInputField name="shirazehKhoroug" label={"تاریخ خروج"} />
+            <DateInput
+              label="تاریخ ورود"
+              getValue={(value) => {
+                methods.setValue("shirazehVouroud", value);
+              }}
+            />
+            <DateInput
+              label="تاریخ خروج"
+              getValue={(value) => {
+                methods.setValue("shirazehKhoroug", value);
+              }}
+            />
           </div>
           <div className="flex flex-wrap justify-center gap-14 items-center bg-[#8b97ff] py-7 ">
-          <SelectableInputField
+            <SelectableInputField
               name="gereh"
               data={colorArray}
               placeholder="انتخاب گره"
               getRealValue={(value: string) => {
                 methods.setValue("gereh", value);
               }}
+              className={"z-30"}
             />
-            <SimpleInputField name="gerehVouroud" label={"تاریخ ورود"} />
-            <SimpleInputField name="gerehKhoroug" label={"تاریخ خروج"} />
+            <DateInput
+              label="تاریخ ورود"
+              getValue={(value) => {
+                methods.setValue("gerehVouroud", value);
+              }}
+            />
+            <DateInput
+              label="تاریخ خروج"
+              getValue={(value) => {
+                methods.setValue("gerehKhoroug", value);
+              }}
+            />
           </div>
           <div className="flex flex-wrap justify-center gap-14 items-center bg-[#7684ff] py-7 rounded-br-md rounded-bl-md shadow-lg shadow-gray-300">
-          <SelectableInputField
+            <SelectableInputField
               name="cheleh"
               data={colorArray}
               placeholder="انتخاب چله"
@@ -245,15 +204,22 @@ function AddCarpet() {
                 methods.setValue("cheleh", value);
               }}
             />
-            <SimpleInputField name="chelehVouroud" label={"تاریخ ورود"} />
-            <SimpleInputField name="chelehKhoroug" label={"تاریخ خروج"} />
+            <DateInput
+              label="تاریخ ورود"
+              getValue={(value) => {
+                methods.setValue("chelehVouroud", value);
+              }}
+            />
+            <DateInput
+              label="تاریخ خروج"
+              getValue={(value) => {
+                methods.setValue("chelehKhoroug", value);
+              }}
+            />
           </div>
 
           <div className="flex justify-between items-center mt-7">
-            <CheckBoxInputField
-              name="send"
-              label={"ارسال شده"}
-            />
+            <CheckBoxInputField name="send" label={"ارسال شده"} />
             <div className="flex justify-center items-center gap-2">
               <button className="bg-gray-200 px-5 py-2 rounded-md text-xl text-gray-600">
                 انصراف
