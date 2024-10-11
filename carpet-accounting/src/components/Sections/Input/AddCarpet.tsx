@@ -14,6 +14,9 @@ import useGetCircleSizes from "@/api/Carpets/Sizes/getCircleSizes";
 import useGetRectangleWidth from "@/api/Carpets/Sizes/getRectangleWidth";
 import useGetRectangleLength from "@/api/Carpets/Sizes/getRectangleLength";
 import DateInput from "@/components/UI/Inputs/DateInput";
+import useGetCheleh from "@/api/Carpets/Skills/getCheleh";
+import useGetShirazeh from "@/api/Carpets/Skills/getShirazeh";
+import useGetGereh from "@/api/Carpets/Skills/getGereh"
 
 const colorArray = [
   { value: "نارنجی", id: 1 },
@@ -34,6 +37,9 @@ function AddCarpet() {
   const { data: CircleSizes } = useGetCircleSizes();
   const { data: Widths } = useGetRectangleWidth();
   const { data: Lengths } = useGetRectangleLength();
+  const { data: Cheleh } = useGetCheleh();
+  const { data: Gereh } = useGetGereh();
+  const { data: Shirazeh } = useGetShirazeh()
 
   const methods = useForm({
     defaultValues: {
@@ -49,7 +55,7 @@ function AddCarpet() {
       shirazehKhoroug: "",
       shirazehVouroud: "",
       cheleh: "",
-      chelehKhroug: "",
+      chelehKhoroug: "",
       chelehVouroud: "",
       gereh: "",
       gerehKhoroug: "",
@@ -73,11 +79,10 @@ function AddCarpet() {
 
   const arz = methods.watch("arz");
   const tool = methods.watch("tool");
-
   useEffect(() => {
     if (arz && tool) {
       const calculatedMetraj = Number(arz) * Number(tool);
-      methods.setValue("metraj", String(calculatedMetraj)); 
+      methods.setValue("metraj", String(calculatedMetraj));
     }
   }, [arz, tool, methods.setValue]);
 
@@ -152,7 +157,7 @@ function AddCarpet() {
           <div className="flex flex-wrap justify-center gap-14 items-center bg-[#9fa8ff] py-7 ">
             <SelectableInputField
               name="shirazeh"
-              data={colorArray}
+              data={Shirazeh?.data}
               placeholder="انتخاب شیرازه"
               getRealValue={(value: string) => {
                 methods.setValue("shirazeh", value);
@@ -175,7 +180,7 @@ function AddCarpet() {
           <div className="flex flex-wrap justify-center gap-14 items-center bg-[#8b97ff] py-7 ">
             <SelectableInputField
               name="gereh"
-              data={colorArray}
+              data={Gereh?.data}
               placeholder="انتخاب گره"
               getRealValue={(value: string) => {
                 methods.setValue("gereh", value);
@@ -198,7 +203,7 @@ function AddCarpet() {
           <div className="flex flex-wrap justify-center gap-14 items-center bg-[#7684ff] py-7 rounded-br-md rounded-bl-md shadow-lg shadow-gray-300">
             <SelectableInputField
               name="cheleh"
-              data={colorArray}
+              data={Cheleh?.data}
               placeholder="انتخاب چله"
               getRealValue={(value: string) => {
                 methods.setValue("cheleh", value);

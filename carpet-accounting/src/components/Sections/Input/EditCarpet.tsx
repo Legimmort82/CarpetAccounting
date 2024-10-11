@@ -8,6 +8,14 @@ import Form from "@/components/UI/Form";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import React from "react";
+import useGetAllColors from "@/api/Carpets/Colors&Designs/getColors";
+import useGetDesigns from "@/api/Carpets/Colors&Designs/getDesigns";
+import useGetCircleSizes from "@/api/Carpets/Sizes/getCircleSizes";
+import useGetRectangleLength from "@/api/Carpets/Sizes/getRectangleLength";
+import useGetRectangleWidth from "@/api/Carpets/Sizes/getRectangleWidth";
+import useGetCheleh from "@/api/Carpets/Skills/getCheleh";
+import useGetGereh from "@/api/Carpets/Skills/getGereh";
+import useGetShirazeh from "@/api/Carpets/Skills/getShirazeh";
 
 const colorArray = [
   { value: "نارنجی", id: 1 },
@@ -71,6 +79,15 @@ const shoaaArray = [
 ];
 
 function EditCarpet() {
+  const { data: colors } = useGetAllColors();
+  const { data: designs } = useGetDesigns();
+  const { data: CircleSizes } = useGetCircleSizes();
+  const { data: Widths } = useGetRectangleWidth();
+  const { data: Lengths } = useGetRectangleLength();
+  const { data: Cheleh } = useGetCheleh();
+  const { data: Gereh } = useGetGereh();
+  const { data: Shirazeh } = useGetShirazeh()
+
   const methods = useForm({
     defaultValues: {
       arz: "",
@@ -85,7 +102,7 @@ function EditCarpet() {
       shirazehKhoroug: "",
       shirazehVouroud: "",
       cheleh: "",
-      chelehKhroug: "",
+      chelehKhoroug: "",
       chelehVouroud: "",
       gereh: "",
       gerehKhoroug: "",
@@ -93,10 +110,7 @@ function EditCarpet() {
     },
     // resolver: zodResolver(AddCarpetSchema),
   });
-  // const [isCircle, setIsCircle] = useState(false);
   const [isRectangle, setIsRectangle] = useState(true);
-  // const [isRadius, setIsRadius] = useState(false);
-  // const [isWH, setIsWH] = useState(true);
 
   const handleRectangleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log(isRectangle);
@@ -109,12 +123,6 @@ function EditCarpet() {
       setIsRectangle(true);
       methods.setValue("rectangle", isRectangle);
     }
-
-    // if (e.target.checked) {
-    //   setIsCircle(false);
-    //   setIsWH(!isWH);
-    //   setIsRadius(!isRadius);
-    // }
   };
 
   const arz = methods.watch("arz");
@@ -155,7 +163,7 @@ function EditCarpet() {
             <div className="flex flex-wrap justify-center gap-12 items-center bg-[#cbcfff] py-7 rounded-tr-md rounded-tl-md">
               <SelectableInputField
                 name="arz"
-                data={arzArray}
+                data={isRectangle ? CircleSizes?.data : Widths?.data}
                 placeholder={!isRectangle ? "انتخاب عرض" : "انتخاب شعاع"}
                 getRealValue={(value: string) => {
                   methods.setValue("arz", value);
@@ -164,7 +172,7 @@ function EditCarpet() {
               />
               <SelectableInputField
                 name="tool"
-                data={toolArray}
+                data={isRectangle ? CircleSizes?.data : Widths?.data}
                 placeholder={!isRectangle ? "انتخاب طول" : "انتخاب شعاع"}
                 getRealValue={(value: string) => {
                   methods.setValue("tool", value);
@@ -174,7 +182,7 @@ function EditCarpet() {
               <SimpleInputField name="metraj" label={"متراژ"} readOnly />
               <SelectableInputField
                 name="naghsheh"
-                data={naghshehArray}
+                data={designs?.data}
                 placeholder={"انتخاب نقشه"}
                 getValue={(value: string) => {
                   methods.setValue("naghsheh", value);
@@ -183,7 +191,7 @@ function EditCarpet() {
               />
               <SelectableInputField
                 name="rang"
-                data={colorArray}
+                data={colors?.data}
                 placeholder="انتخاب رنگ"
                 getValue={(value: string) => {
                   methods.setValue("rang", value);
@@ -196,7 +204,7 @@ function EditCarpet() {
             <div className="flex flex-wrap justify-center gap-14 items-center bg-[#9fa8ff] py-7 ">
               <SelectableInputField
                 name="shirazeh"
-                data={naghshehArray}
+                data={Shirazeh?.data}
                 placeholder={"انتخاب شیرازه"}
                 getRealValue={(value: string) => {
                   methods.setValue("shirazeh", value);
@@ -209,7 +217,7 @@ function EditCarpet() {
             <div className="flex flex-wrap justify-center gap-14 items-center bg-[#8b97ff] py-7 ">
             <SelectableInputField
                 name="gereh"
-                data={naghshehArray}
+                data={Gereh?.data}
                 placeholder={"انتخاب گره"}
                 getRealValue={(value: string) => {
                   methods.setValue("gereh", value);
@@ -222,7 +230,7 @@ function EditCarpet() {
             <div className="flex flex-wrap justify-center gap-14 items-center bg-[#7684ff] py-7 rounded-br-md rounded-bl-md shadow-lg shadow-gray-300">
             <SelectableInputField
                 name="cheleh"
-                data={naghshehArray}
+                data={Cheleh?.data}
                 placeholder={"انتخاب چله"}
                 getRealValue={(value: string) => {
                   methods.setValue("cheleh", value);

@@ -2,6 +2,7 @@ import { forwardRef } from "react";
 import DatePicker, { DateObject } from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
+import { log } from "console";
 
 type props = {
   value?: Date;
@@ -30,7 +31,9 @@ const DateInput = forwardRef(
   ) => {
     const handleChange = (date: DateObject) => {
       if (getValue) getValue(date.year + "/" + date.month + "/" + date.day);
-      console.log(date.year + "/" + date.month + "/" + date.day);
+      // console.log(date.year + "/" + date.month + "/" + date.day);
+      // console.log(date);
+      
     };
     return (
       <div className="flex gap-2 items-center">
