@@ -68,7 +68,7 @@ const SelectableInput = forwardRef(
             onClick={() => setOpen(!open)}
           >
             <p className="text-md px-1">{selected ? selected : placeholder} </p>
-            <Image className="w-4 h-4" src={downArrow} alt="downArrow" />
+            <Image className={`w-4 h-4 duration-300 ${open ? "rotate-180" : "rotate-0"}`} src={downArrow} alt="downArrow" />
           </div>
 
           <ul
