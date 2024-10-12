@@ -215,7 +215,12 @@ const columns = [
   }),
 
   columnHelper.accessor("ersalshodeh", {
-    cell: (info) => <span>{info.getValue() ? "بله" : "خیر"}</span>,
+    cell: (info) => 
+    <input
+      type="checkbox"
+      checked={info.getValue()}
+      // onChange={}
+    />,
     header: () => (
       <span className="flex items-center justify-center">
         ارسال شده
