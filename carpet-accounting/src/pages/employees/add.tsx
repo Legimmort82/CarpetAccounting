@@ -1,12 +1,49 @@
-import React from 'react'
+import Layout from "@/components/Layout/Layout";
+import {
+  SelectableInputField,
+  SimpleInputField,
+} from "@/components/UI/Fields/fields";
+import Form from "@/components/UI/Form";
+import React from "react";
+import { useForm } from "react-hook-form";
 
-function AddEmployees
-() {
+function AddEmployees() {
+  const skills = [
+    { id: 1, value: "شیرازه" },
+    { id: 2, value: "چله" },
+    { id: 3, value: "گره" },
+  ];
+  const methods = useForm();
+  const handleSubmit = (data: object) => {
+    console.log(data);
+  };
   return (
-    <div>AddEmployees
-        
-    </div>
-  )
+    <Layout>
+      <div className="flex flex-col justify-center items-center h-screen">
+        <h2 className="mb-10 text-2xl font-semibold">اضافه کردن کارکنان جدید</h2>
+        <Form
+          onSubmit={handleSubmit}
+          methods={methods}
+          className="w-[90%] rounded-xl bg-[#050A30] px-4 py-10"
+        >
+          <div className="flex justify-center gap-6 items-center">
+            <SimpleInputField name="fullName"  placeholder="نام کامل"/>
+            <SelectableInputField
+              name="skill"
+              data={skills}
+              placeholder="انتخاب مهارت"
+            />
+            <button className="bg-[#aab1e6] px-6 py-2 rounded-xl">
+              انصراف
+            </button>
+            <button type="submit" className="bg-[#5865c2] px-6 py-2 rounded-xl">
+              اضافه کردن
+            </button>
+          </div>
+        </Form>
+      </div>
+    </Layout>
+  );
 }
 
-export default AddEmployees
+export default AddEmployees;

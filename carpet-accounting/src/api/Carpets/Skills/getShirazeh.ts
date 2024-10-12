@@ -12,7 +12,7 @@ import { useQuery } from "@tanstack/react-query";
 const useGetShirazeh = (options = {}) => {
   return useQuery({
     queryKey: ["ShirazehSkill"],
-    queryFn: () => apiClient.get("/accounts/sections/shiraze/"),
+    queryFn: () => apiClient.get("/accounts/sections/shirazeh/"),
     retry: 1,
     ...options,
   });

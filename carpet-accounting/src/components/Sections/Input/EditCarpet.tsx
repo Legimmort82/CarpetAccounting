@@ -1,6 +1,7 @@
 import Layout from "@/components/Layout/Layout";
 import {
   CheckBoxInputField,
+  SelectByNameInputField,
   SelectableInputField,
   SimpleInputField,
 } from "@/components/UI/Fields/fields";
@@ -17,69 +18,15 @@ import useGetCheleh from "@/api/Carpets/Skills/getCheleh";
 import useGetGereh from "@/api/Carpets/Skills/getGereh";
 import useGetShirazeh from "@/api/Carpets/Skills/getShirazeh";
 import DateInput from "@/components/UI/Inputs/DateInput";
-
-const colorArray = [
-  { value: "نارنجی", id: 1 },
-  { value: "سفید", id: 2 },
-  { value: "زرد", id: 3 },
-  { value: "آبی", id: 4 },
-  { value: "قرمز", id: 5 },
-  { value: "زرشکی", id: 6 },
-  { value: "سبز", id: 7 },
-  { value: "قهوه ای", id: 8 },
-  { value: "طوسی", id: 9 },
-  { value: "سرمه ای", id: 10 },
-];
-const naghshehArray = [
-  { value: "سلطانی", id: 1 },
-  { value: "آهو", id: 2 },
-  { value: "پلنگی", id: 3 },
-  { value: "دریا", id: 4 },
-  { value: "جنگل", id: 5 },
-  { value: "کوه", id: 6 },
-  { value: "بیابان", id: 7 },
-  { value: "رود", id: 8 },
-  { value: "ساحل", id: 9 },
-  { value: "جزیره", id: 10 },
-];
-const toolArray = [
-  { value: "4", id: 1 },
-  { value: "2", id: 2 },
-  { value: "5", id: 3 },
-  { value: "2", id: 4 },
-  { value: "6", id: 5 },
-  { value: "3", id: 6 },
-  { value: "3", id: 7 },
-  { value: "4", id: 8 },
-  { value: "2", id: 9 },
-  { value: "4", id: 10 },
-];
-const arzArray = [
-  { value: "3", id: 1 },
-  { value: "2", id: 2 },
-  { value: "1", id: 3 },
-  { value: "1", id: 4 },
-  { value: "2", id: 5 },
-  { value: "3", id: 6 },
-  { value: "3", id: 7 },
-  { value: "1", id: 8 },
-  { value: "2", id: 9 },
-  { value: "1", id: 10 },
-];
-const shoaaArray = [
-  { value: "3.5", id: 1 },
-  { value: "2.25", id: 2 },
-  { value: "1.9", id: 3 },
-  { value: "1", id: 4 },
-  { value: "2", id: 5 },
-  { value: "3.25", id: 6 },
-  { value: "3", id: 7 },
-  { value: "1.75", id: 8 },
-  { value: "2.45", id: 9 },
-  { value: "1.25", id: 10 },
-];
+import { useRouter } from "next/router";
+import mockData from "@/data/data.json";
 
 function EditCarpet() {
+  const router = useRouter();
+  const findCarpet = mockData.find(
+    (carpet) => carpet.shomareh == Number(router.query?.carpetId)
+  );
+
   const { data: colors } = useGetAllColors();
   const { data: designs } = useGetDesigns();
   const { data: CircleSizes } = useGetCircleSizes();
@@ -87,7 +34,7 @@ function EditCarpet() {
   const { data: Lengths } = useGetRectangleLength();
   const { data: Cheleh } = useGetCheleh();
   const { data: Gereh } = useGetGereh();
-  const { data: Shirazeh } = useGetShirazeh()
+  const { data: Shirazeh } = useGetShirazeh();
 
   const methods = useForm({
     defaultValues: {
@@ -97,9 +44,10 @@ function EditCarpet() {
       naghsheh: "",
       rang: "",
       serial: "",
+      send: false,
       code: "",
-      shirazeh: "",
       rectangle: false,
+      shirazeh: "",
       shirazehKhoroug: "",
       shirazehVouroud: "",
       cheleh: "",
@@ -111,19 +59,40 @@ function EditCarpet() {
     },
     // resolver: zodResolver(AddCarpetSchema),
   });
-  const [isRectangle, setIsRectangle] = useState(true);
-
-  const handleRectangleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(isRectangle);
-
-    if (isRectangle == true) {
-      setIsRectangle(false);
-      console.log(isRectangle);
-      methods.setValue("rectangle", isRectangle);
-    } else {
-      setIsRectangle(true);
-      methods.setValue("rectangle", isRectangle);
+  useEffect(() => {
+    if (findCarpet) {
+      methods.reset({
+        arz: findCarpet?.arz,
+        tool: findCarpet?.tool,
+        naghsheh: findCarpet?.naghsheh,
+        rang: findCarpet?.rang,
+        serial: findCarpet?.serial,
+        code: findCarpet?.code,
+        send: findCarpet?.ersalshodeh,
+        shirazeh: findCarpet?.shirazeh,
+        cheleh: findCarpet?.cheleh,
+        gereh: findCarpet?.gereh,
+        rectangle: findCarpet?.isRectangle,
+        shirazehVouroud: findCarpet?.shirazehVouroud,
+        shirazehKhoroug: findCarpet?.shirazehKhoroug,
+        chelehVouroud: findCarpet?.chelehVouroud,
+        chelehKhoroug: findCarpet?.chelehKhroug,
+        gerehVouroud: findCarpet?.gerehVouroud,
+        gerehKhoroug: findCarpet?.gerehKhoroug,
+      });
+      setIsRectangle(findCarpet?.isRectangle ? findCarpet?.isRectangle : false);
+      setIsSend(findCarpet?.ersalshodeh ? findCarpet?.ersalshodeh : false);
     }
+  }, [findCarpet, methods.reset]);
+  const [isRectangle, setIsRectangle] = useState(false);
+  const [isSend, setIsSend] = useState(false);
+  const handleRectangleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsRectangle(e.target.checked);
+    methods.setValue("rectangle", e.target.checked);
+  };
+  const handleSendCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsSend(e.target.checked);
+    methods.setValue("send", e.target.checked);
   };
 
   const arz = methods.watch("arz");
@@ -154,9 +123,9 @@ function EditCarpet() {
 
               <div className="flex flex-wrap gap-5 items-center">
                 <CheckBoxInputField
-                  name="regtangle"
-                  // checked={true}
+                  name="rectangle"
                   label={"مستطیل"}
+                  checked={isRectangle}
                   onChange={handleRectangleChange}
                 />
               </div>
@@ -164,21 +133,23 @@ function EditCarpet() {
             <div className="flex flex-wrap justify-center gap-12 items-center bg-[#cbcfff] py-7 rounded-tr-md rounded-tl-md">
               <SelectableInputField
                 name="arz"
-                data={isRectangle ? CircleSizes?.data : Widths?.data}
-                placeholder={!isRectangle ? "انتخاب عرض" : "انتخاب شعاع"}
+                data={!isRectangle ? CircleSizes?.data : Widths?.data}
+                placeholder={isRectangle ? "انتخاب عرض" : "انتخاب شعاع"}
                 getRealValue={(value: string) => {
                   methods.setValue("arz", value);
                 }}
-                className={`z-40`}
+                selectedBefore={findCarpet?.arz}
+                className={`z-50`}
               />
               <SelectableInputField
                 name="tool"
-                data={isRectangle ? CircleSizes?.data : Widths?.data}
-                placeholder={!isRectangle ? "انتخاب طول" : "انتخاب شعاع"}
+                data={!isRectangle ? CircleSizes?.data : Lengths?.data}
+                placeholder={isRectangle ? "انتخاب طول" : "انتخاب شعاع"}
                 getRealValue={(value: string) => {
                   methods.setValue("tool", value);
                 }}
-                className={`z-30`}
+                selectedBefore={findCarpet?.tool}
+                className={`z-50`}
               />
               <SimpleInputField name="metraj" label={"متراژ"} readOnly />
               <SelectableInputField
@@ -188,6 +159,7 @@ function EditCarpet() {
                 getValue={(value: string) => {
                   methods.setValue("naghsheh", value);
                 }}
+                selectedBefore={findCarpet?.naghsheh}
                 className={"z-20"}
               />
               <SelectableInputField
@@ -197,89 +169,98 @@ function EditCarpet() {
                 getValue={(value: string) => {
                   methods.setValue("rang", value);
                 }}
+                selectedBefore={findCarpet?.rang}
               />
               <SimpleInputField name="serial" label={"سریال"} />
               <SimpleInputField name="code" label={"کد"} />
             </div>
 
             <div className="flex flex-wrap justify-center gap-14 items-center bg-[#9fa8ff] py-7 ">
-              <SelectableInputField
+              <SelectByNameInputField
                 name="shirazeh"
                 data={Shirazeh?.data}
                 placeholder={"انتخاب شیرازه"}
                 getRealValue={(value: string) => {
                   methods.setValue("shirazeh", value);
                 }}
+                selectedBefore={findCarpet?.shirazeh}
                 className={"z-40"}
               />
-              {/* <SimpleInputField name="shirazehVouroud" label={"تاریخ ورود"} />
-              <SimpleInputField name="shirazehKhoroug" label={"تاریخ خروج"} /> */}
               <DateInput
                 label="تاریخ ورود"
                 getValue={(value) => {
                   methods.setValue("shirazehVouroud", value);
                 }}
+                selected={findCarpet?.shirazehVouroud}
               />
               <DateInput
                 label="تاریخ خروج"
                 getValue={(value) => {
                   methods.setValue("shirazehKhoroug", value);
                 }}
+                selected={findCarpet?.shirazehKhoroug}
               />
             </div>
             <div className="flex flex-wrap justify-center gap-14 items-center bg-[#8b97ff] py-7 ">
-              <SelectableInputField
+              <SelectByNameInputField
                 name="gereh"
                 data={Gereh?.data}
                 placeholder={"انتخاب گره"}
                 getRealValue={(value: string) => {
                   methods.setValue("gereh", value);
                 }}
+                selectedBefore={findCarpet?.gereh}
                 className={"z-30"}
               />
-              {/* <SimpleInputField name="gerehVouroud" label={"تاریخ ورود"} />
-              <SimpleInputField name="gerehKhoroug" label={"تاریخ خروج"} /> */}
               <DateInput
                 label="تاریخ ورود"
                 getValue={(value) => {
                   methods.setValue("gerehVouroud", value);
                 }}
+                selected={findCarpet?.gerehVouroud}
               />
               <DateInput
                 label="تاریخ خروج"
                 getValue={(value) => {
                   methods.setValue("gerehKhoroug", value);
                 }}
+                selected={findCarpet?.gerehKhoroug}
               />
             </div>
             <div className="flex flex-wrap justify-center gap-14 items-center bg-[#7684ff] py-7 rounded-br-md rounded-bl-md shadow-lg shadow-gray-300">
-              <SelectableInputField
+              <SelectByNameInputField
                 name="cheleh"
                 data={Cheleh?.data}
                 placeholder={"انتخاب چله"}
                 getRealValue={(value: string) => {
                   methods.setValue("cheleh", value);
                 }}
-                className={"z-30"}
+                selectedBefore={findCarpet?.cheleh}
+                className={"z-20"}
               />
-              {/* <SimpleInputField name="chelehVouroud" label={"تاریخ ورود"} />
-              <SimpleInputField name="chelehKhoroug" label={"تاریخ خروج"} /> */}
               <DateInput
                 label="تاریخ ورود"
                 getValue={(value) => {
                   methods.setValue("chelehVouroud", value);
                 }}
+                selected={findCarpet?.chelehVouroud}
               />
               <DateInput
                 label="تاریخ خروج"
                 getValue={(value) => {
                   methods.setValue("chelehKhoroug", value);
                 }}
+                selected={findCarpet?.chelehKhroug}
               />
             </div>
 
             <div className="flex justify-between items-center mt-7">
-              <CheckBoxInputField name="send" label={"ارسال شده"} />
+              <CheckBoxInputField
+                name="send"
+                label={"ارسال شده"}
+                checked={isSend}
+                onChange={handleSendCheckbox}
+              />
               <div className="flex justify-center items-center gap-2">
                 <button className="bg-gray-200 px-5 py-2 rounded-md text-xl text-gray-600">
                   حذف

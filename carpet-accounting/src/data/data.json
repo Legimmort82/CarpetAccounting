@@ -8,7 +8,7 @@
     "rang": "فیروزه ای",
     "serial": "6122/1",
     "code": "6/1",
-    "shirazeh": "رقیه محمدی6",
+    "shirazeh": "",
     "shirazehKhoroug": "05/25",
     "shirazehVouroud": "05/28",
     "cheleh": "ناصر مولایی6",
@@ -17,7 +17,8 @@
     "gereh": "افشار6",
     "gerehKhoroug": "05/28",
     "gerehVouroud": "05/30",
-    "ersalshodeh": false
+    "ersalshodeh": true,
+    "isRectangle": true
   },
   {
     "shomareh": 2,
@@ -75,8 +76,8 @@
     "chelehKhroug": "",
     "chelehVouroud": "",
     "gereh": "مصطفی6",
-    "gerehKhoroug": "05/30",
-    "gerehVouroud": "06/02",
+    "gerehKhoroug": "",
+    "gerehVouroud": "",
     "ersalshodeh": false
   },
   {
@@ -95,7 +96,7 @@
     "chelehKhroug": "",
     "chelehVouroud": "",
     "gereh": "مصطفی6",
-    "gerehKhoroug": "05/30",
+    "gerehKhoroug": "",
     "gerehVouroud": "06/02",
     "ersalshodeh": false
   },

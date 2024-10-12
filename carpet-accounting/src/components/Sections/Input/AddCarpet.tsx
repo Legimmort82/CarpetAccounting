@@ -3,6 +3,7 @@ import Form from "@/components/UI/Form";
 import { useForm } from "react-hook-form";
 import {
   CheckBoxInputField,
+  SelectByNameInputField,
   SelectableInputField,
   SimpleInputField,
 } from "@/components/UI/Fields/fields";
@@ -18,19 +19,6 @@ import useGetCheleh from "@/api/Carpets/Skills/getCheleh";
 import useGetShirazeh from "@/api/Carpets/Skills/getShirazeh";
 import useGetGereh from "@/api/Carpets/Skills/getGereh"
 
-const colorArray = [
-  { value: "نارنجی", id: 1 },
-  { value: "سفید", id: 2 },
-  { value: "زرد", id: 3 },
-  { value: "آبی", id: 4 },
-  { value: "قرمز", id: 5 },
-  { value: "زرشکی", id: 6 },
-  { value: "سبز", id: 7 },
-  { value: "قهوه ای", id: 8 },
-  { value: "طوسی", id: 9 },
-  { value: "سرمه ای", id: 10 },
-];
-
 function AddCarpet() {
   const { data: colors } = useGetAllColors();
   const { data: designs } = useGetDesigns();
@@ -40,7 +28,7 @@ function AddCarpet() {
   const { data: Cheleh } = useGetCheleh();
   const { data: Gereh } = useGetGereh();
   const { data: Shirazeh } = useGetShirazeh()
-
+  
   const methods = useForm({
     defaultValues: {
       arz: "",
@@ -51,7 +39,8 @@ function AddCarpet() {
       serial: "",
       code: "",
       shirazeh: "",
-      rectangle: false,
+      send:false,
+      rectangle: true,
       shirazehKhoroug: "",
       shirazehVouroud: "",
       cheleh: "",
@@ -65,18 +54,16 @@ function AddCarpet() {
   });
 
   const [isRectangle, setIsRectangle] = useState(true);
+  const [isSend, setIsSend] = useState(false);
 
   const handleRectangleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (isRectangle == true) {
-      setIsRectangle(false);
-      console.log(isRectangle);
-      methods.setValue("rectangle", isRectangle);
-    } else {
-      setIsRectangle(true);
-      methods.setValue("rectangle", isRectangle);
-    }
+    setIsRectangle(e.target.checked);
+    methods.setValue("rectangle", e.target.checked);
   };
-
+const handleSendCheckbox=(e:  React.ChangeEvent<HTMLInputElement>)=>{
+  setIsSend(e.target.checked);
+  methods.setValue("send", e.target.checked);
+}
   const arz = methods.watch("arz");
   const tool = methods.watch("tool");
   useEffect(() => {
@@ -105,8 +92,8 @@ function AddCarpet() {
 
             <div className="flex flex-wrap gap-5 items-center">
               <CheckBoxInputField
-                name="regtangle"
-                // checked={isRectangle}
+                name="rectangle"
+                checked={isRectangle}
                 label={"مستطیل"}
                 onChange={handleRectangleChange}
               />
@@ -116,8 +103,8 @@ function AddCarpet() {
           <div className="flex flex-wrap justify-center gap-12 items-center bg-[#cbcfff] py-7">
             <SelectableInputField
               name="arz"
-              data={isRectangle ? CircleSizes?.data : Widths?.data}
-              placeholder={!isRectangle ? "انتخاب عرض" : "انتخاب شعاع"}
+              data={!isRectangle ? CircleSizes?.data : Widths?.data}
+              placeholder={isRectangle ? "انتخاب عرض" : "انتخاب شعاع"}
               getRealValue={(value: string) => {
                 methods.setValue("arz", value);
               }}
@@ -125,8 +112,8 @@ function AddCarpet() {
             />
             <SelectableInputField
               name="tool"
-              data={isRectangle ? CircleSizes?.data : Lengths?.data}
-              placeholder={!isRectangle ? "انتخاب طول" : "انتخاب شعاع"}
+              data={!isRectangle ? CircleSizes?.data : Lengths?.data}
+              placeholder={isRectangle ? "انتخاب طول" : "انتخاب شعاع"}
               getRealValue={(value: string) => {
                 methods.setValue("tool", value);
               }}
@@ -155,7 +142,7 @@ function AddCarpet() {
             <SimpleInputField name="code" label={"کد"} />
           </div>
           <div className="flex flex-wrap justify-center gap-14 items-center bg-[#9fa8ff] py-7 ">
-            <SelectableInputField
+            <SelectByNameInputField
               name="shirazeh"
               data={Shirazeh?.data}
               placeholder="انتخاب شیرازه"
@@ -178,7 +165,7 @@ function AddCarpet() {
             />
           </div>
           <div className="flex flex-wrap justify-center gap-14 items-center bg-[#8b97ff] py-7 ">
-            <SelectableInputField
+            <SelectByNameInputField
               name="gereh"
               data={Gereh?.data}
               placeholder="انتخاب گره"
@@ -201,7 +188,7 @@ function AddCarpet() {
             />
           </div>
           <div className="flex flex-wrap justify-center gap-14 items-center bg-[#7684ff] py-7 rounded-br-md rounded-bl-md shadow-lg shadow-gray-300">
-            <SelectableInputField
+            <SelectByNameInputField
               name="cheleh"
               data={Cheleh?.data}
               placeholder="انتخاب چله"
@@ -224,7 +211,7 @@ function AddCarpet() {
           </div>
 
           <div className="flex justify-between items-center mt-7">
-            <CheckBoxInputField name="send" label={"ارسال شده"} />
+            <CheckBoxInputField name="send" label={"ارسال شده"} checked={isSend} onChange={handleSendCheckbox}/>
             <div className="flex justify-center items-center gap-2">
               <button className="bg-gray-200 px-5 py-2 rounded-md text-xl text-gray-600">
                 انصراف

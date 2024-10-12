@@ -225,7 +225,8 @@ const columns = [
 ]
 
 function Incompletes() {
-  const [data, setData] = useState([...mockData])
+  const filteredData= mockData.filter((item)=>  (item?.gerehVouroud  == "") || (item?.gerehKhoroug == "") || (item?.gereh == "") || (item?.cheleh == "")|| (item?.shirazeh == ""))
+  const [data, setData] = useState([...filteredData])
   const [globalFilter, setGlobalFilter] = useState("");
   const debounceSearch = useDebounce(globalFilter, 1000);
   const router = useRouter();
@@ -268,7 +269,7 @@ function Incompletes() {
                 <Image className="absolute w-7 h-7 top-[10px] right-1" src={searchLogo} alt="search-logo" />
               </div>
 
-              <div className="flex items-center gap-4 mb-4 z-50">
+              {/* <div className="flex items-center gap-4 mb-4 z-50">
                 <div className="flex items-center gap-4">
                   <SelectableInput
                     name="month"
@@ -286,7 +287,7 @@ function Incompletes() {
                   />
                 </div>
                 <button className="bg-gray-200 py-2 px-4 text-center rounded-md">مشاهده</button>
-              </div>
+              </div> */}
             </div>
           </div>
 

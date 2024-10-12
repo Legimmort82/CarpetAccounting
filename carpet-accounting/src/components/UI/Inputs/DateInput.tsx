@@ -1,44 +1,46 @@
-import { forwardRef } from "react";
-import DatePicker, { DateObject } from "react-multi-date-picker";
+import { forwardRef, useEffect, useRef, useState } from "react";
+import DatePicker, { DateObject, Value } from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import { log } from "console";
 
 type props = {
-  value?: Date;
   error?: string;
   placeholder?: string;
   name?: string;
   readOnly?: boolean;
   required?: boolean;
   label?: string;
+  selected?: string;
   getValue?: (value: string) => void;
 };
 
 const DateInput = forwardRef(
   (
     {
-      value,
       name,
       label,
       error,
       placeholder,
       readOnly,
       required,
+      selected,
       getValue,
     }: props,
     ref: any
   ) => {
+    const [value, setValue] = useState<Value>();
+
     const handleChange = (date: DateObject) => {
+      setValue(date);
       if (getValue) getValue(date.year + "/" + date.month + "/" + date.day);
-      // console.log(date.year + "/" + date.month + "/" + date.day);
-      // console.log(date);
-      
     };
+
     return (
       <div className="flex gap-2 items-center">
         <label htmlFor="">{label}</label>
         <DatePicker
+          placeholder={selected}
           name={name}
           value={value}
           onChange={handleChange}

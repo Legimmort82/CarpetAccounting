@@ -23,14 +23,14 @@ type props = {
   getRealValue?: (value: string) => void;
   placeholder?: string;
   name?: string;
-  data: { id: number; value: string }[];
+  data: { id: number; name: string; last_name: string }[];
   required?: boolean;
   getValue?: (value: number) => void;
   className?: string;
   selectedBefore?: string;
 };
 
-const SelectableInput = forwardRef(
+const SelectByName = forwardRef(
   (
     {
       type = "text",
@@ -40,9 +40,9 @@ const SelectableInput = forwardRef(
       name,
       data,
       required,
-      selectedBefore,
       getValue,
       getRealValue,
+      selectedBefore,
       className,
     }: props,
     ref: any
@@ -56,7 +56,6 @@ const SelectableInput = forwardRef(
         setSelected(selectedBefore);
       }
     }, [selectedBefore]);
-
     return (
       <>
         <div
@@ -98,22 +97,42 @@ const SelectableInput = forwardRef(
                   key={item?.id}
                   className={`py-2 px-4 text-sm hover:bg-sky-600 hover:text-white
                 ${
-                  item?.value === selected
+                  item?.name + item?.last_name === selected
                     ? "bg-indigo-600 text-white"
                     : "bg-gray-200"
                 }
-                ${item?.value?.startsWith(inputValue) ? "block" : "hidden"}`}
+                ${
+                  (item?.name || item?.last_name)?.startsWith(inputValue)
+                    ? "block"
+                    : "hidden"
+                }`}
                   onClick={() => {
-                    if (item?.value !== selected) {
-                      setSelected(item?.value);
-                      getValue?.(item?.id); // Optional chaining for getValue
-                      getRealValue?.(item?.value); // Always defined, no error
+                    if (item?.name + item?.last_name !== selected) {
+                      setSelected(
+                        (item?.name ? item?.name : "") +
+                          (item?.name ? " " + item?.last_name : item?.last_name)
+                      );
+                      if (getValue) {
+                        getValue(item?.id);
+                      }
+
+                      // Add this check to avoid invoking `undefined`
+                      if (getRealValue) {
+                        getRealValue(
+                          (item?.name ? item?.name : "") +
+                            (item?.name
+                              ? " " + item?.last_name
+                              : item?.last_name)
+                        );
+                      }
+
                       setOpen(false);
                       setInputValue("");
                     }
                   }}
                 >
-                  {item.value}
+                  {(item?.name ? item?.name : "") +
+                    (item?.name ? " " + item?.last_name : item?.last_name)}
                 </li>
               ))}
           </ul>
@@ -123,4 +142,4 @@ const SelectableInput = forwardRef(
   }
 );
 
-export default SelectableInput;
+export default SelectByName;

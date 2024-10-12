@@ -12,7 +12,7 @@ import { useQuery } from "@tanstack/react-query";
 const useGetCheleh = (options = {}) => {
   return useQuery({
     queryKey: ["ChelehSkill"],
-    queryFn: () => apiClient.get("/accounts/sections/chaleh/"),
+    queryFn: () => apiClient.get("/accounts/sections/chelleh/"),
     retry: 1,
     ...options,
   });
