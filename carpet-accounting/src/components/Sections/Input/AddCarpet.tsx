@@ -28,7 +28,7 @@ function AddCarpet() {
   const { data: Cheleh } = useGetCheleh();
   const { data: Gereh } = useGetGereh();
   const { data: Shirazeh } = useGetShirazeh()
-  
+
   const methods = useForm({
     defaultValues: {
       arz: "",
@@ -39,7 +39,7 @@ function AddCarpet() {
       serial: "",
       code: "",
       shirazeh: "",
-      send:false,
+      send: false,
       rectangle: true,
       shirazehKhoroug: "",
       shirazehVouroud: "",
@@ -60,10 +60,10 @@ function AddCarpet() {
     setIsRectangle(e.target.checked);
     methods.setValue("rectangle", e.target.checked);
   };
-const handleSendCheckbox=(e:  React.ChangeEvent<HTMLInputElement>)=>{
-  setIsSend(e.target.checked);
-  methods.setValue("send", e.target.checked);
-}
+  const handleSendCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsSend(e.target.checked);
+    methods.setValue("send", e.target.checked);
+  }
   const arz = methods.watch("arz");
   const tool = methods.watch("tool");
   useEffect(() => {
@@ -211,7 +211,7 @@ const handleSendCheckbox=(e:  React.ChangeEvent<HTMLInputElement>)=>{
           </div>
 
           <div className="flex justify-between items-center mt-7">
-            <CheckBoxInputField name="send" label={"ارسال شده"} checked={isSend} onChange={handleSendCheckbox}/>
+            <CheckBoxInputField name="send" label={"ارسال شده"} checked={isSend} onChange={handleSendCheckbox} />
             <div className="flex justify-center items-center gap-2">
               <button className="bg-gray-200 px-5 py-2 rounded-md text-xl text-gray-600">
                 انصراف

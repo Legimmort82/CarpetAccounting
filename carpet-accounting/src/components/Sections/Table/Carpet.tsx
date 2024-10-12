@@ -282,7 +282,6 @@ function Carpets() {
                     placeholder="انتخاب سال"
                     data={yearsArray}
                     className="z-50 relative"
-
                   />
                 </div>
                 <button className="bg-gray-200 py-2 px-4 text-center rounded-md">مشاهده</button>

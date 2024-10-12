@@ -5,7 +5,15 @@ import employeesData from "@/data/employees.json"
 import Image from "next/image";
 import Layout from "@/components/Layout/Layout";
 import { useRouter } from "next/router";
+import { useDebounce } from "@/hooks/useDebounce";
+import SelectableInput from "@/components/UI/Inputs/SelectableInput";
+import useGetSkills from "@/api/Carpets/Skills/getSkills";
 
+// const skillArray = [
+//   { value: "شیرازه", id: 1 },
+//   { value: "گره", id: 2 },
+//   { value: "چله", id: 3 },
+// ]
 
 type Carpet = {
   shomareh: number,
@@ -28,7 +36,7 @@ const columns = [
     cell: (info) => info.getValue(),
     header: () => (
       <span className="flex items-center">
-        نام
+        نام و نام خانوادگی
       </span>
     )
   }),
@@ -40,19 +48,30 @@ const columns = [
         مهارت
       </span>
     )
-  })
+  }),
+
+  // columnHelper.accessor("amaliat", {
+  //   cell: (info) => info.getValue(),
+  //   header: () => (
+  //     <span className="flex items-center">
+  //       عملیات
+  //     </span>
+  //   )
+  // })
 ]
 
 function Employees() {
   const [data, setData] = useState([...employeesData])
   const [globalFilter, setGlobalFilter] = useState("");
+  const debounceSearch = useDebounce(globalFilter, 1000);
   const router = useRouter()
+  const { data: Skills } = useGetSkills()
 
   const table = useReactTable({
     data,
     columns,
     state: {
-      globalFilter,
+      globalFilter: debounceSearch,
     },
     initialState: {
       pagination: {
@@ -68,26 +87,39 @@ function Employees() {
   return (
     <>
       <Layout>
-        <div className="flex flex-col min-h-screen w-full py-6 px-4 items-center overflow-auto">
+        <div className="flex flex-col h-screen w-full pt-[150px] px-4 items-center">
+          <div className="flex flex-col items-stretch pl-4 py-3 pr-[366px] fixed top-0 left-0 bg-white w-full">
+            <h1 className="text-3xl font-bold self-center mb-6">فهرست تمام کارمندان</h1>
 
-          <h1 className="text-3xl font-bold mb-10">فهرست تمام کارمندان</h1>
+            <div className="flex justify-between items-center">
+              <div className="mb-4 relative">
+                <input
+                  type="text"
+                  value={globalFilter ?? ""}
+                  onChange={(e) => setGlobalFilter(e.target.value)}
+                  placeholder="دنبال چی میگردی؟"
+                  className="relative bg-[#0c007a] h-[44px] pl-4 pr-9 py-3 rounded-md w-[550px] text-white"
+                />
+                <Image className="absolute w-7 h-7 top-[10px] right-1" src={searchLogo} alt="search-logo" />
+              </div>
 
-          <div className="flex justify-center items-center w-full">
-            <div className="mb-4 relative">
-              <input
-                type="text"
-                value={globalFilter ?? ""}
-                onChange={(e) => setGlobalFilter(e.target.value)}
-                placeholder="دنبال چی میگردی؟"
-                className="relative bg-[#2E2A54] h-[44px] pl-4 pr-9 py-3 rounded-md w-[550px] text-white"
-              />
-              <Image className="absolute w-7 h-7 top-[10px] right-1" src={searchLogo} alt="search-logo" />
+              <div className="flex items-center gap-4 mb-4 z-50">
+                <div className="flex items-center gap-4">
+                  <SelectableInput
+                    name="skill"
+                    placeholder="انتخاب مهارت"
+                    data={Skills?.data}
+                    className="z-20 relative"
+                  />
+                </div>
+                <button className="bg-gray-200 py-2 px-4 text-center rounded-md">مشاهده</button>
+              </div>
             </div>
           </div>
 
           <div className="overflow-x-auto shadow-md rounded-lg">
             <table className="min-w-full divide-y divide-white">
-              <thead className="bg-[#050A30]">
+              <thead className="bg-[#000655]">
                 {table.getHeaderGroups().map((headerGroup) => (
                   <tr key={headerGroup.id} >
                     {headerGroup.headers.map((header) => (
@@ -105,7 +137,7 @@ function Employees() {
                 ))}
               </thead>
 
-              <tbody className="bg-[#C9CCE7] divide-y-2 divide-white">
+              <tbody className="bg-[#7fb8e7] divide-y-2 divide-white">
                 {table.getRowModel().rows.map((row) => (
                   <tr key={row.id} onClick={() => router.push(`/employees/edit/${row.original.shomareh}`)} className="hover:bg-gray-50 cursor-pointer">
                     {row.getVisibleCells().map((cell) => (
@@ -125,8 +157,8 @@ function Employees() {
             </table>
           </div>
 
-          <div className="flex justify-center items-center mt-4 text-sm text-gray-700 w-full">
-            <div className="flex items-center mt-4 pl-10 ">
+          <div className="flex justify-between items-center py-2 text-sm text-gray-700 bg-white pl-40 pr-[510px] fixed bottom-0 left-0 w-full">
+            <div className="flex items-center mt-4">
               <span className="ml-2">تعداد ردیف ها</span>
 
               <select
