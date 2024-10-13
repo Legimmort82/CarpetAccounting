@@ -15,9 +15,9 @@ import useGetCircleSizes from "@/api/Carpets/Sizes/getCircleSizes";
 import useGetRectangleWidth from "@/api/Carpets/Sizes/getRectangleWidth";
 import useGetRectangleLength from "@/api/Carpets/Sizes/getRectangleLength";
 import DateInput from "@/components/UI/Inputs/DateInput";
-import useGetCheleh from "@/api/Carpets/Skills/getCheleh";
-import useGetShirazeh from "@/api/Carpets/Skills/getShirazeh";
-import useGetGereh from "@/api/Carpets/Skills/getGereh"
+import useGetCheleh from "@/api/Employees/getCheleh";
+import useGetShirazeh from "@/api/Employees/getShirazeh";
+import useGetGereh from "@/api/Employees/getGereh"
 
 function AddCarpet() {
   const { data: colors } = useGetAllColors();

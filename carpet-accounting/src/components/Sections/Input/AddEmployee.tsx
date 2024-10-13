@@ -1,4 +1,4 @@
-import useGetSkills from "@/api/Carpets/Skills/getSkills";
+import useGetSkills from "@/api/Employees/getSkills";
 import Layout from "@/components/Layout/Layout";
 import {
   SelectableInputField,
@@ -8,14 +8,16 @@ import Form from "@/components/UI/Form";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
-// const skills = [
-//   { id: 1, value: "شیرازه" },
-//   { id: 2, value: "چله" },
-//   { id: 3, value: "گره" },
-// ];
+const skills = [
+  { id: 1, value: "شیرازه" },
+  { id: 2, value: "چله" },
+  { id: 3, value: "گره" },
+];
 
 function AddEmployee() {
   const { data: Skills } = useGetSkills()
+  console.log(Skills);
+  
   const methods = useForm({
     defaultValues: {
       name: "",

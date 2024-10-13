@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import employeeData from "@/data/employees.json"
-import useGetSkills from "@/api/Carpets/Skills/getSkills";
+import useGetSkills from "@/api/Employees/getSkills";
 
 // const skills = [
 //   { id: 1, value: "شیرازه" },

@@ -1,13 +1,26 @@
-import searchLogo from "@/assets/table/search.svg"
-import { createColumnHelper, flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, useReactTable } from "@tanstack/react-table"
-import { useState } from "react";
-import employeesData from "@/data/employees.json"
+import searchLogo from "@/assets/table/search.svg";
+import {
+  createColumnHelper,
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
+import { useEffect, useState } from "react";
+import employeesData from "@/data/employees.json";
 import Image from "next/image";
 import Layout from "@/components/Layout/Layout";
 import { useRouter } from "next/router";
 import { useDebounce } from "@/hooks/useDebounce";
 import SelectableInput from "@/components/UI/Inputs/SelectableInput";
-import useGetSkills from "@/api/Carpets/Skills/getSkills";
+import useGetSkills from "@/api/Employees/getSkills";
+import useGetAllEmployees from "@/api/Employees/getAllEmployees";
+import useGetCheleh from "@/api/Employees/getCheleh";
+import useGetGereh from "@/api/Employees/getGereh";
+import useGetShirazeh from "@/api/Employees/getShirazeh";
+import { SelectByNameInputField } from "@/components/UI/Fields/fields";
+import SelectByName from "@/components/UI/Inputs/SelectByName";
 
 // const skillArray = [
 //   { value: "شیرازه", id: 1 },
@@ -16,39 +29,49 @@ import useGetSkills from "@/api/Carpets/Skills/getSkills";
 // ]
 
 type Carpet = {
-  shomareh: number,
-  name: string,
-  maharat: string
-}
+  id: number;
+  name: string;
+  section: string;
+  last_name: string;
+};
+type actions = {
+  row: object;
+};
 const columnHelper = createColumnHelper<Carpet>();
 
 const columns = [
-  columnHelper.accessor("shomareh", {
+  columnHelper.accessor("id", {
     cell: (info) => info.getValue(),
-    header: () => (
-      <span className="flex items-center">
-        شماره
-      </span>
-    )
+    header: () => <span className="flex items-center">شماره</span>,
   }),
 
   columnHelper.accessor("name", {
+    cell: (info) => {
+      const name = info.getValue();
+      return name ? name : "";
+    },
+    header: () => <span className="flex items-center">نام</span>,
+  }),
+  columnHelper.accessor("last_name", {
     cell: (info) => info.getValue(),
-    header: () => (
-      <span className="flex items-center">
-        نام و نام خانوادگی
-      </span>
-    )
+    header: () => <span className="flex items-center">نام خانوادگی</span>,
   }),
 
-  columnHelper.accessor("maharat", {
-    cell: (info) => info.getValue(),
-    header: () => (
-      <span className="flex items-center">
-        مهارت
-      </span>
-    )
+  columnHelper.accessor("section", {
+    cell: (info) => {
+      const section = info.getValue();
+      if (section == "1") return "گره زن";
+      else if (section == "2") return "چله کش";
+      else if (section == "3") return "شیرازه";
+      else return section;
+    },
+    header: () => <span className="flex items-center">مهارت</span>,
   }),
+  {
+    id: "actions",
+    header: "درخواست‌ها",
+    cell: ({ row }: actions) => <Actions props={row} />,
+  },
 
   // columnHelper.accessor("amaliat", {
   //   cell: (info) => info.getValue(),
@@ -58,15 +81,32 @@ const columns = [
   //     </span>
   //   )
   // })
-]
+];
 
 function Employees() {
-  const [data, setData] = useState([...employeesData])
+  const { data: AllEmployees } = useGetAllEmployees();
+  const { data: Cheleh } = useGetCheleh();
+  const { data: Gereh } = useGetGereh();
+  const { data: Shirazeh } = useGetShirazeh();
+
+  const [data, setData] = useState([]);
   const [globalFilter, setGlobalFilter] = useState("");
   const debounceSearch = useDebounce(globalFilter, 1000);
-  const router = useRouter()
-  const { data: Skills } = useGetSkills()
+  const router = useRouter();
+  const { data: Skills } = useGetSkills();
+  console.log(Skills);
 
+  const handleChangeData = (value: number) => {
+    if (value == 1) setData(Gereh?.data);
+    else if (value == 2) setData(Cheleh?.data);
+    else if (value == 3) setData(Shirazeh?.data);
+    else setData(AllEmployees?.data);
+  };
+  useEffect(() => {
+    if (AllEmployees && AllEmployees.data) {
+      setData(AllEmployees.data); // Set data once AllEmployees is available
+    }
+  }, [AllEmployees]);
   const table = useReactTable({
     data,
     columns,
@@ -89,7 +129,9 @@ function Employees() {
       <Layout>
         <div className="flex flex-col h-screen w-full pt-[150px] px-4 items-center">
           <div className="flex flex-col items-stretch pl-4 py-3 pr-[366px] fixed top-0 left-0 bg-white w-full">
-            <h1 className="text-3xl font-bold self-center mb-6">فهرست تمام کارمندان</h1>
+            <h1 className="text-3xl font-bold self-center mb-6">
+              فهرست تمام کارمندان
+            </h1>
 
             <div className="flex justify-between items-center">
               <div className="mb-4 relative">
@@ -100,19 +142,26 @@ function Employees() {
                   placeholder="دنبال چی میگردی؟"
                   className="relative bg-[#0c007a] h-[44px] pl-4 pr-9 py-3 rounded-md w-[550px] text-white"
                 />
-                <Image className="absolute w-7 h-7 top-[10px] right-1" src={searchLogo} alt="search-logo" />
+                <Image
+                  className="absolute w-7 h-7 top-[10px] right-1"
+                  src={searchLogo}
+                  alt="search-logo"
+                />
               </div>
 
               <div className="flex items-center gap-4 mb-4 z-50">
                 <div className="flex items-center gap-4">
-                  <SelectableInput
+                  <SelectByName
                     name="skill"
                     placeholder="انتخاب مهارت"
                     data={Skills?.data}
                     className="z-20 relative"
+                    getValue={handleChangeData}
                   />
                 </div>
-                <button className="bg-gray-200 py-2 px-4 text-center rounded-md">مشاهده</button>
+                <button className="bg-gray-200 py-2 px-4 text-center rounded-md">
+                  مشاهده
+                </button>
               </div>
             </div>
           </div>
@@ -121,7 +170,7 @@ function Employees() {
             <table className="min-w-full divide-y divide-white">
               <thead className="bg-[#000655]">
                 {table.getHeaderGroups().map((headerGroup) => (
-                  <tr key={headerGroup.id} >
+                  <tr key={headerGroup.id}>
                     {headerGroup.headers.map((header) => (
                       <th
                         key={header.id}
@@ -139,7 +188,13 @@ function Employees() {
 
               <tbody className="bg-[#7fb8e7] divide-y-2 divide-white">
                 {table.getRowModel().rows.map((row) => (
-                  <tr key={row.id} onClick={() => router.push(`/employees/edit/${row.original.shomareh}`)} className="hover:bg-gray-50 cursor-pointer">
+                  <tr
+                    key={row.id}
+                    onClick={() =>
+                      router.push(`/employees/edit/${row.original.id}`)
+                    }
+                    className="hover:bg-gray-50 cursor-pointer"
+                  >
                     {row.getVisibleCells().map((cell) => (
                       <td
                         key={cell.id}
@@ -200,7 +255,9 @@ function Employees() {
                   type="number"
                   value={table.getState().pagination.pageIndex + 1}
                   onChange={(e) => {
-                    const page = e.target.value ? Number(e.target.value) - 1 : 0;
+                    const page = e.target.value
+                      ? Number(e.target.value) - 1
+                      : 0;
                     table.setPageIndex(page);
                   }}
                   className="w-16 p-2 rounded-md border border-gray-300 text-center"
@@ -223,13 +280,18 @@ function Employees() {
               >
                 {">>"}
               </button>
-
             </div>
           </div>
         </div>
       </Layout>
     </>
-  )
+  );
 }
+type ActionsProps = {
+  props: object;
+};
+const Actions = ({ props }: ActionsProps) => {
+  return <div></div>;
+};
 
-export default Employees
+export default Employees;
