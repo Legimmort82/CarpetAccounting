@@ -1,4 +1,5 @@
 import searchLogo from "@/assets/table/search.svg"
+import check from "@/assets/table/check.svg"
 import { createColumnHelper, flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, useReactTable } from "@tanstack/react-table"
 import { useState } from "react";
 import mockData from "@/data/data.json"
@@ -6,7 +7,6 @@ import Image from "next/image";
 import Layout from "@/components/Layout/Layout";
 import { useRouter } from "next/router";
 import { useDebounce } from "@/hooks/useDebounce";
-import { SelectableInputField } from "@/components/UI/Fields/fields";
 import SelectableInput from "@/components/UI/Inputs/SelectableInput";
 
 const monthArray = [
@@ -215,12 +215,11 @@ const columns = [
   }),
 
   columnHelper.accessor("ersalshodeh", {
-    cell: (info) => 
-    <input
-      type="checkbox"
-      checked={info.getValue()}
-      // onChange={}
-    />,
+    cell: ({ row: { original } }) => (
+      original.ersalshodeh
+        ? <Image className="w-7 h-7" src={check} alt="check" />
+        : <span className="text-[16px] duration-200 hover:text-[22px]">نه</span>
+    ),
     header: () => (
       <span className="flex items-center justify-center">
         ارسال شده

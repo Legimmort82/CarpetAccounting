@@ -21,6 +21,9 @@ import useGetGereh from "@/api/Employees/getGereh";
 import useGetShirazeh from "@/api/Employees/getShirazeh";
 import { SelectByNameInputField } from "@/components/UI/Fields/fields";
 import SelectByName from "@/components/UI/Inputs/SelectByName";
+import edit from "@/assets/table/edit.svg"
+import view from "@/assets/table/view.svg";
+
 
 // const skillArray = [
 //   { value: "شیرازه", id: 1 },
@@ -92,7 +95,6 @@ function Employees() {
   const [data, setData] = useState([]);
   const [globalFilter, setGlobalFilter] = useState("");
   const debounceSearch = useDebounce(globalFilter, 1000);
-  const router = useRouter();
   const { data: Skills } = useGetSkills();
   console.log(Skills);
 
@@ -166,15 +168,15 @@ function Employees() {
             </div>
           </div>
 
-          <div className="overflow-x-auto shadow-md rounded-lg">
-            <table className="min-w-full divide-y divide-white">
-              <thead className="bg-[#000655]">
+          <div className="overflow-x-auto shadow-md rounded-lg mb-[74px]">
+            <table className="min-w-full divide-y divide-white ">
+              <thead className="bg-[#000655] top-0 z-10">
                 {table.getHeaderGroups().map((headerGroup) => (
                   <tr key={headerGroup.id}>
                     {headerGroup.headers.map((header) => (
                       <th
                         key={header.id}
-                        className="px-6 py-3 text-center text-xs font-medium text-white uppercase"
+                        className="px-6 py-3 text-center text-md font-medium text-white uppercase"
                       >
                         {flexRender(
                           header.column.columnDef.header,
@@ -190,10 +192,7 @@ function Employees() {
                 {table.getRowModel().rows.map((row) => (
                   <tr
                     key={row.id}
-                    onClick={() =>
-                      router.push(`/employees/edit/${row.original.id}`)
-                    }
-                    className="hover:bg-gray-50 cursor-pointer"
+                    className="hover:bg-gray-300"
                   >
                     {row.getVisibleCells().map((cell) => (
                       <td
@@ -290,8 +289,27 @@ function Employees() {
 type ActionsProps = {
   props: object;
 };
-const Actions = ({ props }: ActionsProps) => {
-  return <div></div>;
-};
 
+//TODO add router ==============================================
+const Actions = ({ props }: ActionsProps) => {
+  // const router = useRouter();
+  // const id = router.query.id as string;
+  // console.log(id);
+  return (
+    <div className="flex items-center gap-x-3">
+      <Image
+        className="text-gray-700 w-5 h-5 cursor-pointer duration-200 hover:scale-[1.2]"
+        src={edit}
+        alt="view"
+        // onClick={() => router.push(`/employees/edit/${id}`)}
+      />
+      <Image className="text-gray-700 w-5 h-5 cursor-pointer duration-200 hover:scale-[1.2]"
+        src={view}
+        alt="view"
+        // onClick={() => router.push(`/employees/edit/${id}`)}
+      />
+    </div>
+  )
+};
+// router.push(`/employees/edit/${row.original.id}`)
 export default Employees;
