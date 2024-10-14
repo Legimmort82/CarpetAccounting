@@ -258,22 +258,22 @@ function Incompletes() {
     <>
       <Layout>
         <div className="flex flex-col h-screen w-full pt-[150px] px-4 items-center">
-          <div className="flex flex-col items-stretch pl-4 py-3 pr-[366px] fixed top-0 left-0 bg-white w-full">
-            <h1 className="text-3xl font-bold self-center mb-6">فهرست تمام قالی ها</h1>
+          <div className="flex flex-col items-stretch pl-4 py-3 pr-[328px] fixed top-0 left-0 bg-white w-full">
+            <h1 className="text-3xl font-bold self-center mb-6">فهرست تکمیل نشده ها</h1>
 
             <div className="flex justify-between items-center">
-              <div className="mb-4 relative">
+              <div className="relative">
                 <input
                   type="text"
                   value={globalFilter ?? ""}
                   onChange={(e) => setGlobalFilter(e.target.value)}
                   placeholder="دنبال چی میگردی؟"
-                  className="relative bg-[#2E2A54] h-[44px] pl-4 pr-9 py-3 rounded-md w-[550px] text-white"
+                  className="relative bg-[#050A30] h-[44px] pl-4 pr-11 font-semibold py-3 flex items-center rounded-md w-[550px] text-white"
                 />
-                <Image className="absolute w-7 h-7 top-[10px] right-1" src={searchLogo} alt="search-logo" />
+                <Image className="absolute w-7 h-7 top-[9px] right-2" src={searchLogo} alt="search-logo" />
               </div>
 
-              {/* <div className="flex items-center gap-4 mb-4 z-50">
+              <div className="flex items-center gap-4 z-50">
                 <div className="flex items-center gap-4">
                   <SelectableInput
                     name="month"
@@ -290,20 +290,20 @@ function Incompletes() {
 
                   />
                 </div>
-                <button className="bg-gray-200 py-2 px-4 text-center rounded-md">مشاهده</button>
-              </div> */}
+                <button className="py-2 px-4 text-center text-white font-semibold rounded-md bg-[#050A30]">مشاهده</button>
+              </div>
             </div>
           </div>
 
-          <div className="w-calc382 overflow-x-auto rounded-lg mb-[70px]">
-            <table className=" divide-y divide-white  overflow-x-auto rounded-lg ">
+          <div className="w-calc382 overflow-x-auto rounded-lg mb-[80px] p-2">
+            <table className=" divide-y divide-white  overflow-x-auto rounded-lg w-full border border-collapse">
               <thead className="bg-[#050A30] top-0 z-10">
                 {table.getHeaderGroups().map((headerGroup) => (
                   <tr key={headerGroup.id}>
                     {headerGroup.headers.map((header) => (
                       <th
                         key={header.id}
-                        className="px-9 py-3 text-center text-md font-medium text-white uppercase"
+                        className="px-9 py-3 text-center text-md font-medium text-white uppercase border"
                       >
                         {flexRender(
                           header.column.columnDef.header,
@@ -315,13 +315,13 @@ function Incompletes() {
                 ))}
               </thead>
 
-              <tbody className="bg-[#C9CCE7] divide-y-2 divide-white">
+              <tbody className="bg-[#c3c4cb] divide-y-2 divide-white">
                 {table.getRowModel().rows.map((row) => (
-                  <tr key={row.id} onClick={() => router.push(`/carpets/edit/${row.original.shomareh}`)} className="hover:bg-gray-50 cursor-pointer">
+                  <tr key={row.id} onClick={() => router.push(`/carpets/edit/${row.original.shomareh}`)} className="even:bg-[#dfdfe7] cursor-pointer">
                     {row.getVisibleCells().map((cell) => (
                       <td
                         key={cell.id}
-                        className="px-9 py-4 text-center text-sm font-medium text-gray-800"
+                        className="px-9 py-4 text-center text-sm font-medium text-gray-800 border"
                       >
                         {flexRender(
                           cell.column.columnDef.cell,
@@ -335,12 +335,12 @@ function Incompletes() {
             </table>
           </div>
 
-          <div className="flex justify-between items-center py-2 text-sm text-gray-700 bg-white pl-40 pr-[510px] fixed bottom-0 left-0 w-full">
+          <div className="flex justify-between items-center py-2 text-sm text-gray-700 bg-white pl-40 pr-[510px] fixed bottom-2 left-0 w-full">
             <div className="flex items-center mt-4 ">
-              <span className="ml-2">تعداد ردیف ها</span>
+              <span className="ml-4">تعداد ردیف ها</span>
 
               <select
-                className="border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 p-2"
+                className="border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 py-2 px-3"
                 value={table.getState().pagination.pageSize}
                 onChange={(e) => {
                   table.setPageSize(Number(e.target.value));
@@ -356,7 +356,7 @@ function Incompletes() {
 
             <div className="flex justify-between items-center mt-4 text-sm text-gray-700">
               <button
-                className="p-2 ml-1 rounded-md bg-gray-200 text-gray-600 hover:bg-gray-200 disabled:opacity-50"
+                className="p-2 ml-1 rounded-md bg-[#050A30] text-white hover:bg-gray-200 disabled:opacity-50"
                 onClick={() => table.firstPage()}
                 disabled={!table.getCanPreviousPage()}
               >
@@ -364,7 +364,7 @@ function Incompletes() {
               </button>
 
               <button
-                className="p-2 rounded-md ml-2 bg-gray-200 text-gray-600 hover:bg-gray-200 disabled:opacity-50"
+                className="p-2 rounded-md ml-2 bg-[#050A30] text-white hover:bg-gray-200 disabled:opacity-50"
                 onClick={() => table.previousPage()}
                 disabled={!table.getCanPreviousPage()}
               >
@@ -383,11 +383,11 @@ function Incompletes() {
                   }}
                   className="w-16 p-2 rounded-md border border-gray-300 text-center"
                 />
-                <span className="ml-1"> از {table.getPageCount()} </span>
+                <span className="ml-1 mr-2"> از {table.getPageCount()} </span>
               </div>
 
               <button
-                className="p-2 ml-1 rounded-md bg-gray-200 text-gray-600 hover:bg-gray-200 disabled:opacity-50"
+                className="p-2 ml-1 rounded-md bg-[#050A30] text-white hover:bg-gray-200 disabled:opacity-50"
                 onClick={() => table.nextPage()}
                 disabled={!table.getCanNextPage()}
               >
@@ -395,7 +395,7 @@ function Incompletes() {
               </button>
 
               <button
-                className="p-2 rounded-md bg-gray-200 text-gray-600 hover:bg-gray-200 disabled:opacity-50"
+                className="p-2 rounded-md bg-[#050A30] text-white hover:bg-gray-200 disabled:opacity-50"
                 onClick={() => table.setPageIndex(table.getPageCount() - 1)}
                 disabled={!table.getCanNextPage()}
               >

@@ -12,7 +12,7 @@ type props = {
  */
 const useUpdateEmployee = (options = {}) => {
   return useMutation({
-    mutationFn: ({ data, id }: props) => apiClient.put(`/accounts/workers/${id}/update`, data),
+    mutationFn: ({ data, id }: props) => apiClient.put(`/accounts/workers/${id}`, data),
 
     ...options,
   });

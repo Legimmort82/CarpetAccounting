@@ -19,7 +19,7 @@ import useGetAllEmployees from "@/api/Employees/getAllEmployees";
 import useGetCheleh from "@/api/Employees/getCheleh";
 import useGetGereh from "@/api/Employees/getGereh";
 import useGetShirazeh from "@/api/Employees/getShirazeh";
-import { SelectByNameInputField } from "@/components/UI/Fields/fields";
+import { SelectByNameInputField, SelectableInputField } from "@/components/UI/Fields/fields";
 import SelectByName from "@/components/UI/Inputs/SelectByName";
 import edit from "@/assets/table/edit.svg"
 import view from "@/assets/table/view.svg";
@@ -98,12 +98,7 @@ function Employees() {
   const { data: Skills } = useGetSkills();
   console.log(Skills);
 
-  const handleChangeData = (value: number) => {
-    if (value == 1) setData(Gereh?.data);
-    else if (value == 2) setData(Cheleh?.data);
-    else if (value == 3) setData(Shirazeh?.data);
-    else setData(AllEmployees?.data);
-  };
+
   useEffect(() => {
     if (AllEmployees && AllEmployees.data) {
       setData(AllEmployees.data); // Set data once AllEmployees is available
@@ -126,6 +121,22 @@ function Employees() {
     onGlobalFilterChange: setGlobalFilter,
     getFilteredRowModel: getFilteredRowModel(),
   });
+  
+  const handleChangeData = (value: number) => {
+    let selectedData = [];
+  
+    if (value === 1 && Gereh?.data) {
+      selectedData = Gereh.data;
+    } else if (value === 2 && Cheleh?.data) {
+      selectedData = Cheleh.data;
+    } else if (value === 3 && Shirazeh?.data) {
+      selectedData = Shirazeh.data;
+    } else if (AllEmployees?.data) {
+      selectedData = AllEmployees.data;
+    }
+  
+    setData(selectedData || []); // Ensure it's never undefined
+  };
   return (
     <>
       <Layout>
@@ -153,7 +164,7 @@ function Employees() {
 
               <div className="flex items-center gap-4 mb-4 z-50">
                 <div className="flex items-center gap-4">
-                  <SelectByName
+                  <SelectableInput
                     name="skill"
                     placeholder="انتخاب مهارت"
                     data={Skills?.data}
@@ -168,7 +179,7 @@ function Employees() {
             </div>
           </div>
 
-          <div className="overflow-x-auto shadow-md rounded-lg mb-[74px]">
+          <div className="overflow-x-auto shadow-md rounded-lg mb-[74px] w-full">
             <table className="min-w-full divide-y divide-white ">
               <thead className="bg-[#000655] top-0 z-10">
                 {table.getHeaderGroups().map((headerGroup) => (
@@ -189,7 +200,7 @@ function Employees() {
               </thead>
 
               <tbody className="bg-[#7fb8e7] divide-y-2 divide-white">
-                {table.getRowModel().rows.map((row) => (
+                {table?.getRowModel().rows.map((row) => (
                   <tr
                     key={row.id}
                     className="hover:bg-gray-300"
@@ -296,7 +307,7 @@ const Actions = ({ props }: ActionsProps) => {
   // const id = router.query.id as string;
   // console.log(id);
   return (
-    <div className="flex items-center gap-x-3">
+    <div className="flex items-center gap-x-6 justify-center">
       <Image
         className="text-gray-700 w-5 h-5 cursor-pointer duration-200 hover:scale-[1.2]"
         src={edit}

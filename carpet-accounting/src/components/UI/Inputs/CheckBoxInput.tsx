@@ -7,6 +7,7 @@ type props = {
   required?: boolean;
   label?: string;
   checked?: boolean;
+  className?:string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
@@ -20,13 +21,14 @@ const CheckBoxInput = forwardRef(
       label,
       checked,
       onChange,
+      className,
     }: props,
     ref: any
   ) => {
     return (
       <>
-        <div>
-          <label className="text-xl pl-2">{label}</label>
+        <div className="flex items-center">
+          <label className={`text-xl pl-2 ${className}`}>{label}</label>
           <input
             type={type}
             checked={checked}

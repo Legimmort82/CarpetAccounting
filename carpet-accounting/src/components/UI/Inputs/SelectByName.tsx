@@ -1,7 +1,8 @@
 import Image from "next/image";
-import { forwardRef, useEffect, useState } from "react";
+import React, { LegacyRef, forwardRef, useEffect, useState } from "react";
 import downArrow from "@/assets/table/arrow-down-2.svg";
 import search from "@/assets/table/search-solid.svg";
+import useOutsideClick from "@/hooks/useOutsideClick";
 
 // const arrey = [
 //   { value: "نارنجی", id: 1 },
@@ -48,6 +49,10 @@ const SelectByName = forwardRef(
     ref: any
   ) => {
     // const [color, setColor] = useState(data);
+    const handleClickOutside = () => {
+      setOpen(false);
+    };
+    const SelectRef = useOutsideClick({ handler: handleClickOutside });
     const [inputValue, setInputValue] = useState("");
     const [selected, setSelected] = useState("");
     const [open, setOpen] = useState(false);
@@ -56,9 +61,15 @@ const SelectByName = forwardRef(
         setSelected(selectedBefore);
       }
     }, [selectedBefore]);
+    const handleSearch=(e:React.ChangeEvent<HTMLInputElement>)=>{
+      setInputValue(e.target.value)
+      setSelected(e.target.value)
+      getRealValue?.(e.target.value)
+    }
     return (
       <>
         <div
+        ref={SelectRef as LegacyRef<HTMLDivElement> | undefined}
           className={`font-medium z-20 h-10 cursor-pointer duration-300 hover:scale-[1.02] ${className}`}
         >
           <div
@@ -85,7 +96,7 @@ const SelectByName = forwardRef(
                 ref={ref}
                 value={inputValue}
                 name={name}
-                onChange={(e) => setInputValue(e.target.value)}
+                onChange={handleSearch}
                 placeholder="انتخاب "
                 className=" w-full py-2 px-9 bg-gray-50 outline-none"
               />

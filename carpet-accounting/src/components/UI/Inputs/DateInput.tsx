@@ -12,6 +12,7 @@ type props = {
   required?: boolean;
   label?: string;
   selected?: string;
+  className?:string;
   getValue?: (value: string) => void;
 };
 
@@ -26,6 +27,7 @@ const DateInput = forwardRef(
       required,
       selected,
       getValue,
+      className,
     }: props,
     ref: any
   ) => {
@@ -38,7 +40,7 @@ const DateInput = forwardRef(
 
     return (
       <div className="flex gap-2 items-center">
-        <label htmlFor="">{label}</label>
+        <label htmlFor="" className={className}>{label}</label>
         <DatePicker
           placeholder={selected}
           name={name}

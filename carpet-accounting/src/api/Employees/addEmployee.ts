@@ -11,7 +11,7 @@ type props = {
  */
 const useAddEmployee = (options = {}) => {
   return useMutation({
-    mutationFn: ({ data }: props) => apiClient.post(`/accounts/workers/add`, data),
+    mutationFn: ({ data }: props) => apiClient.post(`/accounts/workers`, data),
 
     ...options,
   });

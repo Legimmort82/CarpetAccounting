@@ -9,6 +9,7 @@ type props = {
   required?: boolean;
   label?: string;
   readOnly?: boolean;
+  className?:string;
   onChange?: () => void;
 };
 
@@ -23,6 +24,7 @@ const SimpleInput = forwardRef(
       readOnly,
       required,
       label,
+      className,
       onChange,
     }: props,
     ref: any
@@ -36,7 +38,7 @@ const SimpleInput = forwardRef(
     };
     return (
       <div className="flex items-center justify-center gap-2">
-        <label className="text-xl">{label}</label>
+        <label className={`text-xl ${className}`}>{label}</label>
         <input
           readOnly={readOnly}
           type={type}

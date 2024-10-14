@@ -12,7 +12,7 @@ type props = {
  */
 const useDeleteEmployee = (options = {}) => {
   return useMutation({
-    mutationFn: ({ data, id }: props) => apiClient.delete(`/accounts/workers/${id}/delete`, data),
+    mutationFn: ({ data, id }: props) => apiClient.delete(`/accounts/workers/${id}`, data),
 
     ...options,
   });

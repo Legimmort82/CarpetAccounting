@@ -13,7 +13,7 @@ const config: Config = {
         foreground: "var(--foreground)",
       },
       width: {
-        'calc382': 'calc(100vw - 382px)',
+        'calc382': 'calc(100vw - 332px)',
       },
       height: {
         'calc50': 'calc(100vh - 50px)',

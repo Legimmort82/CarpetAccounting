@@ -5,3 +5,26 @@
 body {
     direction: rtl;
 }
+
+::-webkit-scrollbar {
+    margin: 10px;
+    width: 7px;
+    height: 7px;
+}
+ 
+/* Track */
+::-webkit-scrollbar-track {
+    background: #e4dddd;
+    border-radius: 6px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #050A30;
+    border-radius: 6px;
+}
+ 
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #312f2f;
+}
