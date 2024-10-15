@@ -28,7 +28,7 @@ function AddCarpet() {
   const { data: Cheleh } = useGetCheleh();
   const { data: Gereh } = useGetGereh();
   const { data: Shirazeh } = useGetShirazeh()
-
+  
   const methods = useForm({
     defaultValues: {
       arz: "",
@@ -163,6 +163,7 @@ function AddCarpet() {
                 methods.setValue("shirazehVouroud", value);
               }}
               className={"text-white"}
+              id="shirazehVouroud"
             />
             <DateInput
               label="تاریخ خروج"
@@ -170,6 +171,7 @@ function AddCarpet() {
                 methods.setValue("shirazehKhoroug", value);
               }}
               className={"text-white"}
+              id="shirazehKhoroug"
             />
           </div>
           <div className="flex flex-wrap justify-center gap-14 items-center py-7 ">
@@ -188,6 +190,7 @@ function AddCarpet() {
                 methods.setValue("gerehVouroud", value);
               }}
               className={"text-white"}
+              id="gerehVouroud"
             />
             <DateInput
               label="تاریخ خروج"
@@ -195,6 +198,7 @@ function AddCarpet() {
                 methods.setValue("gerehKhoroug", value);
               }}
               className={"text-white"}
+              id="gerehKhoroug"
             />
           </div>
           <div className="flex flex-wrap justify-center gap-14 items-center py-7 rounded-br-md rounded-bl-md">
@@ -212,6 +216,7 @@ function AddCarpet() {
                 methods.setValue("chelehVouroud", value);
               }}
               className={"text-white"}
+              id="chelehVouroud"
             />
             <DateInput
               label="تاریخ خروج"
@@ -219,6 +224,7 @@ function AddCarpet() {
                 methods.setValue("chelehKhoroug", value);
               }}
               className={"text-white"}
+              id="chelehKhoroug"
             />
           </div>
 

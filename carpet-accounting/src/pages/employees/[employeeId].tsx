@@ -1,14 +1,23 @@
-import searchLogo from "@/assets/table/search.svg"
-import check from "@/assets/table/check.svg"
-import { createColumnHelper, flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, useReactTable } from "@tanstack/react-table"
+import React, { useEffect } from "react";
+import searchLogo from "@/assets/table/search.svg";
+import check from "@/assets/table/check.svg";
+import {
+  createColumnHelper,
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
 import { useState } from "react";
-import mockData from "@/data/data.json"
+import mockData from "@/data/data.json";
 import Image from "next/image";
 import Layout from "@/components/Layout/Layout";
 import { useRouter } from "next/router";
 import { useDebounce } from "@/hooks/useDebounce";
 import SelectableInput from "@/components/UI/Inputs/SelectableInput";
-import {CarpetData} from "@/data/05data"
+import { CarpetData } from "@/data/05data";
+import useGetSingleEmployee from "@/api/Employees/getSingleEmployee";
 const monthArray = [
   { value: "01", id: 1 },
   { value: "02", id: 2 },
@@ -21,8 +30,8 @@ const monthArray = [
   { value: "09", id: 9 },
   { value: "10", id: 10 },
   { value: "11", id: 11 },
-  { value: "12", id: 12 }
-]
+  { value: "12", id: 12 },
+];
 const yearsArray = [
   { value: "1396", id: 1 },
   { value: "1397", id: 2 },
@@ -35,205 +44,195 @@ const yearsArray = [
   { value: "1404", id: 9 },
   { value: "1405", id: 10 },
   { value: "1406", id: 11 },
-  { value: "1407", id: 12 }
-]
+  { value: "1407", id: 12 },
+];
 
 type Carpet = {
-  shomareh: number,
-  arz: string,
-  tool: string,
-  metraj: string,
-  naghsheh: string,
-  rang: string,
-  serial: string,
-  code: string,
-  shirazeh: string,
-  shirazehKhoroug: string,
-  shirazehVouroud: string,
-  cheleh: string,
-  chelehKhroug: string,
-  chelehVouroud: string,
-  gereh: string,
-  gerehKhoroug: string,
-  gerehVouroud: string,
-  ersalshodeh: boolean
-}
+  id: number;
+  isRectangle: boolean;
+  arz: string;
+  tool: string;
+  metraj: string;
+  naghsheh: string;
+  rang: string;
+  serial: string;
+  code: string;
+  shirazeh: string;
+  shirazehKhoroug: string;
+  shirazehVouroud: string;
+  cheleh: string;
+  chelehKhroug: string;
+  chelehVouroud: string;
+  gereh: string;
+  gerehKhoroug: string;
+  gerehVouroud: string;
+  ersalshodeh: boolean;
+};
 const columnHelper = createColumnHelper<Carpet>();
 
 const columns = [
-  columnHelper.accessor("shomareh", {
+  columnHelper.accessor("id", {
     cell: (info) => info.getValue(),
     header: () => (
-      <span className="flex items-center justify-center">
-        شماره
-      </span>
-    )
+      <span className="flex items-center justify-center">شماره</span>
+    ),
   }),
 
   columnHelper.accessor("arz", {
     cell: (info) => info.getValue(),
-    header: () => (
-      <span className="flex items-center justify-center">
-        عرض
-      </span>
-    )
+    header: () => <span className="flex items-center justify-center">عرض</span>,
   }),
 
   columnHelper.accessor("tool", {
     cell: (info) => info.getValue(),
-    header: () => (
-      <span className="flex items-center justify-center">
-        طول
-      </span>
-    )
+    header: () => <span className="flex items-center justify-center">طول</span>,
   }),
 
   columnHelper.accessor("metraj", {
     cell: (info) => info.getValue(),
     header: () => (
-      <span className="flex items-center justify-center">
-        متراژ
-      </span>
-    )
+      <span className="flex items-center justify-center">متراژ</span>
+    ),
   }),
 
   columnHelper.accessor("naghsheh", {
     cell: (info) => info.getValue(),
     header: () => (
-      <span className="flex items-center justify-center">
-        نقشه
-      </span>
-    )
+      <span className="flex items-center justify-center">نقشه</span>
+    ),
   }),
 
   columnHelper.accessor("rang", {
     cell: (info) => info.getValue(),
-    header: () => (
-      <span className="flex items-center justify-center">
-        رنگ
-      </span>
-    )
+    header: () => <span className="flex items-center justify-center">رنگ</span>,
   }),
 
   columnHelper.accessor("serial", {
     cell: (info) => info.getValue(),
     header: () => (
-      <span className="flex items-center justify-center">
-        سریال
-      </span>
-    )
+      <span className="flex items-center justify-center">سریال</span>
+    ),
   }),
 
   columnHelper.accessor("code", {
     cell: (info) => info.getValue(),
-    header: () => (
-      <span className="flex items-center justify-center">
-        کد
-      </span>
-    )
+    header: () => <span className="flex items-center justify-center">کد</span>,
+  }),
+  columnHelper.accessor("isRectangle", {
+    cell: (info) => {
+      const rectangle = info.getValue();
+      if (rectangle) return "مستطیل";
+      else return "دایره";
+    },
+    header: () => <span className="flex items-center justify-center">نوع</span>,
   }),
 
   columnHelper.accessor("shirazeh", {
     cell: (info) => info.getValue(),
     header: () => (
-      <span className="flex items-center justify-center">
-        شیرازه
-      </span>
-    )
+      <span className="flex items-center justify-center">شیرازه</span>
+    ),
   }),
 
   columnHelper.accessor("shirazehKhoroug", {
     cell: (info) => info.getValue(),
     header: () => (
-      <span className="flex items-center justify-center">
-        خ-شیرازه
-      </span>
-    )
+      <span className="flex items-center justify-center">خ-شیرازه</span>
+    ),
   }),
 
   columnHelper.accessor("shirazehVouroud", {
     cell: (info) => info.getValue(),
     header: () => (
-      <span className="flex items-center justify-center">
-        و-شیرازه
-      </span>
-    )
+      <span className="flex items-center justify-center">و-شیرازه</span>
+    ),
   }),
 
   columnHelper.accessor("cheleh", {
     cell: (info) => info.getValue(),
-    header: () => (
-      <span className="flex items-center justify-center">
-        چله
-      </span>
-    )
+    header: () => <span className="flex items-center justify-center">چله</span>,
   }),
 
   columnHelper.accessor("chelehKhroug", {
     cell: (info) => info.getValue(),
     header: () => (
-      <span className="flex items-center justify-center">
-        خ-چله
-      </span>
-    )
+      <span className="flex items-center justify-center">خ-چله</span>
+    ),
   }),
 
   columnHelper.accessor("chelehVouroud", {
     cell: (info) => info.getValue(),
     header: () => (
-      <span className="flex items-center justify-center">
-        و-چله
-      </span>
-    )
+      <span className="flex items-center justify-center">و-چله</span>
+    ),
   }),
 
   columnHelper.accessor("gereh", {
     cell: (info) => info.getValue(),
-    header: () => (
-      <span className="flex items-center justify-center">
-        گره
-      </span>
-    )
+    header: () => <span className="flex items-center justify-center">گره</span>,
   }),
 
   columnHelper.accessor("gerehKhoroug", {
     cell: (info) => info.getValue(),
     header: () => (
-      <span className="flex items-center justify-center">
-        خ-گره
-      </span>
-    )
+      <span className="flex items-center justify-center">خ-گره</span>
+    ),
   }),
 
   columnHelper.accessor("gerehVouroud", {
     cell: (info) => info.getValue(),
     header: () => (
-      <span className="flex items-center justify-center">
-        و-گره
-      </span>
-    )
+      <span className="flex items-center justify-center">و-گره</span>
+    ),
   }),
 
   columnHelper.accessor("ersalshodeh", {
-    cell: ({ row: { original } }) => (
-      original.ersalshodeh
-        ? <Image className="w-7 h-7" src={check} alt="check" />
-        : <span className="text-[16px] duration-200 hover:text-[22px]">نه</span>
-    ),
+    cell: ({ row: { original } }) =>
+      original.ersalshodeh ? (
+        <Image className="w-7 h-7" src={check} alt="check" />
+      ) : (
+        <span className="text-[16px] duration-200 hover:text-[22px]">خیر</span>
+      ),
     header: () => (
-      <span className="flex items-center justify-center">
-        ارسال شده
-      </span>
-    )
+      <span className="flex items-center justify-center">ارسال شده</span>
+    ),
   }),
-]
+];
+const EmployeePage = () => {
+  const router = useRouter();
+  const [fullName, setFullName] = useState("");
+  const [section, setSection] = useState("");
 
-function Incompletes() {
-  const filteredData = CarpetData.filter((item) => (item?.gerehVouroud == "") || (item?.gerehKhoroug == "") || (item?.gereh == "") || (item?.cheleh == "") || (item?.shirazeh == ""))
-  const [data, setData] = useState([...filteredData])
+  const { data: singleEmployee } = useGetSingleEmployee(
+    router.query.employeeId
+  );
+  
+  const calculateName = () => {
+    const name = singleEmployee?.data?.name;
+    const last_name = singleEmployee?.data?.last_name;
+    const section = singleEmployee?.data?.section;
+    if (section == 1) setSection("gereh");
+    else if (section == 2) setSection("cheleh");
+    else setSection("shirazeh");
+    if (name != null || undefined) setFullName(name + " " + last_name);
+    else setFullName(last_name);
+  };
+
+  const filteredData = CarpetData.filter((item) => item[section] == fullName);
+  
+  useEffect(()=>{
+  if(filteredData){
+    setData(filteredData)
+  }
+
+  },[singleEmployee,fullName])
+  const [data, setData] = useState(filteredData);
   const [globalFilter, setGlobalFilter] = useState("");
   const debounceSearch = useDebounce(globalFilter, 1000);
-  const router = useRouter();
+
+  useEffect(() => {
+    if (singleEmployee?.data) calculateName();
+  }, [singleEmployee?.data]);
 
   const table = useReactTable({
     data,
@@ -252,14 +251,22 @@ function Incompletes() {
     onGlobalFilterChange: setGlobalFilter,
     getFilteredRowModel: getFilteredRowModel(),
   });
-
-
   return (
     <>
       <Layout>
         <div className="flex flex-col h-screen w-full pt-[150px] px-4 items-center">
           <div className="flex flex-col items-stretch pl-4 py-3 pr-[328px] fixed top-0 left-0 bg-white w-full">
-            <h1 className="text-3xl font-bold self-center mb-6">فهرست تکمیل نشده ها</h1>
+            <h1 className="text-3xl font-bold self-center mb-6">
+              {singleEmployee?.data && (
+                <div>
+                  {singleEmployee?.data?.name
+                    ? singleEmployee?.data?.name +
+                      " " +
+                      singleEmployee?.data?.last_name
+                    : singleEmployee?.data?.last_name}
+                </div>
+              )}
+            </h1>
 
             <div className="flex justify-between items-center">
               <div className="relative">
@@ -268,9 +275,13 @@ function Incompletes() {
                   value={globalFilter ?? ""}
                   onChange={(e) => setGlobalFilter(e.target.value)}
                   placeholder="دنبال چی میگردی؟"
-                  className="relative bg-[#050A30] h-[44px] pl-4 pr-11 font-semibold py-3 flex items-center rounded-md w-[550px] text-white"
+                  className="relative bg-[#050A30] flex items-center h-[44px] pl-4 pr-11 py-3 font-semibold rounded-md w-[550px] text-white"
                 />
-                <Image className="absolute w-7 h-7 top-[9px] right-2" src={searchLogo} alt="search-logo" />
+                <Image
+                  className="absolute w-7 h-7 top-[9px] right-2"
+                  src={searchLogo}
+                  alt="search-logo"
+                />
               </div>
 
               <div className="flex items-center gap-4 z-50">
@@ -287,15 +298,16 @@ function Incompletes() {
                     placeholder="انتخاب سال"
                     data={yearsArray}
                     className="z-50 relative"
-
                   />
                 </div>
-                <button className="py-2 px-4 text-center text-white font-semibold rounded-md bg-[#050A30]">مشاهده</button>
+                <button className="py-2 px-4 text-center text-white font-semibold rounded-md bg-[#050A30]">
+                  مشاهده
+                </button>
               </div>
             </div>
           </div>
 
-          <div className="w-calc382 overflow-x-auto rounded-lg mb-[80px] p-2">
+          <div className="w-calc382 overflow-x-auto mb-[80px] p-2">
             <table className=" divide-y divide-white  overflow-x-auto rounded-lg w-full border border-collapse">
               <thead className="bg-[#050A30] top-0 z-10">
                 {table.getHeaderGroups().map((headerGroup) => (
@@ -317,7 +329,13 @@ function Incompletes() {
 
               <tbody className="bg-[#c3c4cb] divide-y-2 divide-white">
                 {table.getRowModel().rows.map((row) => (
-                  <tr key={row.id} onClick={() => router.push(`/carpets/edit/${row.original.shomareh}`)} className="even:bg-[#dfdfe7] cursor-pointer">
+                  <tr
+                    key={row.id}
+                    onClick={() =>
+                      router.push(`/carpets/edit/${row.original.id}`)
+                    }
+                    className="cursor-pointer even:bg-[#dfdfe7]"
+                  >
                     {row.getVisibleCells().map((cell) => (
                       <td
                         key={cell.id}
@@ -335,12 +353,12 @@ function Incompletes() {
             </table>
           </div>
 
-          <div className="flex justify-between items-center py-2 text-sm text-gray-700 bg-white pl-40 pr-[510px] fixed bottom-2 left-0 w-full">
+          <div className="flex justify-between items-center py-2 text-sm text-gray-700  pl-40 pr-[510px] fixed bottom-2 left-0 w-full">
             <div className="flex items-center mt-4 ">
               <span className="ml-4">تعداد ردیف ها</span>
 
               <select
-                className="border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 py-2 px-3"
+                className="border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 px-3 py-2"
                 value={table.getState().pagination.pageSize}
                 onChange={(e) => {
                   table.setPageSize(Number(e.target.value));
@@ -378,7 +396,9 @@ function Incompletes() {
                   type="number"
                   value={table.getState().pagination.pageIndex + 1}
                   onChange={(e) => {
-                    const page = e.target.value ? Number(e.target.value) - 1 : 0;
+                    const page = e.target.value
+                      ? Number(e.target.value) - 1
+                      : 0;
                     table.setPageIndex(page);
                   }}
                   className="w-16 p-2 rounded-md border border-gray-300 text-center"
@@ -406,7 +426,7 @@ function Incompletes() {
         </div>
       </Layout>
     </>
-  )
-}
+  );
+};
 
-export default Incompletes
+export default EmployeePage;

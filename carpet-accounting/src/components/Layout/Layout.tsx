@@ -104,7 +104,7 @@ function Layout({ children }: props) {
 
 							<div className={`${openSalary ? "block" : "hidden"} w-full flex flex-col items-center`}>
 								<DropDownList
-									href="/"
+									href="/salary/add-help"
 									logo={salaryLogo}
 								>
 									ثبت مساعده

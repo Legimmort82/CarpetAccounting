@@ -45,7 +45,7 @@ const columnHelper = createColumnHelper<Carpet>();
 const columns = [
   columnHelper.accessor("id", {
     cell: (info) => info.getValue(),
-    header: () => <span className="flex items-center">شماره</span>,
+    header: () => <span className="flex items-center justify-center">شماره</span>,
   }),
 
   columnHelper.accessor("name", {
@@ -53,11 +53,11 @@ const columns = [
       const name = info.getValue();
       return name ? name : "";
     },
-    header: () => <span className="flex items-center">نام</span>,
+    header: () => <span className="flex items-center justify-center">نام</span>,
   }),
   columnHelper.accessor("last_name", {
     cell: (info) => info.getValue(),
-    header: () => <span className="flex items-center">نام خانوادگی</span>,
+    header: () => <span className="flex items-center justify-center">نام خانوادگی</span>,
   }),
 
   columnHelper.accessor("section", {
@@ -68,12 +68,12 @@ const columns = [
       else if (section == "3") return "شیرازه";
       else return section;
     },
-    header: () => <span className="flex items-center">مهارت</span>,
+    header: () => <span className="flex items-center justify-center">مهارت</span>,
   }),
   {
     id: "actions",
     header: "درخواست‌ها",
-    cell: ({ row }: actions) => <Actions props={row} />,
+    cell: ({ row }: actions) => <Actions row={row} />,
   },
 
   // columnHelper.accessor("amaliat", {
@@ -96,7 +96,7 @@ function Employees() {
   const [globalFilter, setGlobalFilter] = useState("");
   const debounceSearch = useDebounce(globalFilter, 1000);
   const { data: Skills } = useGetSkills();
-  console.log(Skills);
+
 
 
   useEffect(() => {
@@ -141,28 +141,28 @@ function Employees() {
     <>
       <Layout>
         <div className="flex flex-col h-screen w-full pt-[150px] px-4 items-center">
-          <div className="flex flex-col items-stretch pl-4 py-3 pr-[366px] fixed top-0 left-0 bg-white w-full">
+          <div className="flex flex-col items-stretch pl-4 py-3 pr-[318px] fixed top-0 left-0 bg-white w-full">
             <h1 className="text-3xl font-bold self-center mb-6">
               فهرست تمام کارمندان
             </h1>
 
             <div className="flex justify-between items-center">
-              <div className="mb-4 relative">
+              <div className=" relative">
                 <input
                   type="text"
                   value={globalFilter ?? ""}
                   onChange={(e) => setGlobalFilter(e.target.value)}
                   placeholder="دنبال چی میگردی؟"
-                  className="relative bg-[#0c007a] h-[44px] pl-4 pr-9 py-3 rounded-md w-[550px] text-white"
+                  className="relative bg-[#050A30] h-[44px] flex items-center pl-4 pr-11 py-3 rounded-md w-[550px] text-white"
                 />
                 <Image
-                  className="absolute w-7 h-7 top-[10px] right-1"
+                  className="absolute w-7 h-7 top-[9px] right-2"
                   src={searchLogo}
                   alt="search-logo"
                 />
               </div>
 
-              <div className="flex items-center gap-4 mb-4 z-50">
+              <div className="flex items-center gap-4 z-50">
                 <div className="flex items-center gap-4">
                   <SelectableInput
                     name="skill"
@@ -179,15 +179,15 @@ function Employees() {
             </div>
           </div>
 
-          <div className="overflow-x-auto shadow-md rounded-lg mb-[74px] w-full">
-            <table className="min-w-full divide-y divide-white ">
-              <thead className="bg-[#000655] top-0 z-10">
+          <div className="overflow-x-auto w-calc382 shadow-md  mb-[80px]">
+            <table className="min-w-full divide-y divide-white overflow-x-auto border border-collapse">
+              <thead className="bg-[#050A30] top-0 z-10">
                 {table.getHeaderGroups().map((headerGroup) => (
                   <tr key={headerGroup.id}>
                     {headerGroup.headers.map((header) => (
                       <th
                         key={header.id}
-                        className="px-6 py-3 text-center text-md font-medium text-white uppercase"
+                        className="px-6 py-3 text-center text-md font-medium text-white uppercase border"
                       >
                         {flexRender(
                           header.column.columnDef.header,
@@ -199,16 +199,16 @@ function Employees() {
                 ))}
               </thead>
 
-              <tbody className="bg-[#7fb8e7] divide-y-2 divide-white">
+              <tbody className="bg-[#c3c4cb] divide-y-2 divide-white">
                 {table?.getRowModel().rows.map((row) => (
                   <tr
                     key={row.id}
-                    className="hover:bg-gray-300"
+                    className="cursor-pointer even:bg-[#dfdfe7]"
                   >
                     {row.getVisibleCells().map((cell) => (
                       <td
                         key={cell.id}
-                        className="px-7 py-4 text-right text-sm font-medium text-gray-800"
+                        className="px-7 py-4 text-center text-sm font-medium text-gray-800 border"
                       >
                         {flexRender(
                           cell.column.columnDef.cell,
@@ -243,7 +243,7 @@ function Employees() {
 
             <div className="flex justify-between items-center mt-4 text-sm text-gray-700">
               <button
-                className="p-2 ml-1 rounded-md bg-gray-200 text-gray-600 hover:bg-gray-200 disabled:opacity-50"
+                className="p-2 ml-1 rounded-md bg-[#050A30] text-white hover:bg-gray-200 disabled:opacity-50"
                 onClick={() => table.firstPage()}
                 disabled={!table.getCanPreviousPage()}
               >
@@ -251,7 +251,7 @@ function Employees() {
               </button>
 
               <button
-                className="p-2 rounded-md ml-2 bg-gray-200 text-gray-600 hover:bg-gray-200 disabled:opacity-50"
+                className="p-2 rounded-md ml-2 bg-[#050A30] text-white hover:bg-gray-200 disabled:opacity-50"
                 onClick={() => table.previousPage()}
                 disabled={!table.getCanPreviousPage()}
               >
@@ -272,11 +272,11 @@ function Employees() {
                   }}
                   className="w-16 p-2 rounded-md border border-gray-300 text-center"
                 />
-                <span className="ml-1"> از {table.getPageCount()} </span>
+                <span className="ml-1 mr-2"> از {table.getPageCount()} </span>
               </div>
 
               <button
-                className="p-2 ml-1 rounded-md bg-gray-200 text-gray-600 hover:bg-gray-200 disabled:opacity-50"
+                className="p-2 ml-1 rounded-md bg-[#050A30] text-white hover:bg-gray-200 disabled:opacity-50"
                 onClick={() => table.nextPage()}
                 disabled={!table.getCanNextPage()}
               >
@@ -284,7 +284,7 @@ function Employees() {
               </button>
 
               <button
-                className="p-2 rounded-md bg-gray-200 text-gray-600 hover:bg-gray-200 disabled:opacity-50"
+                className="p-2 rounded-md bg-[#050A30] text-white hover:bg-gray-200 disabled:opacity-50"
                 onClick={() => table.setPageIndex(table.getPageCount() - 1)}
                 disabled={!table.getCanNextPage()}
               >
@@ -297,13 +297,23 @@ function Employees() {
     </>
   );
 }
-type ActionsProps = {
-  props: object;
-};
+interface OriginalType {
+  id: number;
+  name: string;
+  // Add other properties as needed
+}
+
+interface Row {
+  original: OriginalType;
+}
+interface ActionsProps {
+  row: Row;
+}
+
 
 //TODO add router ==============================================
-const Actions = ({ props }: ActionsProps) => {
-  // const router = useRouter();
+const Actions = ({ row }: ActionsProps) => {
+  const router = useRouter();
   // const id = router.query.id as string;
   // console.log(id);
   return (
@@ -317,7 +327,7 @@ const Actions = ({ props }: ActionsProps) => {
       <Image className="text-gray-700 w-5 h-5 cursor-pointer duration-200 hover:scale-[1.2]"
         src={view}
         alt="view"
-        // onClick={() => router.push(`/employees/edit/${id}`)}
+        onClick={() => router.push(`/employees/${row.original.id}`)}
       />
     </div>
   )

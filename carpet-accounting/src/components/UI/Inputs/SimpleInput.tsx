@@ -38,7 +38,7 @@ const SimpleInput = forwardRef(
     };
     return (
       <div className="flex items-center justify-center gap-2">
-        <label className={`text-xl ${className}`}>{label}</label>
+        <label className={`text-xl font-semibold ${className}`}>{label}</label>
         <input
           readOnly={readOnly}
           type={type}

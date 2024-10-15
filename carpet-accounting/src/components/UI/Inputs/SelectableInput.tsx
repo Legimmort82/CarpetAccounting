@@ -109,9 +109,9 @@ const SelectableInput = forwardRef(
             </div>
 
             {data &&
-              data.map((item) => (
+              data.map((item,index) => (
                 <li
-                  key={item?.id}
+                  key={item?.id ? item?.id : index}
                   className={`py-2 px-4 text-sm hover:bg-sky-600 hover:text-white
                 ${
                   item?.value === selected
