@@ -20,7 +20,7 @@ import useGetShirazeh from "@/api/Employees/getShirazeh";
 import DateInput from "@/components/UI/Inputs/DateInput";
 import { useRouter } from "next/router";
 import mockData from "@/data/data.json";
-import {CarpetData} from "@/data/05data"
+import { CarpetData } from "@/data/05data"
 function EditCarpet() {
   const router = useRouter();
   const findCarpet = CarpetData.find(
@@ -110,173 +110,179 @@ function EditCarpet() {
   return (
     <>
       <Layout>
-      <section className="flex flex-col min-h-screen w-full py-6 px-4 items-center justify-center overflow-auto">
-        <div className="bg-[#0e1549] rounded-md">
+        <section className="flex flex-col min-h-screen w-full py-6 px-4 items-center justify-center overflow-auto">
+          <div className="bg-[#0e1549] rounded-md">
 
-        <div className="bg-[#070a2b] w-full py-16 border-b-2 rounded-t-md border-white px-6 flex justify-center items-center">
+            <div className="bg-[#070a2b] w-full py-16 border-b-2 rounded-t-md border-white px-6 flex justify-center items-center">
 
-        <h1 className="text-3xl font-bold text-white">ویرایش کردن قالی</h1>
-        </div>
-
-        <Form
-          onSubmit={handleSubmit}
-          methods={methods}
-          className="flex flex-col gap-y-1"
-        >
-          <div className="flex items-center justify-center gap-6 self-start w-full py-7 px-6  rounded-tr-md rounded-tl-md">
-            <h2 className="text-xl text-white font-bold self-start pl-5">نوع قالی:</h2>
-
-            <div className="flex flex-wrap gap-5 items-center">
-              <CheckBoxInputField
-                name="rectangle"
-                checked={isRectangle}
-                label={"مستطیل"}
-                className={"text-white"}
-                onChange={handleRectangleChange}
-              />
+              <h1 className="text-3xl font-bold text-white">ویرایش کردن قالی</h1>
             </div>
-          </div>
 
-          <div className="flex flex-wrap justify-center gap-12 items-center  py-7">
-            <SelectableInputField
-              name="arz"
-              data={!isRectangle ? CircleSizes?.data : Widths?.data}
-              placeholder={isRectangle ? "انتخاب عرض" : "انتخاب شعاع"}
-              getRealValue={(value: string) => {
-                methods.setValue("arz", value);
-              }}
-selectedBefore={findCarpet?.arz}
-              className={`z-50`}
-            />
-            <SelectableInputField
-              name="tool"
-              data={!isRectangle ? CircleSizes?.data : Lengths?.data}
-              placeholder={isRectangle ? "انتخاب طول" : "انتخاب شعاع"}
-              getRealValue={(value: string) => {
-                methods.setValue("tool", value);
-              }}
-selectedBefore={findCarpet?.tool}
-              className={`z-50`}
-            />
-            <SimpleInputField name="metraj" label={"متراژ"} readOnly className={"text-white"} />
-            <SelectableInputField
-              name="naghsheh"
-              data={designs?.data}
-              placeholder={"انتخاب نقشه"}
-              getValue={(value: string) => {
-                methods.setValue("naghsheh", value);
-              }}
-selectedBefore={findCarpet?.naghsheh}
-              className={"z-20"}
-            />
-            <SelectableInputField
-              name="rang"
-              data={colors?.data}
-              placeholder="انتخاب رنگ"
-              getValue={(value: string) => {
-                methods.setValue("rang", value);
-              }}
-              selectedBefore={findCarpet?.rang}
-            />
-            <SimpleInputField name="serial" label={"سریال"}  className={"text-white"}/>
-            <SimpleInputField name="code" label={"کد"}  className={"text-white"}/>
-          </div>
-          <div className="flex flex-wrap justify-center gap-14 items-center  py-7 ">
-            <SelectByNameInputField
-              name="shirazeh"
-              data={Shirazeh?.data}
-              placeholder="انتخاب شیرازه"
-              getRealValue={(value: string) => {
-                methods.setValue("shirazeh", value);
-              }}
-selectedBefore={findCarpet?.shirazeh}
-              className={"z-40"}
-            />
-            <DateInput
-              label="تاریخ ورود"
-              getValue={(value) => {
-                methods.setValue("shirazehVouroud", value);
-              }}
-              selected={findCarpet?.shirazehVouroud}
-            />
-            <DateInput
-              label="تاریخ خروج"
-              getValue={(value) => {
-                methods.setValue("shirazehKhoroug", value);
-              }}
-              selected={findCarpet?.shirazehKhoroug}
-            />
-          </div>
-          <div className="flex flex-wrap justify-center gap-14 items-center py-7 ">
-            <SelectByNameInputField
-              name="gereh"
-              data={Gereh?.data}
-              placeholder="انتخاب گره"
-              getRealValue={(value: string) => {
-                methods.setValue("gereh", value);
-              }}
-selectedBefore={findCarpet?.gereh}
-              className={"z-30"}
-            />
-            <DateInput
-              label="تاریخ ورود"
-              getValue={(value) => {
-                methods.setValue("gerehVouroud", value);
-              }}
-              selected={findCarpet?.gerehVouroud}
-            />
-            <DateInput
-              label="تاریخ خروج"
-              getValue={(value) => {
-                methods.setValue("gerehKhoroug", value);
-              }}
-              selected={findCarpet?.gerehKhoroug}
-            />
-          </div>
-          <div className="flex flex-wrap justify-center gap-14 items-center py-7 rounded-br-md rounded-bl-md">
-            <SelectByNameInputField
-              name="cheleh"
-              data={Cheleh?.data}
-              placeholder="انتخاب چله"
-              getRealValue={(value: string) => {
-                methods.setValue("cheleh", value);
-              }}
-selectedBefore={findCarpet?.cheleh}
-                className={"z-20"}
-            />
-            <DateInput
-              label="تاریخ ورود"
-              getValue={(value) => {
-                methods.setValue("chelehVouroud", value);
-              }}
-              selected={findCarpet?.chelehVouroud}
-            />
-            <DateInput
-              label="تاریخ خروج"
-              getValue={(value) => {
-                methods.setValue("chelehKhoroug", value);
-              }}
-              selected={findCarpet?.chelehKhroug}
-            />
-          </div>
+            <Form
+              onSubmit={handleSubmit}
+              methods={methods}
+              className="flex flex-col gap-y-1"
+            >
+              <div className="flex items-center justify-center gap-6 self-start w-full py-7 px-6  rounded-tr-md rounded-tl-md">
+                <h2 className="text-xl text-white font-bold self-start pl-5">نوع قالی:</h2>
 
-          <div className="flex justify-between items-center mt-7 px-8 pb-6">
-            <CheckBoxInputField name="send" label={"ارسال شده"} checked={isSend} onChange={handleSendCheckbox} className={"text-white font-semibold"}/>
-            <div className="flex justify-center items-center gap-2">
-              <button className="bg-white font-semibold px-5 py-2 rounded-md text-xl">
-                انصراف
-              </button>
-              <button
-                type="submit"
-                className="bg-white font-semibold px-5 py-2 rounded-md text-xl"
-              >
-                اضافه کردن
-              </button>
-            </div>
+                <div className="flex flex-wrap gap-5 items-center">
+                  <CheckBoxInputField
+                    name="rectangle"
+                    checked={isRectangle}
+                    label={"مستطیل"}
+                    className={"text-white"}
+                    onChange={handleRectangleChange}
+                  />
+                </div>
+              </div>
+
+              <div className="flex flex-wrap justify-center gap-12 items-center  py-7">
+                <SelectableInputField
+                  name="arz"
+                  data={!isRectangle ? CircleSizes?.data : Widths?.data}
+                  placeholder={isRectangle ? "انتخاب عرض" : "انتخاب شعاع"}
+                  getRealValue={(value: string) => {
+                    methods.setValue("arz", value);
+                  }}
+                  selectedBefore={findCarpet?.arz}
+                  className={`z-50`}
+                />
+                <SelectableInputField
+                  name="tool"
+                  data={!isRectangle ? CircleSizes?.data : Lengths?.data}
+                  placeholder={isRectangle ? "انتخاب طول" : "انتخاب شعاع"}
+                  getRealValue={(value: string) => {
+                    methods.setValue("tool", value);
+                  }}
+                  selectedBefore={findCarpet?.tool}
+                  className={`z-50`}
+                />
+                <SimpleInputField name="metraj" label={"متراژ"} readOnly className={"text-white"} />
+                <SelectableInputField
+                  name="naghsheh"
+                  data={designs?.data}
+                  placeholder={"انتخاب نقشه"}
+                  getValue={(value: string) => {
+                    methods.setValue("naghsheh", value);
+                  }}
+                  selectedBefore={findCarpet?.naghsheh}
+                  className={"z-20"}
+                />
+                <SelectableInputField
+                  name="rang"
+                  data={colors?.data}
+                  placeholder="انتخاب رنگ"
+                  getValue={(value: string) => {
+                    methods.setValue("rang", value);
+                  }}
+                  selectedBefore={findCarpet?.rang}
+                />
+                <SimpleInputField name="serial" label={"سریال"} className={"text-white"} />
+                <SimpleInputField name="code" label={"کد"} className={"text-white"} />
+              </div>
+              <div className="flex flex-wrap justify-center gap-14 items-center  py-7 ">
+                <SelectByNameInputField
+                  name="shirazeh"
+                  data={Shirazeh?.data}
+                  placeholder="انتخاب شیرازه"
+                  getRealValue={(value: string) => {
+                    methods.setValue("shirazeh", value);
+                  }}
+                  selectedBefore={findCarpet?.shirazeh}
+                  className={"z-40"}
+                />
+                <DateInput
+                  label="تاریخ ورود"
+                  getValue={(value) => {
+                    methods.setValue("shirazehVouroud", value);
+                  }}
+                  selected={findCarpet?.shirazehVouroud}
+                  className={"text-white"}
+                />
+                <DateInput
+                  label="تاریخ خروج"
+                  getValue={(value) => {
+                    methods.setValue("shirazehKhoroug", value);
+                  }}
+                  selected={findCarpet?.shirazehKhoroug}
+                  className={"text-white"}
+                />
+              </div>
+              <div className="flex flex-wrap justify-center gap-14 items-center py-7 ">
+                <SelectByNameInputField
+                  name="gereh"
+                  data={Gereh?.data}
+                  placeholder="انتخاب گره"
+                  getRealValue={(value: string) => {
+                    methods.setValue("gereh", value);
+                  }}
+                  selectedBefore={findCarpet?.gereh}
+                  className={"z-30"}
+                />
+                <DateInput
+                  label="تاریخ ورود"
+                  getValue={(value) => {
+                    methods.setValue("gerehVouroud", value);
+                  }}
+                  selected={findCarpet?.gerehVouroud}
+                  className={"text-white"}
+                />
+                <DateInput
+                  label="تاریخ خروج"
+                  getValue={(value) => {
+                    methods.setValue("gerehKhoroug", value);
+                  }}
+                  selected={findCarpet?.gerehKhoroug}
+                  className={"text-white"}
+                />
+              </div>
+              <div className="flex flex-wrap justify-center gap-14 items-center py-7 rounded-br-md rounded-bl-md">
+                <SelectByNameInputField
+                  name="cheleh"
+                  data={Cheleh?.data}
+                  placeholder="انتخاب چله"
+                  getRealValue={(value: string) => {
+                    methods.setValue("cheleh", value);
+                  }}
+                  selectedBefore={findCarpet?.cheleh}
+                  className={"z-20"}
+                />
+                <DateInput
+                  label="تاریخ ورود"
+                  getValue={(value) => {
+                    methods.setValue("chelehVouroud", value);
+                  }}
+                  selected={findCarpet?.chelehVouroud}
+                  className={"text-white"}
+                />
+                <DateInput
+                  label="تاریخ خروج"
+                  getValue={(value) => {
+                    methods.setValue("chelehKhoroug", value);
+                  }}
+                  selected={findCarpet?.chelehKhroug}
+                  className={"text-white"}
+                />
+              </div>
+
+              <div className="flex justify-between items-center mt-7 px-8 pb-6">
+                <CheckBoxInputField name="send" label={"ارسال شده"} checked={isSend} onChange={handleSendCheckbox} className={"text-white font-semibold"} />
+                <div className="flex justify-center items-center gap-2">
+                  <button className="bg-white font-semibold px-5 py-2 rounded-md text-xl">
+                    انصراف
+                  </button>
+                  <button
+                    type="submit"
+                    className="bg-white font-semibold px-5 py-2 rounded-md text-xl"
+                  >
+                    اضافه کردن
+                  </button>
+                </div>
+              </div>
+            </Form>
           </div>
-        </Form>
-        </div>
-      </section>
+        </section>
       </Layout>
     </>
   );

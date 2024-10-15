@@ -42,6 +42,7 @@ function Layout({ children }: props) {
 					<div className="w-full flex flex-col items-center">
 						<div className="w-full flex flex-col items-center mb-4">
 							<DropDown
+								className={`${openCarpet ? "rotate-180" : "rotate-0"}`}
 								logo={carpetLogo}
 								onClick={openCarpetListHandler}
 							>
@@ -78,6 +79,7 @@ function Layout({ children }: props) {
 
 						<div className="w-full flex flex-col items-center mb-4">
 							<DropDown
+								className={`${openWorkers ? "rotate-180" : "rotate-0"}`}
 								logo={workersListLogo}
 								onClick={openWorkersListHandler}
 							>
@@ -107,6 +109,7 @@ function Layout({ children }: props) {
 
 						<div className="w-full flex flex-col items-center mb-4">
 							<DropDown
+								className={`${openSalary ? "rotate-180" : "rotate-0"}`}
 								logo={salaryLogo}
 								onClick={openSalaryListHandler}
 							>
