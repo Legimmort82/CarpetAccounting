@@ -10,6 +10,7 @@ import workerLogo from "@/assets/sideBar/worker.svg"
 import salaryLogo from "@/assets/sideBar/salary.svg"
 import exitLogo from "@/assets/sideBar/exit.svg"
 import { useState } from "react"
+import { motion } from "framer-motion"
 
 type props = {
 	children: React.ReactNode
@@ -47,7 +48,12 @@ function Layout({ children }: props) {
 								قالی ها
 							</DropDown>
 
-							<div className={`${openCarpet ? "block" : "hidden"} w-full flex flex-col items-center`}>
+							<motion.div
+								className={"w-full flex flex-col items-center"}
+								initial={{ height: 0, opacity: 0 }}
+								animate={{ height: openCarpet ? 'auto' : 0, opacity: openCarpet ? 1 : 0 }}
+								transition={{ duration: 0.8, type: "spring" }}
+							>
 								<DropDownList
 									href="/carpets/all"
 									logo={carpetListLogo}
@@ -67,7 +73,7 @@ function Layout({ children }: props) {
 								>
 									لیست تکمیل نشده ها
 								</DropDownList>
-							</div>
+							</motion.div>
 						</div>
 
 						<div className="w-full flex flex-col items-center mb-4">
@@ -78,7 +84,12 @@ function Layout({ children }: props) {
 								کارکنان
 							</DropDown>
 
-							<div className={`${openWorkers ? "block" : "hidden"} w-full flex flex-col items-center`}>
+							<motion.div
+								className="w-full flex flex-col items-center"
+								initial={{ height: 0, opacity: 0 }}
+								animate={{ height: openWorkers ? 'auto' : 0, opacity: openWorkers ? 1 : 0 }}
+								transition={{ duration: 0.8, type: "spring" }}
+							>
 								<DropDownList
 									href="/employees/all"
 									logo={workerLogo}
@@ -91,7 +102,7 @@ function Layout({ children }: props) {
 								>
 									اضافه کردن افراد
 								</DropDownList>
-							</div>
+							</motion.div>
 						</div>
 
 						<div className="w-full flex flex-col items-center mb-4">
@@ -102,7 +113,12 @@ function Layout({ children }: props) {
 								حقوق
 							</DropDown>
 
-							<div className={`${openSalary ? "block" : "hidden"} w-full flex flex-col items-center`}>
+							<motion.div
+								className="w-full flex flex-col items-center"
+								initial={{ height: 0, opacity: 0 }}
+								animate={{ height: openSalary ? 'auto' : 0, opacity: openSalary ? 1 : 0 }}
+								transition={{ duration: 0.8, type: "spring" }}
+							>
 								<DropDownList
 									href="/"
 									logo={salaryLogo}
@@ -121,7 +137,7 @@ function Layout({ children }: props) {
 								>
 									فاکتور
 								</DropDownList>
-							</div>
+							</motion.div>
 
 						</div>
 
