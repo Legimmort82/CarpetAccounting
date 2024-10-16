@@ -16,6 +16,7 @@ import { useRouter } from "next/router";
 import { useDebounce } from "@/hooks/useDebounce";
 import SelectableInput from "@/components/UI/Inputs/SelectableInput"
 import {CarpetData} from "@/data/05data"
+import useGetAllCarpets from "@/api/Carpets/getAllCarpets";
 const monthArray = [
   { value: "01", id: 1 },
   { value: "02", id: 2 },
@@ -198,6 +199,9 @@ const columns = [
 ];
 
 function Carpets() {
+  const {data:all}= useGetAllCarpets()
+  console.log(all);
+  
   const [data, setData] = useState([...CarpetData]);
   const [globalFilter, setGlobalFilter] = useState("");
   const debounceSearch = useDebounce(globalFilter, 1000);

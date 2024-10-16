@@ -9,12 +9,12 @@ type props = {
  * @param {UseMutationOptions} options
  * @returns UseMutationResult
  */
-const useUpdateEmployee = ( id:string | string[] | undefined,options = {}) => {
+const useAddHelp = (options = {}) => {
   return useMutation({
-    mutationFn: ( data : props) =>
-      apiClient.put(`/accounts/workers/${id}/`, data),
+    mutationFn: ( data : props) => apiClient.post(`/accounts/helps/`, data),
+
     ...options,
   });
 };
 
-export default useUpdateEmployee;
+export default useAddHelp;

@@ -12,21 +12,34 @@ import useGetAllEmployees from "@/api/Employees/getAllEmployees";
 import DateInput from "@/components/UI/Inputs/DateInput";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AddHelpSchema } from "@/schemas/AddHelp";
+import useAddHelp from "@/api/Helps/addHelp";
+import useGetHelps from "@/api/Helps/getHelps";
+import useGetSingleHelps from "@/api/Helps/getSingleHelp";
 
 const AddHelp = () => {
   const { data: Employees } = useGetAllEmployees();
-
+  const {data:allHelps}= useGetHelps()
+  const {data:singleHelp}=useGetSingleHelps()
+  console.log(singleHelp);
+  
+  console.log(allHelps);
+  
+  const mutateAddHelp = useAddHelp();
   const methods = useForm({
     defaultValues: {
-      price: 0,
-      date:"",
-      employee: "",
+      money: 0,
+      date: "",
+      worker: "",
     },
     resolver: zodResolver(AddHelpSchema),
   });
 
   const handleSubmit = (data: object) => {
     console.log(data);
+    mutateAddHelp.mutate(data, {
+      onSuccess: (res) => console.log(res),
+      onError: (error) => console.log(error),
+    });
   };
 
   return (
@@ -40,8 +53,11 @@ const AddHelp = () => {
         >
           <div className="flex justify-center gap-6 items-center">
             <SelectByNameInputField
-              name="employee"
+              name="worker"
               data={Employees?.data}
+              getValue={(value: string) => {
+                methods.setValue("worker", value);
+              }}
               placeholder="انتخاب کارکنان"
             />
             <DateInput
@@ -53,11 +69,14 @@ const AddHelp = () => {
                 methods.setValue("date", value);
               }}
             />
-            <SimpleInputField name="price" placeholder="مبلغ"type="number" />
+            <SimpleInputField name="money" placeholder="مبلغ" type="number" />
             <button className="bg-[#aab1e6] px-6 py-2 rounded-xl font-semibold">
               انصراف
             </button>
-            <button type="submit" className="bg-[#5865c2] px-6 py-2 rounded-xl font-semibold">
+            <button
+              type="submit"
+              className="bg-[#5865c2] px-6 py-2 rounded-xl font-semibold"
+            >
               اضافه کردن
             </button>
           </div>

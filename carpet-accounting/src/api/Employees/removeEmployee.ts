@@ -10,9 +10,9 @@ type props = {
  * @param {UseMutationOptions} options
  * @returns UseMutationResult
  */
-const useDeleteEmployee = (options = {}) => {
+const useDeleteEmployee = (id:string | string[] | undefined,options = {}) => {
   return useMutation({
-    mutationFn: ({ data, id }: props) => apiClient.delete(`/accounts/workers/${id}`, data),
+    mutationFn: () => apiClient.delete(`/accounts/workers/${id}/`),
 
     ...options,
   });
