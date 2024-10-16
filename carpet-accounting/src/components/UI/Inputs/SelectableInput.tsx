@@ -74,7 +74,7 @@ const SelectableInput = forwardRef(
         >
           <div
             className={`bg-gray-200 w-full p-2 flex items-center justify-between rounded-md 
-          ${selected ? "text-black" : "text-gray-500"} ${className}`}
+          ${selected ? "text-black" : "text-gray-500"} ${error ? "bg-red-200" : ""} ${className}`}
             onClick={() => setOpen(!open)}
           >
             <p className="text-md px-1">{selected ? selected : placeholder} </p>

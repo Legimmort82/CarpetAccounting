@@ -18,6 +18,8 @@ import DateInput from "@/components/UI/Inputs/DateInput";
 import useGetCheleh from "@/api/Employees/getCheleh";
 import useGetShirazeh from "@/api/Employees/getShirazeh";
 import useGetGereh from "@/api/Employees/getGereh"
+import { zodResolver } from "@hookform/resolvers/zod";
+import { AddCarpetSchema } from "@/schemas/AddCarpetSchema";
 
 function AddCarpet() {
   const { data: colors } = useGetAllColors();
@@ -38,9 +40,8 @@ function AddCarpet() {
       rang: "",
       serial: "",
       code: "",
+      isRectangle: true,
       shirazeh: "",
-      send: false,
-      rectangle: true,
       shirazehKhoroug: "",
       shirazehVouroud: "",
       cheleh: "",
@@ -49,8 +50,9 @@ function AddCarpet() {
       gereh: "",
       gerehKhoroug: "",
       gerehVouroud: "",
+      send: false,
     },
-    // resolver: zodResolver(AddCarpetSchema),
+    resolver: zodResolver(AddCarpetSchema),
   });
 
   const [isRectangle, setIsRectangle] = useState(true);
@@ -58,7 +60,7 @@ function AddCarpet() {
 
   const handleRectangleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsRectangle(e.target.checked);
-    methods.setValue("rectangle", e.target.checked);
+    methods.setValue("isRectangle", e.target.checked);
   };
   const handleSendCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsSend(e.target.checked);
@@ -97,7 +99,7 @@ function AddCarpet() {
 
             <div className="flex flex-wrap gap-5 items-center">
               <CheckBoxInputField
-                name="rectangle"
+                name="isRectangle"
                 checked={isRectangle}
                 label={"مستطیل"}
                 className={"text-white"}
@@ -130,7 +132,7 @@ function AddCarpet() {
               name="naghsheh"
               data={designs?.data}
               placeholder={"انتخاب نقشه"}
-              getValue={(value: string) => {
+              getRealValue={(value: string) => {
                 methods.setValue("naghsheh", value);
               }}
               className={"z-20"}
@@ -139,7 +141,7 @@ function AddCarpet() {
               name="rang"
               data={colors?.data}
               placeholder="انتخاب رنگ"
-              getValue={(value: string) => {
+              getRealValue={(value: string) => {
                 methods.setValue("rang", value);
               }}
               className={"z-40"}

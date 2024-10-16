@@ -3,9 +3,10 @@ import DatePicker, { DateObject, Value } from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import { log } from "console";
+import { FieldError } from "react-hook-form";
 
 type props = {
-  error?: string;
+  error?: FieldError;
   placeholder?: string;
   name?: string;
   readOnly?: boolean;
@@ -42,7 +43,7 @@ const DateInput = forwardRef(
 
     return (
       <div className="flex gap-2 items-center">
-        <label htmlFor={id} className={`font-semibold ${className}`}>
+        <label htmlFor={id} className={`font-semibold ${className} ${error ? "text-red-300" : ""}`}>
           {label}
         </label>
         <DatePicker
@@ -57,7 +58,7 @@ const DateInput = forwardRef(
           fixRelativePosition
           style={{
             width: "100%",
-            backgroundColor: "#E5E7EB",
+            backgroundColor: `#E5E7EB`,
             border: "none",
             borderRadius: "4px",
             paddingTop: "8px",

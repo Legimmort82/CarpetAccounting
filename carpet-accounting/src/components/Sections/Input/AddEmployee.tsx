@@ -5,6 +5,8 @@ import {
   SimpleInputField,
 } from "@/components/UI/Fields/fields";
 import Form from "@/components/UI/Form";
+import { AddEmployeeSchema } from "@/schemas/AddEmployee";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 
@@ -15,9 +17,9 @@ function AddEmployee() {
     defaultValues: {
       name: "",
       last_name:"",
-      maharat: "",
+      section: "",
     },
-    // resolver: zodResolver(),
+    resolver: zodResolver(AddEmployeeSchema),
   });
 
   const handleSubmit = (data: object) => {
@@ -36,9 +38,10 @@ function AddEmployee() {
             <SimpleInputField name="name" placeholder="نام" />
             <SimpleInputField name="last_name" placeholder="نام خانوادگی" />
             <SelectableInputField
-              name="skill"
+              name="section"
               data={Skills?.data}
               placeholder="انتخاب مهارت"
+              getValue={(value:string)=>{methods.setValue("section",value)}}
             />
             <button className="bg-[#aab1e6] px-6 py-2 rounded-xl font-semibold">
               انصراف
