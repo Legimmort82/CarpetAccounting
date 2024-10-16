@@ -148,7 +148,7 @@ function Layout({ children }: props) {
 							<DropDownList
 								href="/"
 								logo={exitLogo}
-								className={"font-bold"}
+								className={"font-bold z-20"}
 							>
 								خروج
 							</DropDownList>
