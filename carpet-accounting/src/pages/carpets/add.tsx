@@ -1,13 +1,7 @@
-import AddCarpet from "@/components/Sections/Input/AddCarpet"
-
-
+import AddCarpet from "@/components/Sections/Input/AddCarpet";
 
 function AddCarpets() {
-  return (
-    <>
-      <AddCarpet/>
-    </>
-  )
+  return <AddCarpet />;
 }
 
-export default AddCarpets
+export default AddCarpets;

@@ -4,17 +4,19 @@ import { apiClient } from "../instance";
 type props = {
   data: object;
 };
+
 /**
  * login user with credentials
  * @param {UseMutationOptions} options
  * @returns UseMutationResult
  */
-const useUpdateEmployee = ( id:string | string[] | undefined,options = {}) => {
+
+const useLogin = (options = {}) => {
   return useMutation({
-    mutationFn: ( data : props) =>
-      apiClient.put(`/accounts/workers/${id}/`, data),
+    mutationFn: ( data : props) => apiClient.post(`/accounts/token/`, data),
+
     ...options,
   });
 };
 
-export default useUpdateEmployee;
+export default useLogin;

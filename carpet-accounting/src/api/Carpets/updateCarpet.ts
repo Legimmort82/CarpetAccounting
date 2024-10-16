@@ -9,12 +9,13 @@ type props = {
  * @param {UseMutationOptions} options
  * @returns UseMutationResult
  */
-const useUpdateEmployee = ( id:string | string[] | undefined,options = {}) => {
+const useUpdateCarpet = (id: string | string[], options = {}) => {
   return useMutation({
-    mutationFn: ( data : props) =>
-      apiClient.put(`/accounts/workers/${id}/`, data),
+    mutationFn: ({ data }: props) =>
+      apiClient.put(`/carpets/carpets/${id}`, data),
+
     ...options,
   });
 };
 
-export default useUpdateEmployee;
+export default useUpdateCarpet;

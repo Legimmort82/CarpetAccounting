@@ -88,9 +88,13 @@ const columns = [
 
 function Employees() {
   const { data: AllEmployees } = useGetAllEmployees();
+  console.log(AllEmployees);
+  
   const { data: Cheleh } = useGetCheleh();
   const { data: Gereh } = useGetGereh();
   const { data: Shirazeh } = useGetShirazeh();
+  // console.log(Shirazeh);
+  
 
   const [data, setData] = useState([]);
   const [globalFilter, setGlobalFilter] = useState("");
@@ -322,7 +326,7 @@ const Actions = ({ row }: ActionsProps) => {
         className="text-gray-700 w-5 h-5 cursor-pointer duration-200 hover:scale-[1.2]"
         src={edit}
         alt="view"
-        // onClick={() => router.push(`/employees/edit/${id}`)}
+        onClick={() => router.push(`/employees/edit/${row.original.id}`)}
       />
       <Image className="text-gray-700 w-5 h-5 cursor-pointer duration-200 hover:scale-[1.2]"
         src={view}
