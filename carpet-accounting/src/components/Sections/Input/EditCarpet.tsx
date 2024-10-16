@@ -19,8 +19,9 @@ import useGetGereh from "@/api/Employees/getGereh";
 import useGetShirazeh from "@/api/Employees/getShirazeh";
 import DateInput from "@/components/UI/Inputs/DateInput";
 import { useRouter } from "next/router";
-import mockData from "@/data/data.json";
 import { CarpetData } from "@/data/05data"
+import { zodResolver } from "@hookform/resolvers/zod";
+import { AddCarpetSchema } from "@/schemas/AddCarpetSchema";
 function EditCarpet() {
   const router = useRouter();
   const findCarpet = CarpetData.find(
@@ -46,7 +47,7 @@ function EditCarpet() {
       serial: "",
       send: false,
       code: "",
-      rectangle: false,
+      isRectangle: false,
       shirazeh: "",
       shirazehKhoroug: "",
       shirazehVouroud: "",
@@ -57,7 +58,7 @@ function EditCarpet() {
       gerehKhoroug: "",
       gerehVouroud: "",
     },
-    // resolver: zodResolver(AddCarpetSchema),
+    resolver: zodResolver(AddCarpetSchema),
   });
   useEffect(() => {
     if (findCarpet) {
@@ -72,7 +73,7 @@ function EditCarpet() {
         shirazeh: findCarpet?.shirazeh,
         cheleh: findCarpet?.cheleh,
         gereh: findCarpet?.gereh,
-        rectangle: findCarpet?.isRectangle,
+        isRectangle: findCarpet?.isRectangle,
         shirazehVouroud: findCarpet?.shirazehVouroud,
         shirazehKhoroug: findCarpet?.shirazehKhoroug,
         chelehVouroud: findCarpet?.chelehVouroud,
@@ -88,7 +89,7 @@ function EditCarpet() {
   const [isSend, setIsSend] = useState(false);
   const handleRectangleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsRectangle(e.target.checked);
-    methods.setValue("rectangle", e.target.checked);
+    methods.setValue("isRectangle", e.target.checked);
   };
   const handleSendCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsSend(e.target.checked);
@@ -128,7 +129,7 @@ function EditCarpet() {
 
                 <div className="flex flex-wrap gap-5 items-center">
                   <CheckBoxInputField
-                    name="rectangle"
+                    name="isRectangle"
                     checked={isRectangle}
                     label={"مستطیل"}
                     className={"text-white"}
@@ -163,7 +164,7 @@ function EditCarpet() {
                   name="naghsheh"
                   data={designs?.data}
                   placeholder={"انتخاب نقشه"}
-                  getValue={(value: string) => {
+                  getRealValue={(value: string) => {
                     methods.setValue("naghsheh", value);
                   }}
                   selectedBefore={findCarpet?.naghsheh}
@@ -173,7 +174,7 @@ function EditCarpet() {
                   name="rang"
                   data={colors?.data}
                   placeholder="انتخاب رنگ"
-                  getValue={(value: string) => {
+                  getRealValue={(value: string) => {
                     methods.setValue("rang", value);
                   }}
                   selectedBefore={findCarpet?.rang}

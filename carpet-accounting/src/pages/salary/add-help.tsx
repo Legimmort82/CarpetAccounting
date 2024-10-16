@@ -10,6 +10,8 @@ import Form from "@/components/UI/Form";
 import { useForm } from "react-hook-form";
 import useGetAllEmployees from "@/api/Employees/getAllEmployees";
 import DateInput from "@/components/UI/Inputs/DateInput";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { AddHelpSchema } from "@/schemas/AddHelp";
 
 const AddHelp = () => {
   const { data: Employees } = useGetAllEmployees();
@@ -20,7 +22,7 @@ const AddHelp = () => {
       date:"",
       employee: "",
     },
-    // resolver: zodResolver(),
+    resolver: zodResolver(AddHelpSchema),
   });
 
   const handleSubmit = (data: object) => {
@@ -46,11 +48,12 @@ const AddHelp = () => {
               label="تاریخ"
               className="text-white"
               id="date"
+              error={methods.formState.errors?.date}
               getValue={(value) => {
                 methods.setValue("date", value);
               }}
             />
-            <SimpleInputField name="price" placeholder="مبلغ" />
+            <SimpleInputField name="price" placeholder="مبلغ"type="number" />
             <button className="bg-[#aab1e6] px-6 py-2 rounded-xl font-semibold">
               انصراف
             </button>

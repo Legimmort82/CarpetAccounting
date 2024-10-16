@@ -52,9 +52,9 @@ const SimpleInput = forwardRef(
           onBlur={handleBlur}
           className={`w-full py-2 px-4 bg-gray-50 outline-none focus:ring-1 focus:ring-black duration-200 rounded-md ${
             focus ? "scale-[1.03]" : ""
-          }`}
+          } ${error ? "bg-red-200" : ""}`}
         />
-        {error && <p className="text-sm text-red-600 mt-2">{error}</p>}
+        {/* {error && <p className="text-sm text-red-600 mt-2">{error}</p>} */}
       </div>
     );
   }
