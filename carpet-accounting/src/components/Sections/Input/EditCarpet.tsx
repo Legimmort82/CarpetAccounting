@@ -111,7 +111,7 @@ function EditCarpet() {
   return (
     <>
       <Layout>
-        <section className="flex flex-col min-h-screen w-full py-6 px-4 items-center justify-center overflow-auto">
+        <section className="flex flex-col min-h-screen w-full mt-7 py-6 px-4 items-center justify-center overflow-auto">
           <div className="bg-[#0e1549] rounded-md">
 
             <div className="bg-[#070a2b] w-full py-16 border-b-2 rounded-t-md border-white px-6 flex justify-center items-center">
@@ -267,7 +267,7 @@ function EditCarpet() {
                 />
               </div>
 
-              <div className="flex justify-between items-center mt-7 px-8 pb-6">
+              <div className="flex flex-col gap-5 sm:flex-row justify-between items-center mt-7 px-8 pb-6">
                 <CheckBoxInputField name="send" label={"ارسال شده"} checked={isSend} onChange={handleSendCheckbox} className={"text-white font-semibold"} />
                 <div className="flex justify-center items-center gap-2">
                   <button className="bg-white font-semibold px-5 py-2 rounded-md text-xl">

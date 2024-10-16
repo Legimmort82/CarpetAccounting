@@ -13,10 +13,22 @@ const config: Config = {
         foreground: "var(--foreground)",
       },
       width: {
-        'calc382': 'calc(100vw - 332px)',
+        'calc332': 'calc(100vw - 332px)',
+        'calc232': 'calc(100vw - 232px)',
+        'calc132': 'calc(100vw - 132px)',
+        'calc50': 'calc(100vw - 50px)',
+
       },
       height: {
         'calc50': 'calc(100vh - 50px)',
+      },
+      zIndex: {
+        "60": "60",
+        "70": "70",
+        "80": "80",
+        "90": "90",
+        "95": "95",
+        "96": "96"
       },
     },
   },

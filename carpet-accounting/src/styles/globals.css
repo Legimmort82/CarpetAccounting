@@ -10,6 +10,7 @@ body {
     margin: 10px;
     width: 7px;
     height: 7px;
+    z-index: 100;
 }
  
 /* Track */

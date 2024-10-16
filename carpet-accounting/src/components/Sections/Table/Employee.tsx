@@ -140,20 +140,20 @@ function Employees() {
   return (
     <>
       <Layout>
-        <div className="flex flex-col h-screen w-full pt-[150px] px-4 items-center">
-          <div className="flex flex-col items-stretch pl-4 py-3 pr-[318px] fixed top-0 left-0 bg-white w-full">
-            <h1 className="text-3xl font-bold self-center mb-6">
+        <div className="flex flex-col h-screen w-full px-4">
+          <div className=" w-calc50 xl:w-calc332 flex flex-col items-stretch py-3 top-0 left-0 bg-white self-center">
+            <h1 className="text-2xl sm:text-3xl font-bold self-center mb-6">
               فهرست تمام کارمندان
             </h1>
 
-            <div className="flex justify-between items-center">
-              <div className=" relative">
+            <div className="flex flex-col gap-5 sm:flex-row justify-between items-center">
+              <div className=" relative ml-4">
                 <input
                   type="text"
                   value={globalFilter ?? ""}
                   onChange={(e) => setGlobalFilter(e.target.value)}
                   placeholder="دنبال چی میگردی؟"
-                  className="relative bg-[#050A30] h-[44px] flex items-center pl-4 pr-11 py-3 rounded-md w-[550px] text-white"
+                  className="relative bg-[#050A30] flex items-center h-[44px] pl-4 pr-11 py-3 font-semibold rounded-md min-w-[250px] text-white"
                 />
                 <Image
                   className="absolute w-7 h-7 top-[9px] right-2"
@@ -172,22 +172,22 @@ function Employees() {
                     getValue={handleChangeData}
                   />
                 </div>
-                <button className="bg-gray-200 py-2 px-4 text-center rounded-md">
+                <button className="py-2 px-4 text-center text-white font-semibold rounded-md bg-[#050A30]">
                   مشاهده
                 </button>
               </div>
             </div>
           </div>
 
-          <div className="overflow-x-auto w-calc382 shadow-md  mb-[80px]">
-            <table className="min-w-full divide-y divide-white overflow-x-auto border border-collapse">
+          <div className="w-calc50 xl:w-calc332 overflow-x-auto self-center">
+            <table className=" divide-y divide-white overflow-x-auto rounded-lg w-full border border-collapse">
               <thead className="bg-[#050A30] top-0 z-10">
                 {table.getHeaderGroups().map((headerGroup) => (
                   <tr key={headerGroup.id}>
                     {headerGroup.headers.map((header) => (
                       <th
                         key={header.id}
-                        className="px-6 py-3 text-center text-md font-medium text-white uppercase border"
+                        className="px-9 py-3 text-center text-md font-medium text-white uppercase border"
                       >
                         {flexRender(
                           header.column.columnDef.header,
@@ -208,7 +208,7 @@ function Employees() {
                     {row.getVisibleCells().map((cell) => (
                       <td
                         key={cell.id}
-                        className="px-7 py-4 text-center text-sm font-medium text-gray-800 border"
+                        className="px-9 py-4 text-center text-sm font-medium text-gray-800 border"
                       >
                         {flexRender(
                           cell.column.columnDef.cell,
@@ -222,12 +222,12 @@ function Employees() {
             </table>
           </div>
 
-          <div className="flex justify-between items-center py-2 text-sm text-gray-700 bg-white pl-40 pr-[510px] fixed bottom-0 left-0 w-full">
+          <div className="w-calc50 xl:w-calc332 flex flex-col gap-5 sm:flex-row justify-between items-center py-2 text-sm text-gray-700 bottom-2 left-0 self-center">
             <div className="flex items-center mt-4">
               <span className="ml-2">تعداد ردیف ها</span>
 
               <select
-                className="border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 p-2"
+                className="border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 px-3 p-2"
                 value={table.getState().pagination.pageSize}
                 onChange={(e) => {
                   table.setPageSize(Number(e.target.value));

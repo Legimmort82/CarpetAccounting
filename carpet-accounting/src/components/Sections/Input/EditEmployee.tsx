@@ -54,7 +54,7 @@ function EditEmployee() {
           methods={methods}
           className="w-[90%] rounded-xl bg-[#050A30] px-4 py-10"
         >
-          <div className="flex justify-center gap-6 items-center">
+          <div className="flex flex-col sm:flex-row justify-center gap-6 items-center">
             <SimpleInputField name="name" placeholder="نام کامل" />
             <SelectableInputField
               name="maharat"

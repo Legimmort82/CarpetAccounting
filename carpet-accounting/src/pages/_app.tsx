@@ -10,7 +10,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <main className={myFont.className}>
-        <Component {...pageProps} />;
+        <Component {...pageProps} />
       </main>
     </QueryClientProvider>
   );
