@@ -252,7 +252,7 @@ function AddCarpet() {
               />
             </div>
 
-            <div className="flex justify-between items-center mt-7 px-8 pb-6">
+            <div className="flex flex-col sm:flex-row gap-6 justify-between items-center mt-7 px-8 pb-6">
               <CheckBoxInputField
                 name="send"
                 label={"ارسال شده"}
