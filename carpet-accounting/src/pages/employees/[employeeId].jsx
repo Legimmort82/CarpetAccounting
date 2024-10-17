@@ -262,7 +262,7 @@ const EmployeePage = () => {
       <Layout>
         <div className="flex flex-col min-h-screen w-full px-4">
           <div className="w-calc50 xl:w-calc132 2xl:w-calc232 flex flex-col items-stretch py-3 fixed top-0 bg-white self-center">
-            <h1 className="text-2xl sm:text-3xl font-bold self-center mb-6">
+            <h1 id="name" className="text-2xl sm:text-3xl font-bold self-center mb-6">
               {singleEmployee?.data && (
                 <div>
                   {singleEmployee?.data?.name
