@@ -1,13 +1,11 @@
-import { forwardRef, useEffect, useRef, useState } from "react";
+import { forwardRef, useState } from "react";
 import DatePicker, { DateObject, Value } from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
-import { log } from "console";
 import { FieldError } from "react-hook-form";
 
 type props = {
   error?: FieldError;
-  placeholder?: string;
   name?: string;
   readOnly?: boolean;
   required?: boolean;
@@ -24,15 +22,11 @@ const DateInput = forwardRef(
       name,
       label,
       error,
-      placeholder,
-      readOnly,
-      required,
       selected,
       getValue,
       className,
       id,
     }: props,
-    ref: any
   ) => {
     const [value, setValue] = useState<Value>();
 
@@ -74,5 +68,6 @@ const DateInput = forwardRef(
     );
   }
 );
+DateInput.displayName="DateInp"
 
 export default DateInput;

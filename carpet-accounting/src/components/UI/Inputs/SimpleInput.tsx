@@ -1,4 +1,4 @@
-import { forwardRef, useState } from "react";
+import { LegacyRef, forwardRef, useState } from "react";
 
 type props = {
   type?: string;
@@ -27,7 +27,7 @@ const SimpleInput = forwardRef(
       className,
       onChange,
     }: props,
-    ref: any
+    ref : LegacyRef<HTMLInputElement>
   ) => {
     const [focus, setFocus] = useState(false);
     const handleFocus = () => {
@@ -59,5 +59,6 @@ const SimpleInput = forwardRef(
     );
   }
 );
+SimpleInput.displayName= "Simple"
 
 export default SimpleInput;

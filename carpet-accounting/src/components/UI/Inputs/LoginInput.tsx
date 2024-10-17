@@ -1,5 +1,5 @@
 
-import { forwardRef, useState } from "react";
+import { LegacyRef, forwardRef, useState } from "react";
 import Image from "next/image";
 import eye from "@/assets/loginPage/eye.svg"
 import eyeClose from "@/assets/loginPage/eye-closed.svg"
@@ -29,7 +29,7 @@ const LoginInput = forwardRef(
       text,
       isEye = false
     }: props,
-    ref: any
+    ref: LegacyRef<HTMLInputElement>
   ) => {
 
     const [typeKind, setTypeKind] = useState(type)
@@ -61,5 +61,6 @@ const LoginInput = forwardRef(
     );
   }
 );
+LoginInput.displayName="LoginInput"
 
 export default LoginInput;

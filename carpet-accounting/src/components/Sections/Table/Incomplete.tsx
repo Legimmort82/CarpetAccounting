@@ -9,7 +9,6 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { useState } from "react";
-import mockData from "@/data/data.json";
 import Image from "next/image";
 import Layout from "@/components/Layout/Layout";
 import { useRouter } from "next/router";
@@ -46,7 +45,7 @@ const yearsArray = [
 ];
 
 type Carpet = {
-  shomareh: number;
+  id: string | number;
   arz: string;
   tool: string;
   metraj: string;
@@ -68,11 +67,10 @@ type Carpet = {
 const columnHelper = createColumnHelper<Carpet>();
 
 const columns = [
-  columnHelper.accessor("shomareh", {
+
+  columnHelper.accessor("id", {
     cell: (info) => info.getValue(),
-    header: () => (
-      <span className="flex items-center justify-center">شماره</span>
-    ),
+    header: () => <span className="flex items-center justify-center">شماره</span>,
   }),
 
   columnHelper.accessor("arz", {
@@ -197,7 +195,7 @@ function Incompletes() {
       item?.cheleh == "" ||
       item?.shirazeh == ""
   );
-  const [data, setData] = useState([...filteredData]);
+  const [data] = useState([...filteredData]);
   const [globalFilter, setGlobalFilter] = useState("");
   const debounceSearch = useDebounce(globalFilter, 1000);
   const router = useRouter();
@@ -293,7 +291,7 @@ function Incompletes() {
                   <tr
                     key={row.id}
                     onClick={() =>
-                      router.push(`/carpets/edit/${row.original.shomareh}`)
+                      router.push(`/carpets/edit/${row.original.id}`)
                     }
                     className="even:bg-[#dfdfe7] cursor-pointer"
                   >

@@ -1,32 +1,26 @@
-import { useController } from "react-hook-form";
-import { ForwardRefExoticComponent, JSXElementConstructor } from "react";
+import { useController, FieldValues } from "react-hook-form";
+import { ComponentType, ForwardRefExoticComponent, RefAttributes } from "react";
 
-type FieldProps = {
-  name: string;
-  required?: boolean | string;
-  // control: any; // You might want to be more specific depending on your controller type
-  [key: string]: any; // This allows passing additional props
+type FieldProps<T extends FieldValues> = {
+  name: keyof T;
+  [key: string]: unknown; // Allows passing additional props
 };
-
-type WithFieldProps = {
-  Comp:  ForwardRefExoticComponent<any> | JSXElementConstructor<any>;
-};
-
+type Props = Record<string, unknown>;
+interface WithFieldProps {
+  Comp: ComponentType<Props> | ForwardRefExoticComponent<Props & RefAttributes<HTMLInputElement>>;
+}
 const withField = ({ Comp }: WithFieldProps) => {
-  return function Field({ name, required, ...props }: FieldProps) {
+  return function Field<T extends FieldValues>({ name, ...props }: FieldProps<T>) {
     const {
-      field: { ref, ...field },
+      field, // ref is removed, destructured separately
       fieldState,
     } = useController({
-      name,
-      rules: {
-        required: required === true ? "Please enter this field" : required,
-      },
+      name: name as string, // necessary for useController
+      rules: {},
     });
 
     return (
       <Comp
-        required={required}
         {...field}
         error={fieldState.error?.message}
         {...props}

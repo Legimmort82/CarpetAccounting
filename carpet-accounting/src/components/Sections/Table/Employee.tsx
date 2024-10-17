@@ -8,7 +8,6 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
-import employeesData from "@/data/employees.json";
 import Image from "next/image";
 import Layout from "@/components/Layout/Layout";
 import { useRouter } from "next/router";
@@ -19,8 +18,6 @@ import useGetAllEmployees from "@/api/Employees/getAllEmployees";
 import useGetCheleh from "@/api/Employees/getCheleh";
 import useGetGereh from "@/api/Employees/getGereh";
 import useGetShirazeh from "@/api/Employees/getShirazeh";
-import { SelectByNameInputField, SelectableInputField } from "@/components/UI/Fields/fields";
-import SelectByName from "@/components/UI/Inputs/SelectByName";
 import edit from "@/assets/table/edit.svg"
 import view from "@/assets/table/view.svg";
 
@@ -308,7 +305,7 @@ interface OriginalType {
 }
 
 interface Row {
-  original: OriginalType;
+  original?: OriginalType;
 }
 interface ActionsProps {
   row: Row;
@@ -326,12 +323,12 @@ const Actions = ({ row }: ActionsProps) => {
         className="text-gray-700 w-5 h-5 cursor-pointer duration-200 hover:scale-[1.2]"
         src={edit}
         alt="view"
-        onClick={() => router.push(`/employees/edit/${row.original.id}`)}
+        onClick={() => { if (row.original)router.push(`/employees/edit/${row.original.id}`)}}
       />
       <Image className="text-gray-700 w-5 h-5 cursor-pointer duration-200 hover:scale-[1.2]"
         src={view}
         alt="view"
-        onClick={() => router.push(`/employees/${row.original.id}`)}
+        onClick={() => {if(row.original)router.push(`/employees/${row.original.id}`)}}
       />
     </div>
   )

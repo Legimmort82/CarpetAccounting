@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 // import { apiGetCurrentUser } from "@/api/user";
 
@@ -15,7 +15,7 @@ type valueProp={
 }
 
 const AuthProvider = ({ children }:AuthTypes) => {
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [accessToken, setAccessToken] = useState(() =>
     localStorage.getItem("accessToken")
@@ -33,19 +33,20 @@ const AuthProvider = ({ children }:AuthTypes) => {
     localStorage.removeItem("accessToken");
   };
 
-  const currentUsers = async () => {
+  const currentUsers =  useCallback ( async() => {
     if (isLoading) return;
     setIsLoading(true);
-    // const result = await apiGetCurrentUser();
-    // setCurrentUser(result.data);
+    // const result = await fetch("http//localhost");
+    setCurrentUser(true);
     setIsLoading(false);
-  };
+  },[isLoading]);
 
   useEffect(() => {
     if (isLoggedIn) {
-      currentUsers();
+      currentUsers()
+      
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn,currentUsers]);
 
   const values = {
     logout,

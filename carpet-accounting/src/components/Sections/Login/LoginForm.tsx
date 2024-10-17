@@ -4,7 +4,7 @@ import { LoginInputField } from "@/components/UI/Fields/fields";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginSchema } from "@/schemas/LoginSchema";
 import useLogin from "@/api/Auth/Login";
-import Cookies from "js-cookie";
+
 
 function LoginForm() {
   const mutateLogin = useLogin();
@@ -19,7 +19,6 @@ function LoginForm() {
     console.log(data);
     mutateLogin.mutate(data, {
       onSuccess: (res) => {console.log(res)
-        Cookies.set("accessToken",res.data?.access)
       },
       onError: (error) => console.log(error),
     });

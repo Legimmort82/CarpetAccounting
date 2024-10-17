@@ -1,6 +1,5 @@
 import Image from "next/image"
 import downArrow from "@/assets/sideBar/down-arrow.svg"
-import { useState } from "react"
 
 type props = {
   children: React.ReactNode,
@@ -10,7 +9,6 @@ type props = {
 }
 
 function DropDown({ children, logo, onClick, className }: props) {
-  const [open, setOpen] = useState(false)
   return (
     <>
       <div onClick={onClick} className='relative bg-white h-8 w-[85%] flex justify-items-start items-center px-2 py-5 rounded-md mb-2 cursor-pointer'>

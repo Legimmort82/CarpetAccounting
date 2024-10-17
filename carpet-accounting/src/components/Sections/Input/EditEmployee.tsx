@@ -10,7 +10,6 @@ import { useForm } from "react-hook-form";
 import useGetSkills from "@/api/Employees/getSkills";
 import useGetAllEmployees from "@/api/Employees/getAllEmployees";
 import useUpdateEmployee from "@/api/Employees/updateEmployee";
-import useDeleteEmployee from "@/api/Employees/removeEmployee";
 import toast, { Toaster } from "react-hot-toast";
 
 type FindPerson = {
@@ -22,20 +21,7 @@ function EditEmployee() {
   const router = useRouter();
   const EmployeeId = router.query?.employeeId;
   const updateEmployee = useUpdateEmployee(EmployeeId);
-  const deleteEmployee = useDeleteEmployee(EmployeeId);
   const { data: Skills } = useGetSkills();
-  const handleDeleteEmployee = () => {
-    deleteEmployee.mutate(undefined,    
-      {
-        onSuccess: (res) => {
-          console.log(res);
-        },
-        onError: (error) => {
-          console.log(error);
-        },
-      }
-    );
-  };
   const methods = useForm({
     defaultValues: {
       name: "",
@@ -58,7 +44,7 @@ function EditEmployee() {
         section_name: findEmployee?.section,
       });
     }
-  }, [AllEmployees]);
+  }, [AllEmployees,methods,router.query?.employeeId]);
 
   const handleSubmit = (data: object) => {
     console.log(data);

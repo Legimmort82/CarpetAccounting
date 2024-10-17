@@ -1,5 +1,4 @@
 import { apiClient } from "@/api/instance";
-import { UseQueryOptions } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 
 
