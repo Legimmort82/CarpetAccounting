@@ -72,15 +72,6 @@ const columns = [
     header: "درخواست‌ها",
     cell: ({ row }: actions) => <Actions row={row} />,
   },
-
-  // columnHelper.accessor("amaliat", {
-  //   cell: (info) => info.getValue(),
-  //   header: () => (
-  //     <span className="flex items-center">
-  //       عملیات
-  //     </span>
-  //   )
-  // })
 ];
 
 function Employees() {
@@ -204,7 +195,7 @@ function Employees() {
                 {table?.getRowModel().rows.map((row) => (
                   <tr
                     key={row.id}
-                    className="cursor-pointer even:bg-[#dfdfe7]"
+                    className="even:bg-[#dfdfe7]"
                   >
                     {row.getVisibleCells().map((cell) => (
                       <td
