@@ -218,21 +218,22 @@ const EmployeePage = () => {
     else setFullName(last_name);
   },[singleEmployee]);
 
-  const filteredData = CarpetData.filter((item) => {if(section in item) {return item[section as CarpetKey] == fullName}else return false});
+  // const filteredData = CarpetData.filter((item) =>  {return item[section as CarpetKey] == fullName});
+  // console.log(filteredData);
   
-  useEffect(()=>{
-  if(filteredData){
-    setData(filteredData)
-  }
-
-  },[singleEmployee,fullName,filteredData])
-  const [data, setData] = useState(filteredData);
+  useEffect(() => {
+    const filteredData = CarpetData.filter((item) => {
+      return item[section as CarpetKey] == fullName
+    });
+    setData(filteredData);
+  }, [section, fullName, CarpetData]);
+  const [data, setData] = useState([]);
   const [globalFilter, setGlobalFilter] = useState("");
   const debounceSearch = useDebounce(globalFilter, 1000);
 
   useEffect(() => {
     if (singleEmployee?.data) calculateName();
-  }, [singleEmployee?.data,calculateName]);
+  }, []);
 
   const table = useReactTable({
     data,
