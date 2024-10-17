@@ -46,29 +46,29 @@ const yearsArray = [
   { value: "1406", id: 11 },
   { value: "1407", id: 12 },
 ];
-type CarpetKey = 'gereh' | 'cheleh' | 'shirazeh';
-type Carpet = {
-  id: number;
-  isRectangle: boolean;
-  arz: string;
-  tool: string;
-  metraj: string;
-  naghsheh: string;
-  rang: string;
-  serial: string;
-  code: string;
-  shirazeh: string;
-  shirazehKhoroug: string;
-  shirazehVouroud: string;
-  cheleh: string;
-  chelehKhroug: string;
-  chelehVouroud: string;
-  gereh: string;
-  gerehKhoroug: string;
-  gerehVouroud: string;
-  ersalshodeh: boolean;
-};
-const columnHelper = createColumnHelper<Carpet>();
+// type CarpetKey = 'gereh' | 'cheleh' | 'shirazeh';
+// type Carpet = {
+//   id: number;
+//   isRectangle: boolean;
+//   arz: string;
+//   tool: string;
+//   metraj: string;
+//   naghsheh: string;
+//   rang: string;
+//   serial: string;
+//   code: string;
+//   shirazeh: string;
+//   shirazehKhoroug: string;
+//   shirazehVouroud: string;
+//   cheleh: string;
+//   chelehKhroug: string;
+//   chelehVouroud: string;
+//   gereh: string;
+//   gerehKhoroug: string;
+//   gerehVouroud: string;
+//   ersalshodeh: boolean;
+// };
+const columnHelper = createColumnHelper();
 
 const columns = [
   columnHelper.accessor("id", {
@@ -223,17 +223,17 @@ const EmployeePage = () => {
   
   useEffect(() => {
     const filteredData = CarpetData.filter((item) => {
-      return item[section as CarpetKey] == fullName
+      return item[section] == fullName
     });
     setData(filteredData);
-  }, [section, fullName, CarpetData]);
+  }, [section, fullName]);
   const [data, setData] = useState([]);
   const [globalFilter, setGlobalFilter] = useState("");
   const debounceSearch = useDebounce(globalFilter, 1000);
 
   useEffect(() => {
     if (singleEmployee?.data) calculateName();
-  }, []);
+  }, [singleEmployee?.data,calculateName]);
 
   const table = useReactTable({
     data,

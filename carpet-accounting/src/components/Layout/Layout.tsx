@@ -36,9 +36,9 @@ function Layout({ children }: props) {
   const openSalaryListHandler = () => {
     setOpenSalary(!openSalary);
   };
-  const openSidebarHandler = () => {
-    setOpenSidebar(!openSidebar);
-  };
+  // const openSidebarHandler = () => {
+  //   setOpenSidebar(!openSidebar);
+  // };
 
   return (
     <>
