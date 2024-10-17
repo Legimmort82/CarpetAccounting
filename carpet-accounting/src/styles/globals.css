@@ -35,7 +35,7 @@ body {
         visibility: hidden;
     }
 
-    #table, #table * {
+    #table, #table *, #name, #name * {
         visibility: visible;
     }
 }

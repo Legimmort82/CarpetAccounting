@@ -165,7 +165,7 @@ function Layout({ children }: props) {
         </motion.div>
 
         <div className="flex-1">
-          <Image onClick={() => setOpenSidebar(!openSidebar)} className={` ${openSidebar ? "hidden" : "block"} z-40 cursor-pointer fixed top-3 right-[10px] w-7 h-7 sm:w-9 sm:h-9`} src={menu} alt="menu" />
+          <Image onClick={openSidebarHandler} className={` ${openSidebar ? "hidden" : "block"} z-40 cursor-pointer fixed top-3 right-[10px] w-7 h-7 sm:w-9 sm:h-9`} src={menu} alt="menu" />
           {children}
         </div>
       </section>
