@@ -11,6 +11,7 @@ import useGetSkills from "@/api/Employees/getSkills";
 import useGetAllEmployees from "@/api/Employees/getAllEmployees";
 import useUpdateEmployee from "@/api/Employees/updateEmployee";
 import useDeleteEmployee from "@/api/Employees/removeEmployee";
+import toast, { Toaster } from "react-hot-toast";
 
 type FindPerson = {
   id: number;
@@ -64,6 +65,7 @@ function EditEmployee() {
     updateEmployee.mutate(data, {
       onSuccess: (res) => {
         console.log(res);
+        toast.success("فرد مورد نظر ویرایش شد")
       },
       onError: (error) => console.log(error),
     });
@@ -78,7 +80,8 @@ function EditEmployee() {
           className="w-[90%] rounded-xl bg-[#050A30] px-4 py-10"
         >
           <div className="flex flex-col sm:flex-row justify-center gap-6 items-center">
-            <SimpleInputField name="name" placeholder="نام کامل" />
+            <SimpleInputField name="name" placeholder="نام " />
+            <SimpleInputField name="last_name" placeholder="نام خانوادگی" />
             <SelectableInputField
               name="section_name"
               data={Skills?.data}
@@ -93,12 +96,13 @@ function EditEmployee() {
             </button>
           </div>
         </Form>
-        <button
+        <Toaster/>
+        {/* <button
               className="bg- bg-red-500 mt-6 px-6 py-2 rounded-xl"
               onClick={handleDeleteEmployee}
             >
               حذف
-            </button>
+            </button> */}
       </div>
     </Layout>
   );

@@ -22,6 +22,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { AddCarpetSchema } from "@/schemas/AddCarpetSchema";
 import useAddCarpet from "@/api/Carpets/addCarpet";
 import useGetAllCarpets from "@/api/Carpets/getAllCarpets";
+import toast, { Toaster } from "react-hot-toast";
+import CustomToast from "@/components/UI/Toast/CustomToast";
 
 function AddCarpet() {
   const { data: colors } = useGetAllColors();
@@ -80,7 +82,11 @@ function AddCarpet() {
 
   const handleSubmit = (data: object) => {
     mutateCarpet.mutate(data, {
-      onSuccess: (res) => console.log(res),
+      onSuccess: (res) => {console.log(res)
+      toast.success("فرش اضافه شد")
+      methods.reset()
+      }
+      ,
       onError: (error) => {
         console.log(error);
       },
@@ -176,7 +182,7 @@ function AddCarpet() {
                 name="shirazeh"
                 data={Shirazeh?.data}
                 placeholder="انتخاب شیرازه"
-                getValue={(value: string) => {
+                getRealValue={(value: string) => {
                   methods.setValue("shirazeh", value);
                 }}
                 className={"z-40"}
@@ -203,7 +209,7 @@ function AddCarpet() {
                 name="gereh"
                 data={Gereh?.data}
                 placeholder="انتخاب گره"
-                getValue={(value: string) => {
+                getRealValue={(value: string) => {
                   methods.setValue("gereh", value);
                 }}
                 className={"z-30"}
@@ -230,7 +236,7 @@ function AddCarpet() {
                 name="cheleh"
                 data={Cheleh?.data}
                 placeholder="انتخاب چله"
-                getValue={(value: string) => {
+                getRealValue={(value: string) => {
                   methods.setValue("cheleh", value);
                 }}
               />
@@ -273,6 +279,7 @@ function AddCarpet() {
               </div>
             </div>
           </Form>
+          <Toaster/>
         </div>
       </section>
     </Layout>

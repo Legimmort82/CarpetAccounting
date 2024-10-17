@@ -10,6 +10,7 @@ import Form from "@/components/UI/Form";
 import { AddEmployeeSchema } from "@/schemas/AddEmployee";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import toast, { Toaster } from "react-hot-toast";
 
 function AddEmployee() {
   const { data: Skills } = useGetSkills();
@@ -28,7 +29,7 @@ function AddEmployee() {
     console.log(data);
     mutateAddPerson.mutate(data, {
       onSuccess: (res) => {console.log(res) 
-        console.log(allEmployees);
+        toast.success("فرد جدید اضافه شد")
       },
       onError: (error) => console.log(error),
     });
@@ -66,6 +67,7 @@ function AddEmployee() {
             </button>
           </div>
         </Form>
+        <Toaster/>
       </div>
     </Layout>
   );

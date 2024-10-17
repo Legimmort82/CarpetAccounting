@@ -5,6 +5,7 @@ import logo from "@/assets/loginPage/Logo.svg";
 import carpetLogo from "@/assets/sideBar/carpet.svg";
 import carpetListLogo from "@/assets/sideBar/carpet-list.svg";
 import addCarpetLogo from "@/assets/sideBar/add.svg";
+import inComplete from "@/assets/sideBar/inComplete.svg";
 import workersListLogo from "@/assets/sideBar/workers-list.svg";
 import workerLogo from "@/assets/sideBar/worker.svg";
 import salaryLogo from "@/assets/sideBar/salary.svg";
@@ -88,7 +89,7 @@ function Layout({ children }: props) {
                 <DropDownList href="/carpets/add" logo={addCarpetLogo}>
                   اضافه کردن قالی
                 </DropDownList>
-                <DropDownList href="/carpets/incomplete" logo={addCarpetLogo}>
+                <DropDownList href="/carpets/incomplete" logo={inComplete}>
                   لیست تکمیل نشده ها
                 </DropDownList>
               </motion.div>

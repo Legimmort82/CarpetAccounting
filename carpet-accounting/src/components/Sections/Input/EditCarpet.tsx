@@ -22,6 +22,7 @@ import { useRouter } from "next/router";
 import { CarpetData } from "@/data/05data"
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AddCarpetSchema } from "@/schemas/AddCarpetSchema";
+import toast, { Toaster } from "react-hot-toast";
 function EditCarpet() {
   const router = useRouter();
   const findCarpet = CarpetData.find(
@@ -105,6 +106,7 @@ function EditCarpet() {
     }
   }, [arz, tool, methods.setValue]);
   const handleSubmit = (data: object) => {
+    toast.success("تغییرات انجام شد")
     console.log(data);
   };
 
@@ -282,6 +284,7 @@ function EditCarpet() {
                 </div>
               </div>
             </Form>
+            <Toaster/>
           </div>
         </section>
       </Layout>
