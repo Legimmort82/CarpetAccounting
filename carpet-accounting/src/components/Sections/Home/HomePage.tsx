@@ -1,8 +1,15 @@
 import Layout from "@/components/Layout/Layout";
 import carpetImg from "@/assets/carpet.jpg";
 import Image from "next/image";
+import useCheckToken from "@/api/Auth/CheckToken";
+import { useEffect } from "react";
 
 function HomePage() {
+  const mutatein =useCheckToken()
+  useEffect(()=>{
+    mutatein.mutate({},{onSuccess:(res)=>console.log(res)
+    })
+  },[])
   return (
     <>
       <Layout>

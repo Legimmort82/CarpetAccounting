@@ -13,7 +13,7 @@ type props = {
 
 const useLogin = (options = {}) => {
   return useMutation({
-    mutationFn: ( data : props) => apiClient.post(`/accounts/token/`, data),
+    mutationFn: ( data : props) => apiClient.post(`/accounts/login/`, data),
 
     ...options,
   });
