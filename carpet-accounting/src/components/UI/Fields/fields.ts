@@ -4,7 +4,7 @@ import SimpleInput from "../Inputs/SimpleInput";
 import CheckBoxInput from "../Inputs/CheckBoxInput";
 import withField from "./WithField";
 import SelectByName from "../Inputs/SelectByName";
-import { ComponentType, RefAttributes } from "react";
+import { ComponentType, ForwardRefExoticComponent, RefAttributes } from "react";
 interface Props {
     type?: string
     value?: string
@@ -28,7 +28,7 @@ interface Props {
     isEye?: boolean
     data?: any // Add this property to the Props interface
   }
-export const LoginInputField = withField({ Comp: LoginInput  as ComponentType<Props & RefAttributes<HTMLInputElement>>});
+export const LoginInputField = withField({ Comp: LoginInput  as ComponentType<Props> | ForwardRefExoticComponent<Props & RefAttributes<HTMLInputElement>>});
 export const SelectableInputField = withField({ Comp: SelectableInput  as ComponentType<PropsSelect > });
 export const SelectByNameInputField = withField({ Comp: SelectByName  as ComponentType<PropsSelect>});
 export const SimpleInputField = withField({ Comp: SimpleInput  as ComponentType<Props>});

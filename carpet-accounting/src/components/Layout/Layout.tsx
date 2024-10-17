@@ -36,11 +36,13 @@ function Layout({ children }: props) {
   const openSalaryListHandler = () => {
     setOpenSalary(!openSalary);
   };
- 
+  const openSidebarHandler = () => {
+    setOpenSidebar(!openSidebar);
+  };
 
   return (
     <>
-      <section className="">
+      <section className="flex">
         <motion.div
 					initial={{x: '100vw'}}
 					animate={{x: openSidebar ? 0 : "100vw"}}
@@ -162,8 +164,8 @@ function Layout({ children }: props) {
           </div>
         </motion.div>
 
-        <div className="relative flex-1">
-          <Image onClick={() => setOpenSidebar(!openSidebar)} className={` ${openSidebar ? "hidden" : "block"} z-40 cursor-pointer absolute top-3 right-[10px] w-7 h-7 sm:w-9 sm:h-9`} src={menu} alt="menu" />
+        <div className="flex-1">
+          <Image onClick={() => setOpenSidebar(!openSidebar)} className={` ${openSidebar ? "hidden" : "block"} z-40 cursor-pointer fixed top-3 right-[10px] w-7 h-7 sm:w-9 sm:h-9`} src={menu} alt="menu" />
           {children}
         </div>
       </section>
