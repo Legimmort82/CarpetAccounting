@@ -42,7 +42,7 @@ function Layout({ children }: props) {
 
   return (
     <>
-      <section className="flex h-screen overflow-y-auto fixed w-screen">
+      <section className="">
         <motion.div
 					initial={{x: '100vw'}}
 					animate={{x: openSidebar ? 0 : "100vw"}}

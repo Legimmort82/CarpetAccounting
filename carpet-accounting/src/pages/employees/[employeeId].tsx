@@ -259,8 +259,8 @@ const EmployeePage = () => {
   return (
     <>
       <Layout>
-        <div className="flex flex-col h-screen w-full px-4">
-          <div className="w-calc50 xl:w-calc132 2xl:w-calc232 flex flex-col items-stretch py-3 top-0 left-0 bg-white self-center">
+        <div className="flex flex-col min-h-screen w-full px-4">
+          <div className="w-calc50 xl:w-calc132 2xl:w-calc232 flex flex-col items-stretch py-3 fixed top-0 bg-white self-center">
             <h1 className="text-2xl sm:text-3xl font-bold self-center mb-6">
               {singleEmployee?.data && (
                 <div>
@@ -312,8 +312,8 @@ const EmployeePage = () => {
             </div>
           </div>
 
-          <div className="w-calc50 xl:w-calc132 2xl:w-calc232 overflow-x-auto self-center">
-            <table id="table" className=" divide-y divide-white overflow-x-auto rounded-lg w-full border border-collapse">
+          <div className="w-calc50 xl:w-calc132 2xl:w-calc232 overflow-x-auto self-center mt-[200px] mb-[200px] md:mt-[140px] md:mb-[100px]">
+            <table id="table" className=" divide-y divide-white rounded-lg w-full border border-collapse">
               <thead className="bg-[#050A30] top-0 z-10">
                 {table.getHeaderGroups().map((headerGroup) => (
                   <tr key={headerGroup.id}>
@@ -358,7 +358,7 @@ const EmployeePage = () => {
             </table>
           </div>
 
-          <div className="w-calc50 xl:w-calc132 2xl:w-calc232 flex flex-col gap-5 sm:flex-row justify-between items-center py-2 text-sm text-gray-700 bottom-2 left-0 self-center">
+          <div className="w-calc50 xl:w-calc132 2xl:w-calc232 bg-white flex flex-col gap-5 sm:flex-row justify-between items-center py-2 text-sm text-gray-700 fixed bottom-0 self-center">
             <div className="flex items-center mt-4 ">
               <span className="ml-4">تعداد ردیف ها</span>
 
