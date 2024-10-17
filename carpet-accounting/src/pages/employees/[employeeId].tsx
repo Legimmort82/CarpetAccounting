@@ -251,6 +251,11 @@ const EmployeePage = () => {
     onGlobalFilterChange: setGlobalFilter,
     getFilteredRowModel: getFilteredRowModel(),
   });
+
+  const printHandler = () => {
+    return window.print();
+  }
+
   return (
     <>
       <Layout>
@@ -308,7 +313,7 @@ const EmployeePage = () => {
           </div>
 
           <div className="w-calc50 xl:w-calc132 2xl:w-calc232 overflow-x-auto self-center">
-            <table className=" divide-y divide-white overflow-x-auto rounded-lg w-full border border-collapse">
+            <table id="table" className=" divide-y divide-white overflow-x-auto rounded-lg w-full border border-collapse">
               <thead className="bg-[#050A30] top-0 z-10">
                 {table.getHeaderGroups().map((headerGroup) => (
                   <tr key={headerGroup.id}>
@@ -370,6 +375,10 @@ const EmployeePage = () => {
                   </option>
                 ))}
               </select>
+            </div>
+
+            <div className="flex justify-between items-center mt-4">
+              <button onClick={printHandler} className="bg-gray-300 text-gray-700 font-bold p-2 rounded-md py-3 px-6 duration-200 hover:bg-gray-400">چاپ جدول</button>
             </div>
 
             <div className="flex justify-between items-center mt-4 text-sm text-gray-700">

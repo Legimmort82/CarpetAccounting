@@ -16,7 +16,7 @@
         }
     ],
     "start_url": "/",
-    "display": "standalone",
+    "display": "minimal-ui",
     "dir": "rtl",
     "lang": "fa-IR",
     "name": "Carpet-Accounting",

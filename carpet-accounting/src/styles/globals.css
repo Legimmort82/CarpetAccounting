@@ -29,3 +29,16 @@ body {
 ::-webkit-scrollbar-thumb:hover {
     background: #312f2f;
 }
+
+@media print {
+    body * {
+        visibility: hidden;
+    }
+
+    #table, #table * {
+        visibility: visible;
+    }
+}
+  
+
+
