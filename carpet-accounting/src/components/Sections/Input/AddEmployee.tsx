@@ -1,5 +1,4 @@
 import useAddEmployee from "@/api/Employees/addEmployee";
-import useGetAllEmployees from "@/api/Employees/getAllEmployees";
 import useGetSkills from "@/api/Employees/getSkills";
 import Layout from "@/components/Layout/Layout";
 import {
@@ -15,7 +14,6 @@ import toast, { Toaster } from "react-hot-toast";
 function AddEmployee() {
   const { data: Skills } = useGetSkills();
   const mutateAddPerson = useAddEmployee();
-  const {data:allEmployees}= useGetAllEmployees()
   const methods = useForm({
     defaultValues: {
       name: "",

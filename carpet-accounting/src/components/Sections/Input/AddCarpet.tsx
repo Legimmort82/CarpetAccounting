@@ -23,7 +23,6 @@ import { AddCarpetSchema } from "@/schemas/AddCarpetSchema";
 import useAddCarpet from "@/api/Carpets/addCarpet";
 import useGetAllCarpets from "@/api/Carpets/getAllCarpets";
 import toast, { Toaster } from "react-hot-toast";
-import CustomToast from "@/components/UI/Toast/CustomToast";
 
 function AddCarpet() {
   const { data: colors } = useGetAllColors();
@@ -78,7 +77,7 @@ function AddCarpet() {
       const calculatedMetraj = Number(arz) * Number(tool);
       methods.setValue("metraj", String(calculatedMetraj));
     }
-  }, [arz, tool, methods.setValue]);
+  }, [arz, tool, methods.setValue,methods]);
 
   const handleSubmit = (data: object) => {
     mutateCarpet.mutate(data, {

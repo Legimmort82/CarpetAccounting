@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import searchLogo from "@/assets/table/search.svg";
 import check from "@/assets/table/check.svg";
 import {
@@ -10,14 +10,14 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { useState } from "react";
-import mockData from "@/data/data.json";
-import Image from "next/image";
 import Layout from "@/components/Layout/Layout";
 import { useRouter } from "next/router";
 import { useDebounce } from "@/hooks/useDebounce";
 import SelectableInput from "@/components/UI/Inputs/SelectableInput";
 import { CarpetData } from "@/data/05data";
 import useGetSingleEmployee from "@/api/Employees/getSingleEmployee";
+import Image from "next/image";
+
 const monthArray = [
   { value: "01", id: 1 },
   { value: "02", id: 2 },
@@ -46,7 +46,7 @@ const yearsArray = [
   { value: "1406", id: 11 },
   { value: "1407", id: 12 },
 ];
-
+type CarpetKey = 'gereh' | 'cheleh' | 'shirazeh';
 type Carpet = {
   id: number;
   isRectangle: boolean;
@@ -207,7 +207,7 @@ const EmployeePage = () => {
     router.query.employeeId
   );
   
-  const calculateName = () => {
+  const calculateName = useCallback(() => {
     const name = singleEmployee?.data?.name;
     const last_name = singleEmployee?.data?.last_name;
     const section = singleEmployee?.data?.section;
@@ -216,23 +216,23 @@ const EmployeePage = () => {
     else setSection("shirazeh");
     if (name != null || undefined) setFullName(name + " " + last_name);
     else setFullName(last_name);
-  };
+  },[singleEmployee]);
 
-  const filteredData = CarpetData.filter((item) => item[section] == fullName);
+  const filteredData = CarpetData.filter((item) => {if(section in item) {return item[section as CarpetKey] == fullName}else return false});
   
   useEffect(()=>{
   if(filteredData){
     setData(filteredData)
   }
 
-  },[singleEmployee,fullName])
+  },[singleEmployee,fullName,filteredData])
   const [data, setData] = useState(filteredData);
   const [globalFilter, setGlobalFilter] = useState("");
   const debounceSearch = useDebounce(globalFilter, 1000);
 
   useEffect(() => {
     if (singleEmployee?.data) calculateName();
-  }, [singleEmployee?.data]);
+  }, [singleEmployee?.data,calculateName]);
 
   const table = useReactTable({
     data,

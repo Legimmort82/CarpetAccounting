@@ -85,7 +85,7 @@ function EditCarpet() {
       setIsRectangle(findCarpet?.isRectangle ? findCarpet?.isRectangle : false);
       setIsSend(findCarpet?.ersalshodeh ? findCarpet?.ersalshodeh : false);
     }
-  }, [findCarpet, methods.reset]);
+  }, [findCarpet, methods.reset,methods]);
   const [isRectangle, setIsRectangle] = useState(false);
   const [isSend, setIsSend] = useState(false);
   const handleRectangleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -104,7 +104,7 @@ function EditCarpet() {
       const calculatedMetraj = Number(arz) * Number(tool);
       methods.setValue("metraj", String(calculatedMetraj)); // Set the value of 'metraj'(calculatedMetraj); // Set the value of 'metraj'
     }
-  }, [arz, tool, methods.setValue]);
+  }, [arz, tool, methods.setValue,methods]);
   const handleSubmit = (data: object) => {
     toast.success("تغییرات انجام شد")
     console.log(data);

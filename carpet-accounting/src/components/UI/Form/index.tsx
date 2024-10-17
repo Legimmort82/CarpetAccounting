@@ -1,15 +1,19 @@
-import { FormProvider } from "react-hook-form";
+import React from "react";
+import { FieldValues, FormProvider, SubmitHandler, UseFormReturn } from "react-hook-form";
 
-type props = {
-    methods?: any;
-    className?: string;
-    onSubmit: any;
-    children: any;
+type Props<T extends FieldValues> = {
+  methods: UseFormReturn<T>; // Use T extends FieldValues for the form data type
+  className?: string;
+  onSubmit: SubmitHandler<T>; // Use T for the form data type
+  children: React.ReactNode;
 };
 
-const Form = ({ methods, className, onSubmit, children }: props) => {
+const Form = <T extends FieldValues>({ methods, className, onSubmit, children }: Props<T>) => {
+  if (!methods) {
+    throw new Error('Form component requires a "methods" prop');
+  }
   return (
-    <FormProvider {...methods}>
+    <FormProvider {...methods}> {/* Spread the methods object */}
       <form
         onSubmit={methods.handleSubmit(onSubmit)}
         noValidate

@@ -25,7 +25,6 @@ type props = {
   placeholder?: string;
   name?: string;
   data: { id: number; name: string; last_name: string }[];
-  required?: boolean;
   getValue?: (value: number) => void;
   className?: string;
   selectedBefore?: string;
@@ -35,18 +34,16 @@ const SelectByName = forwardRef(
   (
     {
       type = "text",
-      value,
       error,
       placeholder,
       name,
-      data,
-      required,
       getValue,
+      data,
       getRealValue,
       selectedBefore,
       className,
     }: props,
-    ref: any
+    ref: LegacyRef<HTMLInputElement>
   ) => {
     // const [color, setColor] = useState(data);
     const handleClickOutside = () => {
@@ -152,5 +149,6 @@ const SelectByName = forwardRef(
     );
   }
 );
+SelectByName.displayName= "SelectName"
 
 export default SelectByName;

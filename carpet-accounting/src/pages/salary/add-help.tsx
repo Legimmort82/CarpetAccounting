@@ -1,9 +1,7 @@
 import React from "react";
-import useGetSkills from "@/api/Employees/getSkills";
 import Layout from "@/components/Layout/Layout";
 import {
   SelectByNameInputField,
-  SelectableInputField,
   SimpleInputField,
 } from "@/components/UI/Fields/fields";
 import Form from "@/components/UI/Form";
@@ -14,13 +12,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { AddHelpSchema } from "@/schemas/AddHelp";
 import useAddHelp from "@/api/Helps/addHelp";
 import useGetHelps from "@/api/Helps/getHelps";
-import useGetSingleHelps from "@/api/Helps/getSingleHelp";
 
 const AddHelp = () => {
   const { data: Employees } = useGetAllEmployees();
   const {data:allHelps}= useGetHelps()
-  const {data:singleHelp}=useGetSingleHelps()
-  console.log(singleHelp);
+  
+  
   
   console.log(allHelps);
   

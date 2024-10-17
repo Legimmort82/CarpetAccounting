@@ -19,13 +19,11 @@ import useOutsideClick from "@/hooks/useOutsideClick";
 
 type props = {
   type?: string;
-  value?: string;
   error?: string;
   getRealValue?: (value: string) => void;
   placeholder?: string;
   name?: string;
   data: { id: number; value: string }[];
-  required?: boolean;
   getValue?: (value: number) => void;
   className?: string;
   selectedBefore?: string;
@@ -35,18 +33,16 @@ const SelectableInput = forwardRef(
   (
     {
       type = "text",
-      value,
       error,
       placeholder,
       name,
       data,
-      required,
       selectedBefore,
       getValue,
       getRealValue,
       className,
     }: props,
-    ref: any
+    ref:LegacyRef<HTMLInputElement>
   ) => {
     // constolor, setColor] = useState(data);
     const handleClickOutside = () => {
@@ -138,5 +134,6 @@ const SelectableInput = forwardRef(
     );
   }
 );
+SelectableInput.displayName= "SelectableInp"
 
 export default SelectableInput;

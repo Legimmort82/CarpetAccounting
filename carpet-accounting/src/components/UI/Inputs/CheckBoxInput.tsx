@@ -1,4 +1,4 @@
-import { forwardRef } from "react"
+import { LegacyRef, forwardRef } from "react"
 
 type props = {
   type?: string;
@@ -15,7 +15,6 @@ const CheckBoxInput = forwardRef(
   (
     {
       type = "checkbox",
-      error,
       name,
       required,
       label,
@@ -23,7 +22,7 @@ const CheckBoxInput = forwardRef(
       onChange,
       className,
     }: props,
-    ref: any
+    ref: LegacyRef<HTMLInputElement>
   ) => {
     return (
       <>
@@ -42,6 +41,6 @@ const CheckBoxInput = forwardRef(
       </>
     )
   })
-
+CheckBoxInput.displayName="Checkbox"
 
 export default CheckBoxInput
