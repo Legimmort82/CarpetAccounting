@@ -6,6 +6,11 @@ body {
     direction: rtl;
 }
 
+::selection {
+    color: aliceblue;
+    background-color: #050A30;
+}
+
 ::-webkit-scrollbar {
     margin: 10px;
     width: 7px;

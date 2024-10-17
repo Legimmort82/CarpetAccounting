@@ -43,8 +43,8 @@ const LoginInput = forwardRef(
     }
 
     return (
-      <div className="relative w-full">
-        {isEye && <Image src={typeKind == "text" ? eye : eyeClose} alt="eyeLogo" onClick={handleType} className="absolute top-6 left-4 w-6 h-6 cursor-pointer" />}
+      <div className="relative w-full mt-6">
+        {isEye && <Image src={typeKind == "text" ? eye : eyeClose} alt="eyeLogo" onClick={handleType} className="absolute top-[42px] left-3 w-6 h-6 cursor-pointer z-20" />}
         <label className="text-gray-500 font-semibold">{text}</label>
         <input
           type={typeKind}

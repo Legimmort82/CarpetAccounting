@@ -32,11 +32,11 @@ function LoginForm() {
           methods={methods}
           className="w-[70%] lg:w-[50%] mt-10 flex flex-col items-center justify-center"
         >
-          <LoginInputField name="username" text="نام کاربری" />
-          <LoginInputField name="password" text="رمز عبور" />
+          <LoginInputField type="text" name="username" text="نام کاربری" />
+          <LoginInputField isEye={true} type="password" name="password" text="رمز عبور" />
           <button
             type="submit"
-            className="w-full text-[20px] mt-12 h-[45px] bg-[#050A30] text-white rounded-lg"
+            className="w-full text-[20px] mt-12 h-[45px] bg-[#050A30] duration-300 hover:shadow-lg hover:shadow-gray-400 text-white rounded-lg"
           >
             ورود
           </button>

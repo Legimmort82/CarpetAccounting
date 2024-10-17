@@ -95,7 +95,7 @@ function AddCarpet() {
 
   return (
     <Layout>
-      <section className="flex flex-col min-h-screen w-full py-6 px-4 mt-7 items-center justify-center overflow-auto">
+      <section className="flex flex-col min-h-screen w-full py-6 px-4 items-center justify-center overflow-auto">
         <div className="bg-[#0e1549] rounded-md">
           <div className="bg-[#070a2b] w-full py-16 border-b-2 rounded-t-md border-white px-6 flex justify-center items-center">
             <h1 className="text-3xl font-bold text-white">اضافه کردن قالی</h1>
@@ -266,12 +266,12 @@ function AddCarpet() {
                 className={"text-white font-semibold"}
               />
               <div className="flex justify-center items-center gap-2">
-                <button className="bg-white font-semibold px-5 py-2 rounded-md text-xl">
+                <button className="bg-white hover:bg-gray-300 duration-300 font-semibold px-5 py-2 rounded-md text-xl">
                   انصراف
                 </button>
                 <button
                   type="submit"
-                  className="bg-white font-semibold px-5 py-2 rounded-md text-xl"
+                  className="bg-white hover:bg-gray-300 duration-300 font-semibold px-5 py-2 rounded-md text-xl"
                 >
                   اضافه کردن
                 </button>

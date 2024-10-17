@@ -66,13 +66,13 @@ const AddHelp = () => {
                 methods.setValue("date", value);
               }}
             />
-            <SimpleInputField name="money" placeholder="مبلغ" type="number" />
-            <button className="bg-[#aab1e6] px-6 py-2 rounded-xl font-semibold">
+            <SimpleInputField className="text-white" name="money" label="مبلغ" type="number" />
+            <button className="bg-[#aab1e6] hover:bg-[#5865c2] duration-200 px-6 py-2 rounded-xl font-semibold">
               انصراف
             </button>
             <button
               type="submit"
-              className="bg-[#5865c2] px-6 py-2 rounded-xl font-semibold"
+              className="bg-[#5865c2] hover:bg-[#aab1e6] duration-200 px-6 py-2 rounded-xl font-semibold"
             >
               اضافه کردن
             </button>

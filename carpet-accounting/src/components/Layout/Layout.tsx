@@ -48,12 +48,12 @@ function Layout({ children }: props) {
 					animate={{x: openSidebar ? 0 : "100vw"}}
 					transition={{ duration: 0.5, type:"spring" }}
 
-          className={` flex flex-col items-center bg-[#050A30] pr-12 z-96 h-screen fixed top-0 right-[-48px] min-w-[300px] overflow-y-auto overflow-x-hidden ${
+          className={` flex flex-col items-center bg-[#050A30] pr-[60px] z-96 h-screen fixed top-0 right-[-60px] min-w-[300px] overflow-y-auto overflow-x-hidden ${
             openSidebar ? "block" : "hidden"
           } `}
         >
 
-					<Image onClick={() => setOpenSidebar(!openSidebar)} className="absolute top-3 left-3 cursor-pointer" src={closeLogo} alt="closeLogo"/>
+					<Image onClick={openSidebarHandler} className="absolute top-2 left-2 cursor-pointer w-8 h-8 hover:scale-110 duration-200" src={closeLogo} alt="closeLogo"/>
 
           <Link href={"/"}>
             <Image
@@ -156,7 +156,7 @@ function Layout({ children }: props) {
               <DropDownList
                 href="/"
                 logo={exitLogo}
-                className={"font-bold z-20"}
+                className={"font-bold z-20 bg-white"}
               >
                 خروج
               </DropDownList>
@@ -165,7 +165,7 @@ function Layout({ children }: props) {
         </motion.div>
 
         <div className="flex-1">
-          <Image onClick={openSidebarHandler} className={` ${openSidebar ? "hidden" : "block"} z-40 cursor-pointer fixed top-3 right-[10px] w-7 h-7 sm:w-9 sm:h-9`} src={menu} alt="menu" />
+          <Image onClick={openSidebarHandler} className={` ${openSidebar ? "hidden" : "block"} z-40 cursor-pointer fixed top-3 right-[15px] w-7 h-7 hover:scale-105 duration-200 sm:w-9 sm:h-9`} src={menu} alt="menu" />
           {children}
         </div>
       </section>

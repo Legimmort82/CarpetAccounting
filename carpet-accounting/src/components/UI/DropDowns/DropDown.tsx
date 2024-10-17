@@ -20,7 +20,7 @@ function DropDown({ children, logo, onClick, className }: props) {
           {children}
         </div>
 
-        <Image className={`open ? "rotate-180" : "rotate-0"} absolute left-3 top-[14] duration-300 ${className}`} src={downArrow} alt="downArrow" />
+        <Image className={`open ? "rotate-180" : "rotate-0"} w-3 h-3 absolute left-3 top-[14] duration-300 ${className}`} src={downArrow} alt="downArrow" />
       </div>
     </>
   )
