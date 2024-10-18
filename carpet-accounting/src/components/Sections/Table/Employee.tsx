@@ -303,26 +303,24 @@ interface ActionsProps {
 }
 
 
-//TODO add router ==============================================
 const Actions = ({ row }: ActionsProps) => {
   const router = useRouter();
-  // const id = router.query.id as string;
-  // console.log(id);
+
   return (
     <div className="flex items-center gap-x-6 justify-center">
       <Image
         className="text-gray-700 w-5 h-5 cursor-pointer duration-200 hover:scale-[1.2]"
         src={edit}
-        alt="view"
+        alt="edit"
         onClick={() => { if (row.original)router.push(`/employees/edit/${row.original.id}`)}}
       />
       <Image className="text-gray-700 w-5 h-5 cursor-pointer duration-200 hover:scale-[1.2]"
         src={view}
         alt="view"
-        onClick={() => {if(row.original)router.push(`/employees/${row.original.id}`)}}
+        onClick={() => { if (row.original)router.push(`/employees/${row.original.id}`)}}
       />
     </div>
   )
 };
-// router.push(`/employees/edit/${row.original.id}`)
+
 export default Employees;

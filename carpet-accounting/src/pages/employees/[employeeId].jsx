@@ -306,7 +306,7 @@ const EmployeePage = () => {
                     className="z-50 relative"
                   />
                 </div>
-                <button className="py-2 px-4 text-center text-white font-semibold rounded-md bg-[#050A30]">
+                <button className="py-2 px-4 text-center text-white font-semibold rounded-md bg-[#050A30] hover:shadow-md hover:shadow-gray-500 duration-300">
                   مشاهده
                 </button>
               </div>
@@ -384,7 +384,7 @@ const EmployeePage = () => {
 
             <div className="flex justify-between items-center mt-4 text-sm text-gray-700">
               <button
-                className="p-2 ml-1 rounded-md bg-[#050A30] text-white hover:bg-gray-200 disabled:opacity-50"
+                className="p-2 ml-1 rounded-md bg-[#050A30] text-white hover:bg-gray-200 hover:text-black duration-100 disabled:opacity-50"
                 onClick={() => table.firstPage()}
                 disabled={!table.getCanPreviousPage()}
               >
@@ -392,7 +392,7 @@ const EmployeePage = () => {
               </button>
 
               <button
-                className="p-2 rounded-md ml-2 bg-[#050A30] text-white hover:bg-gray-200 disabled:opacity-50"
+                className="p-2 rounded-md ml-2 bg-[#050A30] text-white hover:bg-gray-200 hover:text-black duration-100 disabled:opacity-50"
                 onClick={() => table.previousPage()}
                 disabled={!table.getCanPreviousPage()}
               >
@@ -417,7 +417,7 @@ const EmployeePage = () => {
               </div>
 
               <button
-                className="p-2 ml-1 rounded-md bg-[#050A30] text-white hover:bg-gray-200 disabled:opacity-50"
+                className="p-2 ml-1 rounded-md bg-[#050A30] text-white hover:bg-gray-200 hover:text-black duration-100 disabled:opacity-50"
                 onClick={() => table.nextPage()}
                 disabled={!table.getCanNextPage()}
               >
@@ -425,7 +425,7 @@ const EmployeePage = () => {
               </button>
 
               <button
-                className="p-2 rounded-md bg-[#050A30] text-white hover:bg-gray-200 disabled:opacity-50"
+                className="p-2 rounded-md bg-[#050A30] text-white hover:bg-gray-200 hover:text-black duration-100 disabled:opacity-50"
                 onClick={() => table.setPageIndex(table.getPageCount() - 1)}
                 disabled={!table.getCanNextPage()}
               >

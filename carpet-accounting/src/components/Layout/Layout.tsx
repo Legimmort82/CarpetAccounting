@@ -12,9 +12,10 @@ import salaryLogo from "@/assets/sideBar/salary.svg";
 import exitLogo from "@/assets/sideBar/exit.svg";
 import menu from "@/assets/sideBar/hamburger-menu.svg";
 import closeLogo from "@/assets/sideBar/close.svg"
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { LegacyRef, useState } from "react";
+import { AnimatePresence, easeOut, motion } from "framer-motion";
 import Link from "next/link";
+import useOutsideClick from "@/hooks/useOutsideClick";
 
 type props = {
   children: React.ReactNode;
@@ -24,7 +25,12 @@ function Layout({ children }: props) {
   const [openCarpet, setOpenCarpet] = useState(false);
   const [openWorkers, setOpenWorkers] = useState(false);
   const [openSalary, setOpenSalary] = useState(false);
-  const [openSidebar, setOpenSidebar] = useState(false);
+  const [openSidebar, setOpenSidebar] = useState(true);
+
+  const handleClickOutside = () => {
+    setOpenSidebar(false);
+  };
+  const SelectRef = useOutsideClick({ handler: handleClickOutside });
 
 
   const openCarpetListHandler = () => {
@@ -40,20 +46,37 @@ function Layout({ children }: props) {
     setOpenSidebar(!openSidebar);
   };
 
+  const Variant = {
+    hidden: {
+      x: '100vw',
+      transition: {
+        duration: 0.5,
+        ease: "easeOut"
+      }
+    },
+    visible: {
+      x: 0,
+      transition: {
+        duration: 0.4,
+        ease: "easeOut"
+      }
+    },
+  }
+
   return (
     <>
       <section className="flex">
         <motion.div
-					initial={{x: '100vw'}}
-					animate={{x: openSidebar ? 0 : "100vw"}}
-					transition={{ duration: 0.5, type:"spring" }}
+          ref={SelectRef as LegacyRef<HTMLDivElement> | undefined}
+          variants={Variant}
+          initial={false}
+          animate={openSidebar ? "visible" : "hidden"}
 
-          className={` flex flex-col items-center bg-[#050A30] pr-[60px] z-96 h-screen fixed top-0 right-[-60px] min-w-[300px] overflow-y-auto overflow-x-hidden ${
-            openSidebar ? "block" : "hidden"
-          } `}
+          className={` flex flex-col items-center bg-[#050A30] pr-[60px] z-96 h-screen fixed top-0 right-[-60px] min-w-[300px] overflow-y-auto overflow-x-hidden ${openSidebar ? "block" : "hidden"
+            } `}
         >
 
-					<Image onClick={openSidebarHandler} className="absolute top-2 left-2 cursor-pointer w-8 h-8 hover:scale-110 duration-200" src={closeLogo} alt="closeLogo"/>
+          <Image onClick={openSidebarHandler} className="absolute top-2 left-2 cursor-pointer w-8 h-8 hover:scale-110 duration-200" src={closeLogo} alt="closeLogo" />
 
           <Link href={"/"}>
             <Image
@@ -164,8 +187,9 @@ function Layout({ children }: props) {
           </div>
         </motion.div>
 
+
         <div className="flex-1">
-          <Image onClick={openSidebarHandler} className={` ${openSidebar ? "hidden" : "block"} z-40 cursor-pointer fixed top-3 right-[15px] w-7 h-7 hover:scale-105 duration-200 sm:w-9 sm:h-9`} src={menu} alt="menu" />
+          <Image onClick={openSidebarHandler} className=' z-40 cursor-pointer fixed top-3 right-[15px] w-7 h-7 hover:scale-105 duration-200 sm:w-9 sm:h-9' src={menu} alt="menu" />
           {children}
         </div>
       </section>
