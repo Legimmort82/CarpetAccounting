@@ -13,7 +13,7 @@ import exitLogo from "@/assets/sideBar/exit.svg";
 import menu from "@/assets/sideBar/hamburger-menu.svg";
 import closeLogo from "@/assets/sideBar/close.svg";
 import { LegacyRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import useOutsideClick from "@/hooks/useOutsideClick";
 
@@ -48,15 +48,12 @@ function Layout({ children }: props) {
   return (
     <>
       <section className="flex">
-        <AnimatePresence>
           <motion.div
             ref={SelectRef as LegacyRef<HTMLDivElement> | undefined}
             initial={{ x: "100vw" }}
             animate={{ x: openSidebar ? 0 : "100vw" }}
             transition={{ duration: 0.4, ease: "easeOut" }}
-            className={` flex flex-col items-center bg-[#050A30] pr-[60px] z-96 h-screen fixed top-0 right-[-60px] min-w-[300px] overflow-y-auto overflow-x-hidden ${
-              openSidebar ? "block" : "hidden"
-            } `}
+            className={` flex flex-col items-center bg-[#050A30] pr-[60px] z-96 h-screen fixed top-0 right-[-60px] min-w-[300px] overflow-y-auto overflow-x-hidden  `}
           >
             <Image
               onClick={openSidebarHandler}
@@ -173,7 +170,6 @@ function Layout({ children }: props) {
               </div>
             </div>
           </motion.div>
-        </AnimatePresence>
 
         <div className="flex-1">
           <Image
