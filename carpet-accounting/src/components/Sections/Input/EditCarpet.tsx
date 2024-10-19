@@ -23,8 +23,35 @@ import { CarpetData } from "@/data/05data"
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AddCarpetSchema } from "@/schemas/AddCarpetSchema";
 import toast, { Toaster } from "react-hot-toast";
+import { apiClient } from "@/api/instance";
+
 function EditCarpet() {
-  const router = useRouter();
+  const router = useRouter()
+  useEffect(() => {
+    const accessToken =
+      typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
+
+    if (!accessToken) {
+      router.push("/auth/login"); // no token, redirect to login
+      return;
+    }
+
+    // Verify the token with the API
+    apiClient
+      .get("/accounts/token-verify", {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      })
+      .then((res) => {
+        // Token is valid
+        console.log(res);
+      })
+      .catch(() => {
+        // Token is invalid or expired
+        localStorage.removeItem("accessToken"); // remove invalid token
+        router.push("/auth/login");
+      });
+  }, [router]);
+  
   const findCarpet = CarpetData.find(
     (carpet) => carpet.id == Number(router.query?.carpetId)
   );
@@ -61,6 +88,7 @@ function EditCarpet() {
     },
     resolver: zodResolver(AddCarpetSchema),
   });
+
   useEffect(() => {
     if (findCarpet) {
       methods.reset({
@@ -86,6 +114,8 @@ function EditCarpet() {
       setIsSend(findCarpet?.ersalshodeh ? findCarpet?.ersalshodeh : false);
     }
   }, [findCarpet, methods.reset,methods]);
+
+  
   const [isRectangle, setIsRectangle] = useState(false);
   const [isSend, setIsSend] = useState(false);
   const handleRectangleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

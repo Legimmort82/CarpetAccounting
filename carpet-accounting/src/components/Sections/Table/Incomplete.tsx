@@ -8,13 +8,15 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Layout from "@/components/Layout/Layout";
 import { useRouter } from "next/router";
 import { useDebounce } from "@/hooks/useDebounce";
 import SelectableInput from "@/components/UI/Inputs/SelectableInput";
 import { CarpetData } from "@/data/05data";
+import { apiClient } from "@/api/instance";
+
 const monthArray = [
   { value: "01", id: 1 },
   { value: "02", id: 2 },
@@ -187,6 +189,33 @@ const columns = [
 ];
 
 function Incompletes() {
+  const router = useRouter()
+
+  useEffect(() => {
+    const accessToken =
+      typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
+
+    if (!accessToken) {
+      router.push("/auth/login"); // no token, redirect to login
+      return;
+    }
+
+    // Verify the token with the API
+    apiClient
+      .get("/accounts/token-verify", {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      })
+      .then((res) => {
+        // Token is valid
+        console.log(res);
+      })
+      .catch(() => {
+        // Token is invalid or expired
+        localStorage.removeItem("accessToken"); // remove invalid token
+        router.push("/auth/login");
+      });
+  }, [router]);
+
   const filteredData = CarpetData.filter(
     (item) =>
       item?.gerehVouroud == "" ||
@@ -198,7 +227,6 @@ function Incompletes() {
   const [data] = useState([...filteredData]);
   const [globalFilter, setGlobalFilter] = useState("");
   const debounceSearch = useDebounce(globalFilter, 1000);
-  const router = useRouter();
 
   const table = useReactTable({
     data,

@@ -8,25 +8,27 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Layout from "@/components/Layout/Layout";
 import { useRouter } from "next/router";
 import { useDebounce } from "@/hooks/useDebounce";
 import SelectableInput from "@/components/UI/Inputs/SelectableInput"
-import {CarpetData} from "@/data/05data"
+// import {CarpetData} from "@/data/05data"
+import TestData from "@/data/dataTest.json"
 import useGetAllCarpets from "@/api/Carpets/getAllCarpets";
+import { apiClient } from "@/api/instance";
 
 const monthArray = [
-  { value: "01", id: 1 },
-  { value: "02", id: 2 },
-  { value: "03", id: 3 },
-  { value: "04", id: 4 },
-  { value: "05", id: 5 },
-  { value: "06", id: 6 },
-  { value: "07", id: 7 },
-  { value: "08", id: 8 },
-  { value: "09", id: 9 },
+  { value: "1", id: 1 },
+  { value: "2", id: 2 },
+  { value: "3", id: 3 },
+  { value: "4", id: 4 },
+  { value: "5", id: 5 },
+  { value: "6", id: 6 },
+  { value: "7", id: 7 },
+  { value: "8", id: 8 },
+  { value: "9", id: 9 },
   { value: "10", id: 10 },
   { value: "11", id: 11 },
   { value: "12", id: 12 },
@@ -48,7 +50,7 @@ const yearsArray = [
 
 type Carpet = {
   id: number;
-  isRectangle:boolean;
+  isRectangle?:boolean;
   arz: string;
   tool: string;
   metraj: string;
@@ -199,14 +201,48 @@ const columns = [
 ];
 
 function Carpets() {
+  const router = useRouter()
+
+  useEffect(() => {
+    const accessToken =
+      typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
+
+    if (!accessToken) {
+      router.push("/auth/login"); // no token, redirect to login
+      return;
+    }
+
+    // Verify the token with the API
+    apiClient
+      .get("/accounts/token-verify", {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      })
+      .then((res) => {
+        // Token is valid
+        console.log(res);
+      })
+      .catch(() => {
+        // Token is invalid or expired
+        localStorage.removeItem("accessToken"); // remove invalid token
+        router.push("/auth/login");
+      });
+  }, [router]);
+
   const {data:all}= useGetAllCarpets()
   console.log(all);
-  
-  const [data] = useState([...CarpetData]);
+  const [month,setMonth]=useState("")
+  const [year,setYear]=useState("")
+  const [data,setData] = useState(TestData);
   const [globalFilter, setGlobalFilter] = useState("");
   const debounceSearch = useDebounce(globalFilter, 1000);
-  const router = useRouter();
-
+  const filteredData = TestData.filter(item => {
+    if (!item.shirazehVouroud) return false; 
+    const [itemYear, itemMonth] = item.shirazehVouroud.split('/').map(Number); // Rename local variables
+    return itemYear === Number(year) && itemMonth === Number(month); // Use state variables
+  })
+  const handleDate=()=>{
+    setData(filteredData)
+  }
   const table = useReactTable({
     data,
     columns,
@@ -256,6 +292,7 @@ function Carpets() {
                     name="month"
                     placeholder="انتخاب ماه"
                     data={monthArray}
+                    getRealValue={(value)=>setMonth(value)}
                     className="z-20 relative"
                   />
 
@@ -263,10 +300,11 @@ function Carpets() {
                     name="year"
                     placeholder="انتخاب سال"
                     data={yearsArray}
+                    getRealValue={(value)=>setYear(value)}
                     className="z-50 relative"
                   />
                 </div>
-                <button className="py-2 px-4 text-center text-white font-semibold rounded-md bg-[#050A30] hover:shadow-md hover:shadow-gray-500 duration-300">
+                <button onClick={handleDate} className="py-2 px-4 text-center text-white font-semibold rounded-md bg-[#050A30] hover:shadow-md hover:shadow-gray-500 duration-300">
                   مشاهده
                 </button>
               </div>

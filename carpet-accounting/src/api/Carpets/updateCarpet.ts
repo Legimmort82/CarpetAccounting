@@ -9,10 +9,12 @@ type props = {
  * @param {UseMutationOptions} options
  * @returns UseMutationResult
  */
+const accessToken =
+typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
 const useUpdateCarpet = (id: string | string[], options = {}) => {
   return useMutation({
     mutationFn: ({ data }: props) =>
-      apiClient.put(`/carpets/carpets/${id}`, data),
+      apiClient.put(`/carpets/carpets/${id}`, data,{headers:{Authorization:`Bearer ${accessToken}`}}),
 
     ...options,
   });

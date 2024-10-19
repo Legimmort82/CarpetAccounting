@@ -20,13 +20,7 @@ import useGetGereh from "@/api/Employees/getGereh";
 import useGetShirazeh from "@/api/Employees/getShirazeh";
 import edit from "@/assets/table/edit.svg"
 import view from "@/assets/table/view.svg";
-
-
-// const skillArray = [
-//   { value: "شیرازه", id: 1 },
-//   { value: "گره", id: 2 },
-//   { value: "چله", id: 3 },
-// ]
+import { apiClient } from "@/api/instance";
 
 type Carpet = {
   id: number;
@@ -58,13 +52,7 @@ const columns = [
   }),
 
   columnHelper.accessor("section", {
-    cell: (info) => {
-      const section = info.getValue();
-      if (section == "1") return "گره زن";
-      else if (section == "2") return "چله کش";
-      else if (section == "3") return "شیرازه";
-      else return section;
-    },
+    cell: (info) => info.getValue(),
     header: () => <span className="flex items-center justify-center">مهارت</span>,
   }),
   {
@@ -75,19 +63,43 @@ const columns = [
 ];
 
 function Employees() {
+  const router = useRouter()
+  useEffect(() => {
+    const accessToken =
+      typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
+
+    if (!accessToken) {
+      router.push("/auth/login"); // no token, redirect to login
+      return;
+    }
+
+    // Verify the token with the API
+    apiClient
+      .get("/accounts/token-verify", {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      })
+      .then((res) => {
+        // Token is valid
+        console.log(res);
+      })
+      .catch(() => {
+        // Token is invalid or expired
+        localStorage.removeItem("accessToken"); // remove invalid token
+        router.push("/auth/login");
+      });
+  }, [router]);
+  
   const { data: AllEmployees } = useGetAllEmployees();
   console.log(AllEmployees);
   
   const { data: Cheleh } = useGetCheleh();
   const { data: Gereh } = useGetGereh();
   const { data: Shirazeh } = useGetShirazeh();
-  // console.log(Shirazeh);
-  
+  const { data: Skills } = useGetSkills();
 
   const [data, setData] = useState([]);
   const [globalFilter, setGlobalFilter] = useState("");
   const debounceSearch = useDebounce(globalFilter, 1000);
-  const { data: Skills } = useGetSkills();
 
 
 

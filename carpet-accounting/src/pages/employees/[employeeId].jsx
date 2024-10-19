@@ -17,6 +17,7 @@ import SelectableInput from "@/components/UI/Inputs/SelectableInput";
 import { CarpetData } from "@/data/05data";
 import useGetSingleEmployee from "@/api/Employees/getSingleEmployee";
 import Image from "next/image";
+import { apiClient } from "@/api/instance";
 
 const monthArray = [
   { value: "01", id: 1 },
@@ -72,6 +73,7 @@ const columnHelper = createColumnHelper();
 
 const columns = [
   columnHelper.accessor("id", {
+    id: "id",
     cell: (info) => info.getValue(),
     header: () => (
       <span className="flex items-center justify-center">شماره</span>
@@ -79,16 +81,19 @@ const columns = [
   }),
 
   columnHelper.accessor("arz", {
+    id: "arz",
     cell: (info) => info.getValue(),
     header: () => <span className="flex items-center justify-center">عرض</span>,
   }),
 
   columnHelper.accessor("tool", {
+    id: "tool",
     cell: (info) => info.getValue(),
     header: () => <span className="flex items-center justify-center">طول</span>,
   }),
 
   columnHelper.accessor("metraj", {
+    id: "metraj",
     cell: (info) => info.getValue(),
     header: () => (
       <span className="flex items-center justify-center">متراژ</span>
@@ -96,6 +101,7 @@ const columns = [
   }),
 
   columnHelper.accessor("naghsheh", {
+    id: "naghsheh",
     cell: (info) => info.getValue(),
     header: () => (
       <span className="flex items-center justify-center">نقشه</span>
@@ -103,11 +109,13 @@ const columns = [
   }),
 
   columnHelper.accessor("rang", {
+    id: "rang",
     cell: (info) => info.getValue(),
     header: () => <span className="flex items-center justify-center">رنگ</span>,
   }),
 
   columnHelper.accessor("serial", {
+    id: "serial",
     cell: (info) => info.getValue(),
     header: () => (
       <span className="flex items-center justify-center">سریال</span>
@@ -115,10 +123,12 @@ const columns = [
   }),
 
   columnHelper.accessor("code", {
+    id: "code",
     cell: (info) => info.getValue(),
     header: () => <span className="flex items-center justify-center">کد</span>,
   }),
   columnHelper.accessor("isRectangle", {
+    id: "isRectangle",
     cell: (info) => {
       const rectangle = info.getValue();
       if (rectangle) return "مستطیل";
@@ -128,6 +138,7 @@ const columns = [
   }),
 
   columnHelper.accessor("shirazeh", {
+    id: "shirazeh",
     cell: (info) => info.getValue(),
     header: () => (
       <span className="flex items-center justify-center">شیرازه</span>
@@ -135,6 +146,7 @@ const columns = [
   }),
 
   columnHelper.accessor("shirazehKhoroug", {
+    id: "shirazehKhoroug",
     cell: (info) => info.getValue(),
     header: () => (
       <span className="flex items-center justify-center">خ-شیرازه</span>
@@ -142,6 +154,7 @@ const columns = [
   }),
 
   columnHelper.accessor("shirazehVouroud", {
+    id: "shirazehVouroud",
     cell: (info) => info.getValue(),
     header: () => (
       <span className="flex items-center justify-center">و-شیرازه</span>
@@ -149,11 +162,13 @@ const columns = [
   }),
 
   columnHelper.accessor("cheleh", {
+    id: "cheleh",
     cell: (info) => info.getValue(),
     header: () => <span className="flex items-center justify-center">چله</span>,
   }),
 
   columnHelper.accessor("chelehKhroug", {
+    id: "chelehKhroug",
     cell: (info) => info.getValue(),
     header: () => (
       <span className="flex items-center justify-center">خ-چله</span>
@@ -161,6 +176,7 @@ const columns = [
   }),
 
   columnHelper.accessor("chelehVouroud", {
+    id: "chelehVouroud",
     cell: (info) => info.getValue(),
     header: () => (
       <span className="flex items-center justify-center">و-چله</span>
@@ -168,11 +184,13 @@ const columns = [
   }),
 
   columnHelper.accessor("gereh", {
+    id: "gereh",
     cell: (info) => info.getValue(),
     header: () => <span className="flex items-center justify-center">گره</span>,
   }),
 
   columnHelper.accessor("gerehKhoroug", {
+    id: "gerehKhoroug",
     cell: (info) => info.getValue(),
     header: () => (
       <span className="flex items-center justify-center">خ-گره</span>
@@ -180,6 +198,7 @@ const columns = [
   }),
 
   columnHelper.accessor("gerehVouroud", {
+    id: "gerehVouroud",
     cell: (info) => info.getValue(),
     header: () => (
       <span className="flex items-center justify-center">و-گره</span>
@@ -187,6 +206,7 @@ const columns = [
   }),
 
   columnHelper.accessor("ersalshodeh", {
+    id: "ersalshodeh",
     cell: ({ row: { original } }) =>
       original.ersalshodeh ? (
         <Image className="w-7 h-7" src={check} alt="check" />
@@ -200,44 +220,131 @@ const columns = [
 ];
 const EmployeePage = () => {
   const router = useRouter();
+  useEffect(() => {
+    const accessToken =
+      typeof window !== "undefined"
+        ? localStorage.getItem("accessToken")
+        : null;
+
+    if (!accessToken) {
+      router.push("/auth/login"); // no token, redirect to login
+      return;
+    }
+
+    // Verify the token with the API
+    apiClient
+      .get("/accounts/token-verify", {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      })
+      .then((res) => {
+        // Token is valid
+        console.log(res);
+      })
+      .catch(() => {
+        // Token is invalid or expired
+        localStorage.removeItem("accessToken"); // remove invalid token
+        router.push("/auth/login");
+      });
+  }, [router]);
+  const filterColumns = (section) => {
+    if (section === "gereh") {
+      // Remove columns you don't want in 'gereh' section
+      return columns.filter(
+        (column) =>
+          column.id !== "cheleh" &&
+          column.id !== "chelehKhroug" &&
+          column.id !== "chelehVouroud" &&
+          column.id !== "shirazeh" &&
+          column.id !== "shirazehVouroud" &&
+          column.id !== "shirazehKhoroug" &&
+          column.id !== "rang" &&
+          column.id !== "naghsheh" &&
+          column.id !== "ersalshodeh" &&
+          column.id !== "id"
+      );
+    } else if (section === "cheleh") {
+      // Remove columns you don't want in 'cheleh' section
+      return columns.filter(
+        (column) =>
+          column.id !== "gereh" &&
+          column.id !== "gerehKhoroug" &&
+          column.id !== "gerehVouroud" &&
+          column.id !== "shirazeh" &&
+          column.id !== "shirazehVouroud" &&
+          column.id !== "shirazehKhoroug" &&
+          column.id !== "rang" &&
+          column.id !== "naghsheh" &&
+          column.id !== "ersalshodeh" &&
+          column.id !== "id"
+      );
+    } else if (section === "shirazeh") {
+      // Remove columns for 'shirazeh' section
+      return columns.filter(
+        (column) =>
+          column.id !== "cheleh" &&
+          column.id !== "chelehKhroug" &&
+          column.id !== "chelehVouroud" &&
+          column.id !== "gereh" &&
+          column.id !== "gerehKhoroug" &&
+          column.id !== "gerehVouroud" &&
+          column.id !== "rang" &&
+          column.id !== "naghsheh" &&
+          column.id !== "ersalshodeh" &&
+          column.id !== "id"
+      );
+    }
+    return columns; // Return all columns for other sections
+  };
+
   const [fullName, setFullName] = useState("");
   const [section, setSection] = useState("");
 
   const { data: singleEmployee } = useGetSingleEmployee(
     router.query.employeeId
   );
-  
+
   const calculateName = useCallback(() => {
     const name = singleEmployee?.data?.name;
     const last_name = singleEmployee?.data?.last_name;
     const section = singleEmployee?.data?.section;
-    if (section == 1) setSection("gereh");
-    else if (section == 2) setSection("cheleh");
+    if (section == "گره زن") setSection("gereh");
+    else if (section == "چله کشی") setSection("cheleh");
     else setSection("shirazeh");
     if (name != null || undefined) setFullName(name + " " + last_name);
     else setFullName(last_name);
-  },[singleEmployee]);
+  }, [singleEmployee]);
 
-  // const filteredData = CarpetData.filter((item) =>  {return item[section as CarpetKey] == fullName});
-  // console.log(filteredData);
-  
+  let sumArz = 0;
+  let sumTool = 0;
+  let sumMetraj = 0;
+
   useEffect(() => {
     const filteredData = CarpetData.filter((item) => {
-      return item[section] == fullName
+      return item[section] == fullName;
     });
     setData(filteredData);
   }, [section, fullName]);
+
   const [data, setData] = useState([]);
   const [globalFilter, setGlobalFilter] = useState("");
   const debounceSearch = useDebounce(globalFilter, 1000);
 
+    data.filter((item) => {
+    let arz = Number(item?.arz);
+    let tool = Number(item?.tool);
+    let metraj = Number(item?.metraj);
+    sumArz = sumArz + arz;
+    sumTool = sumTool + tool;
+    sumMetraj = sumMetraj + metraj;
+  });
+
   useEffect(() => {
     if (singleEmployee?.data) calculateName();
-  }, [singleEmployee?.data,calculateName]);
+  }, [singleEmployee?.data, calculateName]);
 
   const table = useReactTable({
     data,
-    columns,
+    columns: filterColumns(section),
     state: {
       globalFilter: debounceSearch,
     },
@@ -255,14 +362,17 @@ const EmployeePage = () => {
 
   const printHandler = () => {
     return window.print();
-  }
+  };
 
   return (
     <>
       <Layout>
         <div className="flex flex-col min-h-screen w-full px-4">
           <div className="w-calc50 xl:w-calc132 2xl:w-calc232 flex flex-col items-stretch py-3 fixed top-0 bg-white self-center">
-            <h1 id="name" className="text-2xl sm:text-3xl font-bold self-center mb-6">
+            <h1
+              id="name"
+              className="text-2xl sm:text-3xl font-bold self-center mb-6"
+            >
               {singleEmployee?.data && (
                 <div>
                   {singleEmployee?.data?.name
@@ -312,9 +422,11 @@ const EmployeePage = () => {
               </div>
             </div>
           </div>
-
           <div className="w-calc50 xl:w-calc132 2xl:w-calc232 overflow-x-auto self-center mt-[200px] mb-[200px] md:mt-[140px] md:mb-[100px]">
-            <table id="table" className=" divide-y divide-white rounded-lg w-full border border-collapse">
+            <table
+              id="table"
+              className=" divide-y divide-white rounded-lg w-full border border-collapse"
+            >
               <thead className="bg-[#050A30] top-0 z-10">
                 {table.getHeaderGroups().map((headerGroup) => (
                   <tr key={headerGroup.id}>
@@ -358,8 +470,15 @@ const EmployeePage = () => {
               </tbody>
             </table>
           </div>
-
           <div className="w-calc50 xl:w-calc132 2xl:w-calc232 bg-white flex flex-col gap-5 sm:flex-row justify-between items-center py-2 text-sm text-gray-700 fixed bottom-0 self-center">
+            <div className="flex gap-6 justify-center  mt-4">
+              <div>مجموع عرض</div>
+              {sumArz}
+              <div>مجموع طول</div>
+              {sumTool}
+              <div>مجموع متراژ</div>
+              {sumMetraj}
+            </div>
             <div className="flex items-center mt-4 ">
               <span className="ml-4">تعداد ردیف ها</span>
 
@@ -370,7 +489,7 @@ const EmployeePage = () => {
                   table.setPageSize(Number(e.target.value));
                 }}
               >
-                {[10, 20, 35, 60, 100].map((pageSize) => (
+                {[10, 20, 35, 60, 100, 200, 300, 500, 800].map((pageSize) => (
                   <option key={pageSize} value={pageSize}>
                     {pageSize}
                   </option>
@@ -379,7 +498,12 @@ const EmployeePage = () => {
             </div>
 
             <div className="flex justify-between items-center mt-4">
-              <button onClick={printHandler} className="bg-gray-300 text-gray-700 font-bold p-2 rounded-md py-3 px-6 duration-200 hover:bg-gray-400">چاپ جدول</button>
+              <button
+                onClick={printHandler}
+                className="bg-gray-300 text-gray-700 font-bold p-2 rounded-md py-3 px-6 duration-200 hover:bg-gray-400"
+              >
+                چاپ جدول
+              </button>
             </div>
 
             <div className="flex justify-between items-center mt-4 text-sm text-gray-700">

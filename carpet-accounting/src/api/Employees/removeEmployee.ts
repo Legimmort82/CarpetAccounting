@@ -7,9 +7,11 @@ import { apiClient } from "../instance";
  * @param {UseMutationOptions} options
  * @returns UseMutationResult
  */
+const accessToken =
+typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
 const useDeleteEmployee = (id:string | string[] | undefined,options = {}) => {
   return useMutation({
-    mutationFn: () => apiClient.delete(`/accounts/workers/${id}/`),
+    mutationFn: () => apiClient.delete(`/accounts/workers/${id}/`,{headers:{Authorization:`Bearer ${accessToken}`}}),
 
     ...options,
   });

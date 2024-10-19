@@ -1,15 +1,37 @@
 import Layout from "@/components/Layout/Layout";
 import carpetImg from "@/assets/carpet.jpg";
 import Image from "next/image";
-import useCheckToken from "@/api/Auth/CheckToken";
 import { useEffect } from "react";
+import { apiClient } from "@/api/instance";
+import { useRouter } from "next/router";
 
 function HomePage() {
-  const mutatein =useCheckToken()
-  useEffect(()=>{
-    mutatein.mutate({},{onSuccess:(res)=>console.log(res)
-    })
-  },[])
+  const router = useRouter()
+    useEffect(() => {
+      const accessToken =
+        typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
+  
+      if (!accessToken) {
+        router.push("/auth/login"); // no token, redirect to login
+        return;
+      }
+  
+      // Verify the token with the API
+      apiClient
+        .get("/accounts/token-verify", {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        })
+        .then((res) => {
+          // Token is valid
+          console.log(res);
+        })
+        .catch(() => {
+          // Token is invalid or expired
+          localStorage.removeItem("accessToken"); // remove invalid token
+          router.push("/auth/login");
+        });
+    }, [router]);
+
   return (
     <>
       <Layout>
@@ -18,7 +40,11 @@ function HomePage() {
             <h1 className="text-[#050A30]">آقای جعفری خوش آمدید</h1>
             <h1 className="text-[#081a9e]">Welcome Mr.Jafari</h1>
           </div>
-          <Image className="max-w-[1000px] w-[80%]" src={carpetImg} alt="carpet" />
+          <Image
+            className="max-w-[1000px] w-[80%]"
+            src={carpetImg}
+            alt="carpet"
+          />
         </section>
       </Layout>
     </>

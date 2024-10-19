@@ -21,10 +21,38 @@ import useGetGereh from "@/api/Employees/getGereh";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AddCarpetSchema } from "@/schemas/AddCarpetSchema";
 import useAddCarpet from "@/api/Carpets/addCarpet";
-import useGetAllCarpets from "@/api/Carpets/getAllCarpets";
+// import useGetAllCarpets from "@/api/Carpets/getAllCarpets";
 import toast, { Toaster } from "react-hot-toast";
+import { useRouter } from "next/router";
+import { apiClient } from "@/api/instance";
 
 function AddCarpet() {
+  const router = useRouter()
+  useEffect(() => {
+    const accessToken =
+      typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
+
+    if (!accessToken) {
+      router.push("/auth/login"); // no token, redirect to login
+      return;
+    }
+
+    // Verify the token with the API
+    apiClient
+      .get("/accounts/token-verify", {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      })
+      .then((res) => {
+        // Token is valid
+        console.log(res);
+      })
+      .catch(() => {
+        // Token is invalid or expired
+        localStorage.removeItem("accessToken"); // remove invalid token
+        router.push("/auth/login");
+      });
+  }, [router]);
+  
   const { data: colors } = useGetAllColors();
   const { data: designs } = useGetDesigns();
   const { data: CircleSizes } = useGetCircleSizes();
@@ -33,8 +61,10 @@ function AddCarpet() {
   const { data: Cheleh } = useGetCheleh();
   const { data: Gereh } = useGetGereh();
   const { data: Shirazeh } = useGetShirazeh();
-  const {data:AllCarpets}= useGetAllCarpets()
+  // const {data:AllCarpets}= useGetAllCarpets()
+
   const mutateCarpet = useAddCarpet();
+
   const methods = useForm({
     defaultValues: {
       arz: "",
@@ -86,11 +116,10 @@ function AddCarpet() {
       methods.reset()
       }
       ,
-      onError: (error) => {
-        console.log(error);
-      },
+      // onError: (error) => {
+      //   console.log(error);
+      // },
     });
-    console.log(AllCarpets);
   };
 
   return (

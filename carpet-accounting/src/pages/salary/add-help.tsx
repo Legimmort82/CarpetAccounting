@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Layout from "@/components/Layout/Layout";
 import {
   SelectByNameInputField,
@@ -12,8 +12,36 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { AddHelpSchema } from "@/schemas/AddHelp";
 import useAddHelp from "@/api/Helps/addHelp";
 import useGetHelps from "@/api/Helps/getHelps";
+import { apiClient } from "@/api/instance";
+import { useRouter } from "next/router";
 
 const AddHelp = () => {
+  const router = useRouter()
+  useEffect(() => {
+    const accessToken =
+      typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
+
+    if (!accessToken) {
+      router.push("/auth/login"); // no token, redirect to login
+      return;
+    }
+
+    // Verify the token with the API
+    apiClient
+      .get("/accounts/token-verify", {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      })
+      .then((res) => {
+        // Token is valid
+        console.log(res);
+      })
+      .catch(() => {
+        // Token is invalid or expired
+        localStorage.removeItem("accessToken"); // remove invalid token
+        router.push("/auth/login");
+      });
+  }, [router]);
+  
   const { data: Employees } = useGetAllEmployees();
   const {data:allHelps}= useGetHelps()
   
@@ -35,7 +63,7 @@ const AddHelp = () => {
     console.log(data);
     mutateAddHelp.mutate(data, {
       onSuccess: (res) => console.log(res),
-      onError: (error) => console.log(error),
+      // onError: (error) => console.log(error),
     });
   };
 

@@ -1,5 +1,6 @@
 import useAddEmployee from "@/api/Employees/addEmployee";
 import useGetSkills from "@/api/Employees/getSkills";
+import { apiClient } from "@/api/instance";
 import Layout from "@/components/Layout/Layout";
 import {
   SelectableInputField,
@@ -8,10 +9,38 @@ import {
 import Form from "@/components/UI/Form";
 import { AddEmployeeSchema } from "@/schemas/AddEmployee";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import toast, { Toaster } from "react-hot-toast";
 
 function AddEmployee() {
+  const router = useRouter()
+  useEffect(() => {
+    const accessToken =
+      typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
+
+    if (!accessToken) {
+      router.push("/auth/login"); // no token, redirect to login
+      return;
+    }
+
+    // Verify the token with the API
+    apiClient
+      .get("/accounts/token-verify", {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      })
+      .then((res) => {
+        // Token is valid
+        console.log(res);
+      })
+      .catch(() => {
+        // Token is invalid or expired
+        localStorage.removeItem("accessToken"); // remove invalid token
+        router.push("/auth/login");
+      });
+  }, [router]);
+  
   const { data: Skills } = useGetSkills();
   const mutateAddPerson = useAddEmployee();
   const methods = useForm({
@@ -29,7 +58,7 @@ function AddEmployee() {
       onSuccess: (res) => {console.log(res) 
         toast.success("فرد جدید اضافه شد")
       },
-      onError: (error) => console.log(error),
+      // onError: (error) => console.log(error),
     });
   };
   return (

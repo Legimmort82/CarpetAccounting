@@ -16,6 +16,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/components/UI/Fields/WithField.jsx", "src/pages/employees/[employeeId].jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/components/UI/Fields/WithField.jsx", "src/pages/employees/[employeeId].jsx", "src/context/AuthProvider.tsx", "src/pages/employees/گره زن/[id].jsx"],
   "exclude": ["node_modules"]
 }

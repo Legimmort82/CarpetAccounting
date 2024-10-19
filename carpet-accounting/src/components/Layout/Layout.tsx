@@ -16,12 +16,14 @@ import { LegacyRef, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import useOutsideClick from "@/hooks/useOutsideClick";
+import { useRouter } from "next/router";
 
 type props = {
   children: React.ReactNode;
 };
 
 function Layout({ children }: props) {
+  const router = useRouter()
   const [openCarpet, setOpenCarpet] = useState(false);
   const [openWorkers, setOpenWorkers] = useState(false);
   const [openSalary, setOpenSalary] = useState(false);
@@ -44,6 +46,10 @@ function Layout({ children }: props) {
   const openSidebarHandler = () => {
     setOpenSidebar(!openSidebar);
   };
+  const handleLogout=()=>{
+    localStorage.removeItem("accessToken")
+    router.push('/auth/login')
+  }
 
   return (
     <>
@@ -159,7 +165,7 @@ function Layout({ children }: props) {
                 </motion.div>
               </div>
 
-              <div className="w-full flex flex-col items-center mb-4 cursor-pointer">
+              <div className="w-full flex flex-col items-center mb-4 cursor-pointer" onClick={handleLogout}>
                 <DropDownList
                   href="/"
                   logo={exitLogo}

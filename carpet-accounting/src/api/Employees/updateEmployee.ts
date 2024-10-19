@@ -9,10 +9,12 @@ type props = {
  * @param {UseMutationOptions} options
  * @returns UseMutationResult
  */
+const accessToken =
+typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
 const useUpdateEmployee = ( id:string | string[] | undefined,options = {}) => {
   return useMutation({
     mutationFn: ( data : props) =>
-      apiClient.put(`/accounts/workers/${id}/`, data),
+      apiClient.put(`/accounts/workers/${id}/`, data,{headers:{Authorization:`Bearer ${accessToken}`}}),
     ...options,
   });
 };
