@@ -17,8 +17,10 @@
     ],
     "start_url": "/",
     "display": "minimal-ui",
+    "orientation": "any",
     "dir": "rtl",
     "lang": "fa-IR",
     "name": "Carpet-Accounting",
-    "short_name": "Carpet"
+    "short_name": "Carpet",
+    "description": "A Progressive Web App built with Next.js"
 }

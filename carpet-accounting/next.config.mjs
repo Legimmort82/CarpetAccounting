@@ -1,17 +1,19 @@
 /** @type {import('next').NextConfig} */
 
-import withPWA from 'next-pwa';
+import createPWA from '@ducanh2912/next-pwa';
 
-const pwaConfig = withPWA({
-  dest: 'public',
+const withPWA = createPWA({
+  dest: "public",
   register: true,
-  skipWaiting: true, 
-  disable: process.env.NODE_ENV === 'development',
+  disable: false,
+  cacheOnFrontEndNav: true,
+  aggressiveFrontEndNavCaching: true,
+  reloadOnOnline: true,
+  swcMinify: true,
 });
 
 const nextConfig = {
-  ...pwaConfig,
   reactStrictMode: true,
 };
 
-export default nextConfig;
+export default withPWA(nextConfig);
