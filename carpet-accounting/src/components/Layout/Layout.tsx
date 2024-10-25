@@ -132,10 +132,16 @@ function Layout({ children }: props) {
                   <DropDownList href="/employees/add" logo={addCarpetLogo}>
                     اضافه کردن افراد
                   </DropDownList>
+                  <DropDownList href="/salary/add-help" logo={salaryLogo}>
+                    ثبت مساعده
+                  </DropDownList>
+                  <DropDownList href="/salary/all" logo={carpetListLogo}>
+                    لیست مساعده ها
+                  </DropDownList>
                 </motion.div>
               </div>
 
-              <div className="w-full flex flex-col items-center mb-4">
+              {/* <div className="w-full flex flex-col items-center mb-4">
                 <DropDown
                   className={`${openSalary ? "rotate-180" : "rotate-0"}`}
                   logo={salaryLogo}
@@ -153,9 +159,7 @@ function Layout({ children }: props) {
                   }}
                   transition={{ duration: 0.8, type: "spring" }}
                 >
-                  <DropDownList href="/salary/add-help" logo={salaryLogo}>
-                    ثبت مساعده
-                  </DropDownList>
+   
                   <DropDownList href="/" logo={salaryLogo}>
                     حقوق ماهانه
                   </DropDownList>
@@ -163,7 +167,7 @@ function Layout({ children }: props) {
                     فاکتور
                   </DropDownList>
                 </motion.div>
-              </div>
+              </div> */}
 
               <div className="w-full flex flex-col items-center mb-4 cursor-pointer" onClick={handleLogout}>
                 <DropDownList
