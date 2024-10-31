@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const createApiClient = (baseUrl :string | undefined) => {
+const createApiClient = () => {
   const instance = axios.create({
-    baseURL: baseUrl,
+    baseURL: "http://localhost:8000",
     timeout: 30000,
     headers: {
       Accept: "application/json",
@@ -12,6 +12,6 @@ const createApiClient = (baseUrl :string | undefined) => {
   return instance;
 };
 
-const apiClient = createApiClient(process.env.CARPET_API);
+const apiClient = createApiClient();
 
 export { apiClient };
