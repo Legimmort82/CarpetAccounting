@@ -1,10 +1,15 @@
-import EditCarpet from "@/components/Sections/Input/EditCarpet"
-
+import EditCarpet from "@/components/Sections/Input/EditCarpet";
+import Head from "next/head";
 
 function EditCarpets() {
   return (
-    <EditCarpet />
-  )
+    <>
+      <Head>
+        <title>Carpet Accounting</title>
+      </Head>
+      <EditCarpet />
+    </>
+  );
 }
 
-export default EditCarpets
+export default EditCarpets;

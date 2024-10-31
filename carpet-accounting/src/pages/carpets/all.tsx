@@ -1,12 +1,15 @@
-import Carpets from "@/components/Sections/Table/Carpet"
-
+import Carpets from "@/components/Sections/Table/Carpet";
+import Head from "next/head";
 
 function AllCarpets() {
   return (
-    <Carpets/>
-  )
+    <>
+      <Head>
+        <title>Carpet Accounting</title>
+      </Head>
+      <Carpets />
+    </>
+  );
 }
 
-export default AllCarpets
-
-
+export default AllCarpets;

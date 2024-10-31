@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect } from "react";
+import Head from "next/head";
 import searchLogo from "@/assets/table/search.svg";
 import check from "@/assets/table/check.svg";
 import {
@@ -14,38 +15,36 @@ import Layout from "@/components/Layout/Layout";
 import { useRouter } from "next/router";
 import { useDebounce } from "@/hooks/useDebounce";
 import SelectableInput from "@/components/UI/Inputs/SelectableInput";
-import { CarpetData } from "@/data/05data";
+// import { CarpetData } from "@/data/05data";
 import useGetSingleEmployee from "@/api/Employees/getSingleEmployee";
 import Image from "next/image";
+import TestData from "@/data/dataTest.json";
 import { apiClient } from "@/api/instance";
 
 const monthArray = [
-  { value: "01", id: 1 },
-  { value: "02", id: 2 },
-  { value: "03", id: 3 },
-  { value: "04", id: 4 },
-  { value: "05", id: 5 },
-  { value: "06", id: 6 },
-  { value: "07", id: 7 },
-  { value: "08", id: 8 },
-  { value: "09", id: 9 },
+  { value: "1", id: 1 },
+  { value: "2", id: 2 },
+  { value: "3", id: 3 },
+  { value: "4", id: 4 },
+  { value: "5", id: 5 },
+  { value: "6", id: 6 },
+  { value: "7", id: 7 },
+  { value: "8", id: 8 },
+  { value: "9", id: 9 },
   { value: "10", id: 10 },
   { value: "11", id: 11 },
   { value: "12", id: 12 },
 ];
+
 const yearsArray = [
-  { value: "1396", id: 1 },
-  { value: "1397", id: 2 },
-  { value: "1398", id: 3 },
-  { value: "1399", id: 4 },
-  { value: "1400", id: 5 },
-  { value: "1401", id: 6 },
-  { value: "1402", id: 7 },
   { value: "1403", id: 8 },
   { value: "1404", id: 9 },
   { value: "1405", id: 10 },
   { value: "1406", id: 11 },
   { value: "1407", id: 12 },
+  { value: "1408", id: 13 },
+  { value: "1409", id: 14 },
+  { value: "1410", id: 15 },
 ];
 // type CarpetKey = 'gereh' | 'cheleh' | 'shirazeh';
 // type Carpet = {
@@ -295,7 +294,8 @@ const EmployeePage = () => {
     }
     return columns; // Return all columns for other sections
   };
-
+  const [month, setMonth] = useState("");
+  const [year, setYear] = useState("");
   const [fullName, setFullName] = useState("");
   const [section, setSection] = useState("");
 
@@ -319,17 +319,29 @@ const EmployeePage = () => {
   let sumMetraj = 0;
 
   useEffect(() => {
-    const filteredData = CarpetData.filter((item) => {
+    const filteredData = TestData.filter((item) => {
       return item[section] == fullName;
     });
     setData(filteredData);
   }, [section, fullName]);
 
   const [data, setData] = useState([]);
+  const filteredData = data.filter((item) => {
+    if (!item.shirazehVouroud || !item[`${section}Vouroud`]) return false;
+    else {
+      const [itemYear, itemMonth] = item[`${section}Vouroud`]
+        .split("/")
+        .map(Number); // Rename local variables
+      return itemYear === Number(year) && itemMonth === Number(month);
+    } // Use state variables
+  });
+  const handleDate = () => {
+    setData(filteredData);
+  };
   const [globalFilter, setGlobalFilter] = useState("");
   const debounceSearch = useDebounce(globalFilter, 1000);
 
-    data.filter((item) => {
+  data.filter((item) => {
     let arz = Number(item?.arz);
     let tool = Number(item?.tool);
     let metraj = Number(item?.metraj);
@@ -367,6 +379,9 @@ const EmployeePage = () => {
   return (
     <>
       <Layout>
+        <Head>
+          <title>Carpet Accounting</title>
+        </Head>
         <div className="flex flex-col min-h-screen w-full px-4">
           <div className="w-calc50 xl:w-calc132 2xl:w-calc232 flex flex-col items-stretch py-3 fixed top-0 bg-white self-center">
             <h1
@@ -406,6 +421,7 @@ const EmployeePage = () => {
                     name="month"
                     placeholder="انتخاب ماه"
                     data={monthArray}
+                    getRealValue={(value) => setMonth(value)}
                     className="z-20 relative"
                   />
 
@@ -413,10 +429,14 @@ const EmployeePage = () => {
                     name="year"
                     placeholder="انتخاب سال"
                     data={yearsArray}
+                    getRealValue={(value) => setYear(value)}
                     className="z-50 relative"
                   />
                 </div>
-                <button className="py-2 px-4 text-center text-white font-semibold rounded-md bg-[#050A30] hover:shadow-md hover:shadow-gray-500 duration-300">
+                <button
+                  onClick={handleDate}
+                  className="py-2 px-4 text-center text-white font-semibold rounded-md bg-[#050A30] hover:shadow-md hover:shadow-gray-500 duration-300"
+                >
                   مشاهده
                 </button>
               </div>

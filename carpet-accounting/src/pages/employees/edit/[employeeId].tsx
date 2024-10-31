@@ -1,9 +1,14 @@
 import EditEmployee from "@/components/Sections/Input/EditEmployee";
-
+import Head from "next/head";
 
 function EditEmployees() {
   return (
-    <EditEmployee/>
+    <>
+      <Head>
+        <title>Carpet Accounting</title>
+      </Head>
+      <EditEmployee />
+    </>
   );
 }
 

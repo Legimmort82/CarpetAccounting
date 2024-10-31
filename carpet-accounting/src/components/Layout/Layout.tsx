@@ -8,7 +8,6 @@ import addCarpetLogo from "@/assets/sideBar/add.svg";
 import inComplete from "@/assets/sideBar/inComplete.svg";
 import workersListLogo from "@/assets/sideBar/workers-list.svg";
 import workerLogo from "@/assets/sideBar/worker.svg";
-import salaryLogo from "@/assets/sideBar/salary.svg";
 import exitLogo from "@/assets/sideBar/exit.svg";
 import menu from "@/assets/sideBar/hamburger-menu.svg";
 import closeLogo from "@/assets/sideBar/close.svg";
@@ -26,7 +25,7 @@ function Layout({ children }: props) {
   const router = useRouter()
   const [openCarpet, setOpenCarpet] = useState(false);
   const [openWorkers, setOpenWorkers] = useState(false);
-  const [openSalary, setOpenSalary] = useState(false);
+  // const [openSalary, setOpenSalary] = useState(false);
   const [openSidebar, setOpenSidebar] = useState(true);
 
   const handleClickOutside = () => {
@@ -40,9 +39,9 @@ function Layout({ children }: props) {
   const openWorkersListHandler = () => {
     setOpenWorkers(!openWorkers);
   };
-  const openSalaryListHandler = () => {
-    setOpenSalary(!openSalary);
-  };
+  // const openSalaryListHandler = () => {
+  //   setOpenSalary(!openSalary);
+  // };
   const openSidebarHandler = () => {
     setOpenSidebar(!openSidebar);
   };
@@ -132,12 +131,12 @@ function Layout({ children }: props) {
                   <DropDownList href="/employees/add" logo={addCarpetLogo}>
                     اضافه کردن افراد
                   </DropDownList>
-                  <DropDownList href="/salary/add-help" logo={salaryLogo}>
+                  {/* <DropDownList href="/salary/add-help" logo={salaryLogo}>
                     ثبت مساعده
                   </DropDownList>
                   <DropDownList href="/salary/all" logo={carpetListLogo}>
                     لیست مساعده ها
-                  </DropDownList>
+                  </DropDownList> */}
                 </motion.div>
               </div>
 
