@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 
-import createPWA from '@ducanh2912/next-pwa';
+import createPWA from "@ducanh2912/next-pwa";
 
 const withPWA = createPWA({
   dest: "public",
@@ -14,6 +14,10 @@ const withPWA = createPWA({
 
 const nextConfig = {
   reactStrictMode: true,
+  output: "export",
+  images: {
+    unoptimized: true
+}
 };
 
 export default withPWA(nextConfig);
