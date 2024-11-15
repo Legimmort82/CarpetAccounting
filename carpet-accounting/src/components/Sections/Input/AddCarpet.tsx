@@ -151,7 +151,7 @@ function AddCarpet() {
               </div>
             </div>
 
-            <div className="flex flex-wrap justify-center gap-12 items-center  py-7">
+            <div className="flex flex-wrap justify-center gap-12 items-center px-4  py-7">
               <SelectableInputField
                 name="arz"
                 data={!isRectangle ? CircleSizes?.data : Widths?.data}
